@@ -692,7 +692,11 @@ def handle_special_commands(user_input):
         "webstorm": "pp-commands\\webstorm.py", # new
         "golab": "pp-commands\\golab.py",  # new
         "phpstorm": "pp-commands\\phpstorm.py",  # new
-        "githubdesktop": "pp-commands\\githubdesktop.py"  # new
+        "githubdesktop": "pp-commands\\githubdesktop.py",  # new
+        "nvim": "pp-commands\\nvim.py", # new
+        "code": "pp-commands\\code.py", # new
+        "micro": "pp-commands\\micro.py", # new
+        "gedit": "pp-commands\\gedit.py" # new
     }
 
     # Custom command launcher
@@ -999,7 +1003,6 @@ def handle_special_commands(user_input):
         except subprocess.CalledProcessError as e:
             print(f"[{timestamp()}] [ERROR] Error executing WSL command: {e}")
         return True
-
 
     if user_input.lower() == "whoami":
         print(user_name)
