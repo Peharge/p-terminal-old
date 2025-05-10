@@ -1219,7 +1219,7 @@ def handle_special_commands(user_input):
 
         # Leere Eingabe abfangen
         if not command_str:
-            logging.error("No program specified after 'launch'.")
+            logging.error("[ERROR] No program specified after 'launch'.")
             return False  # Frühzeitige Rückgabe, falls kein Programmname angegeben wurde
 
         try:
@@ -1233,13 +1233,13 @@ def handle_special_commands(user_input):
                 args = shlex.split(command_str)
                 subprocess.Popen(args)
 
-            logging.info("Program launched: %s", command_str)
+            logging.info("[INFO] Program launched: %s", command_str)
             return True  # Erfolgreiche Ausführung, Rückgabe True
 
         except FileNotFoundError:
-            logging.error("Program not found: %s", command_str)
+            logging.error("[ERROR] Program not found: %s", command_str)
         except Exception as e:
-            logging.exception("Error launching %s: %s", command_str, str(e))
+            logging.exception("[ERROR] Error launching %s: %s", command_str, str(e))
 
         return False
 
@@ -3008,7 +3008,7 @@ def find_vcvarsall_c():
     # Visual Studio Installationspfad (Standardort für VS 2022)
     vs_path = r"C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvarsall.bat"
     if not os.path.isfile(vs_path):
-        logging.error("Visual Studio vcvarsall.bat file not found.")
+        logging.error("[ERROR] Visual Studio vcvarsall.bat file not found.")
         raise FileNotFoundError(f"[{timestamp()}] [ERROR] vcvarsall.bat not found. Please ensure Visual Studio is installed.")
     return vs_path
 
@@ -3033,7 +3033,7 @@ def compile_mp_cpp_with_vs(mp_cpp_file, mp_exe_file):
     Kompiliert run_pp_command.cpp mit cl.exe über die Visual Studio-Umgebung.
     Die Ausgabe wird im UTF-8 Format eingelesen – ungültige Zeichen werden ersetzt.
     """
-    logging.info("Compile run_pp_command.cpp with Visual Studio C++...")
+    logging.info("[INFO] Compile run_pp_command.cpp with Visual Studio C++...")
     vcvarsall = find_vcvarsall()
     # Initialisiere die VS-Umgebung (x64) und rufe cl.exe auf
     command = f'"{vcvarsall}" x64 && cl.exe /EHsc "{mp_cpp_file}" /Fe:"{mp_exe_file}"'
@@ -3048,12 +3048,12 @@ def compile_mp_cpp_with_vs(mp_cpp_file, mp_exe_file):
     )
 
     if result.returncode != 0:
-        logging.error("Compilation failed.")
+        logging.error("[ERROR] Compilation failed.")
         logging.error(result.stdout)
         logging.error(result.stderr)
         return False
 
-    logging.info("Compilation successful.")
+    logging.info("[INFO] Compilation successful.")
     return True
 
 
@@ -3068,7 +3068,7 @@ def run_command_with_admin_privileges(command):
 
     if not os.path.isfile(mp_exe_file):
         if not compile_mp_cpp_with_vs(mp_cpp_file, mp_exe_file):
-            logging.error("Abort: C++ compilation was unsuccessful.")
+            logging.error("[ERROR] Abort: C++ compilation was unsuccessful.")
             return
 
     # Erstelle die Befehlsliste. Bei mehreren Argumenten werden diese getrennt übertragen.
@@ -3082,13 +3082,13 @@ def run_command_with_admin_privileges(command):
     cmd = [mp_exe_file] + args
 
     try:
-        logging.info(f"Execute: {' '.join(cmd)}")
+        logging.info(f"[INFO] Execute: {' '.join(cmd)}")
         # Der C++-Wrapper startet ein neues Terminalfenster, in dem der Befehl interaktiv ausgeführt wird.
         subprocess.run(cmd, check=True)
     except subprocess.CalledProcessError as e:
-        logging.error(f"Command failed: {e}")
+        logging.error(f"[ERROR] Command failed: {e}")
     except KeyboardInterrupt:
-        logging.warning("Cancellation by user.")
+        logging.warning("[WARNING] Cancellation by user.")
 
 
 # --- pp-c command---
@@ -3110,7 +3110,7 @@ def compile_mp_c_with_vs(mp_c_file, mp_c_exe_file):
     """
     Kompiliert run_pp_command.c mit cl.exe über die Visual Studio-Umgebung.
     """
-    logging.info("Compiling run_mp_command.c with Visual Studio...")
+    logging.info("[INFO] Compiling run_mp_command.c with Visual Studio...")
     vcvarsall = find_vcvarsall_c()
 
     # Initialisiere die VS-Umgebung (x64) und rufe cl.exe auf
@@ -3126,12 +3126,12 @@ def compile_mp_c_with_vs(mp_c_file, mp_c_exe_file):
     )
 
     if result.returncode != 0:
-        logging.error("Compilation failed.")
+        logging.error("[ERROR] Compilation failed.")
         logging.error(result.stdout)
         logging.error(result.stderr)
         return False
 
-    logging.info("Compilation successful.")
+    logging.info("[INFO] Compilation successful.")
     return True
 
 
@@ -3146,7 +3146,7 @@ def run_command_with_admin_c_privileges(command):
 
     if not os.path.isfile(mp_c_exe_file):
         if not compile_mp_c_with_vs(mp_c_file, mp_c_exe_file):
-            logging.error("Abort: C compilation was unsuccessful.")
+            logging.error("[ERROR] Abort: C compilation was unsuccessful.")
             return
 
     # Erstelle die Befehlsliste. Bei mehreren Argumenten werden diese getrennt übertragen.
@@ -3160,13 +3160,13 @@ def run_command_with_admin_c_privileges(command):
     cmd = [mp_c_exe_file] + args
 
     try:
-        logging.info(f"Execute: {' '.join(cmd)}")
+        logging.info(f"[INFO] Execute: {' '.join(cmd)}")
         # Der C-Wrapper startet ein neues Terminalfenster, in dem der Befehl interaktiv ausgeführt wird.
         subprocess.run(cmd, check=True)
     except subprocess.CalledProcessError as e:
-        logging.error(f"Command failed: {e}")
+        logging.error(f"[ERROR] Command failed: {e}")
     except KeyboardInterrupt:
-        logging.warning("Cancellation by user.")
+        logging.warning("[WARNING] Cancellation by user.")
 
 
 # --- pp-p command---
@@ -3271,7 +3271,7 @@ def compile_lx_cpp_with_vs(lx_cpp_file, lx_exe_file):
     Kompiliert run_command.cpp mit cl.exe über die Visual Studio-Umgebung.
     Die Ausgabe wird im UTF-8 Format eingelesen – ungültige Zeichen werden ersetzt.
     """
-    logging.info("Compile run_lx_command.cpp with Visual Studio C++...")
+    logging.info("[INFO] Compile run_lx_command.cpp with Visual Studio C++...")
     vcvarsall = find_vcvarsall()
     # Initialisiere die VS-Umgebung (x64) und rufe cl.exe auf
     command = f'"{vcvarsall}" x64 && cl.exe /EHsc "{lx_cpp_file}" /Fe:"{lx_exe_file}"'
@@ -3286,12 +3286,12 @@ def compile_lx_cpp_with_vs(lx_cpp_file, lx_exe_file):
     )
 
     if result.returncode != 0:
-        logging.error("Compilation failed.")
+        logging.error("[ERROR] Compilation failed.")
         logging.error(result.stdout)
         logging.error(result.stderr)
         return False
 
-    logging.info("Compilation successful.")
+    logging.info("[INFO] Compilation successful.")
     return True
 
 
@@ -3306,7 +3306,7 @@ def run_linux_command(command):
 
     if not os.path.isfile(lx_exe_file):
         if not compile_lx_cpp_with_vs(lx_cpp_file, lx_exe_file):
-            logging.error("Abort: C++ compilation was unsuccessful.")
+            logging.error("[ERROR] Abort: C++ compilation was unsuccessful.")
             return
 
     # Erstelle die Befehlsliste. Bei mehreren Argumenten werden diese getrennt übertragen.
@@ -3320,13 +3320,13 @@ def run_linux_command(command):
     cmd = [lx_exe_file] + args
 
     try:
-        logging.info(f"Execute: {' '.join(cmd)}")
+        logging.info(f"[INFO] Execute: {' '.join(cmd)}")
         # Der C++-Wrapper startet ein neues Terminalfenster, in dem der Befehl interaktiv ausgeführt wird.
         subprocess.run(cmd, check=True)
     except subprocess.CalledProcessError as e:
-        logging.error(f"Command failed: {e}")
+        logging.error(f"[ERROR] Command failed: {e}")
     except KeyboardInterrupt:
-        logging.warning("Cancellation by user.")
+        logging.warning("[WARING] Cancellation by user.")
 
 # --- lx-cpp-c command---
 
@@ -3348,7 +3348,7 @@ def compile_lx_cpp_c_with_vs(lx_cpp_c_file, lx_exe_c_file):
     Kompiliert run_command.cpp mit cl.exe über die Visual Studio-Umgebung.
     Die Ausgabe wird im UTF-8 Format eingelesen – ungültige Zeichen werden ersetzt.
     """
-    logging.info("Compile run_lx_c_command.cpp with Visual Studio C++...")
+    logging.info("[INFO] Compile run_lx_c_command.cpp with Visual Studio C++...")
     vcvarsall = find_vcvarsall()
     # Initialisiere die VS-Umgebung (x64) und rufe cl.exe auf
     command = f'"{vcvarsall}" x64 && cl.exe /EHsc "{lx_cpp_c_file}" /Fe:"{lx_exe_c_file}"'
@@ -3363,12 +3363,12 @@ def compile_lx_cpp_c_with_vs(lx_cpp_c_file, lx_exe_c_file):
     )
 
     if result.returncode != 0:
-        logging.error("Compilation failed.")
+        logging.error("[ERROR] Compilation failed.")
         logging.error(result.stdout)
         logging.error(result.stderr)
         return False
 
-    logging.info("Compilation successful.")
+    logging.info("[INFO] Compilation successful.")
     return True
 
 
@@ -3383,7 +3383,7 @@ def run_linux_cpp_c_command(command):
 
     if not os.path.isfile(lx_exe_c_file):
         if not compile_lx_cpp_c_with_vs(lx_cpp_c_file, lx_exe_c_file):
-            logging.error("Abort: C++ compilation was unsuccessful.")
+            logging.error("[ERROR] Abort: C++ compilation was unsuccessful.")
             return
 
     # Erstelle die Befehlsliste. Bei mehreren Argumenten werden diese getrennt übertragen.
@@ -3397,13 +3397,13 @@ def run_linux_cpp_c_command(command):
     cmd = [lx_exe_c_file] + args
 
     try:
-        logging.info(f"Execute: {' '.join(cmd)}")
+        logging.info(f"[INFO] Execute: {' '.join(cmd)}")
         # Der C++-Wrapper startet ein neues Terminalfenster, in dem der Befehl interaktiv ausgeführt wird.
         subprocess.run(cmd, check=True)
     except subprocess.CalledProcessError as e:
-        logging.error(f"Command failed: {e}")
+        logging.error(f"[ERROR] Command failed: {e}")
     except KeyboardInterrupt:
-        logging.warning("Cancellation by user.")
+        logging.warning("[WARNING] Cancellation by user.")
 
 
 # --- lx-c command---
@@ -3425,7 +3425,7 @@ def compile_lx_c_with_vs(lx_c_file, lx_c_exe_file):
     """
     Kompiliert run_lx_c_command.c mit cl.exe über die Visual Studio-Umgebung.
     """
-    logging.info("Compiling run_lx_c_command.c with Visual Studio...")
+    logging.info("[INFO] Compiling run_lx_c_command.c with Visual Studio...")
     vcvarsall = find_vcvarsall_c()
 
     # Initialisiere die VS-Umgebung (x64) und rufe cl.exe auf
@@ -3441,12 +3441,12 @@ def compile_lx_c_with_vs(lx_c_file, lx_c_exe_file):
     )
 
     if result.returncode != 0:
-        logging.error("Compilation failed.")
+        logging.error("[ERROR] Compilation failed.")
         logging.error(result.stdout)
         logging.error(result.stderr)
         return False
 
-    logging.info("Compilation successful.")
+    logging.info("[INFO] Compilation successful.")
     return True
 
 
@@ -3461,7 +3461,7 @@ def run_linux_c_command(command):
 
     if not os.path.isfile(lx_c_exe_file):
         if not compile_lx_c_with_vs(lx_c_file, lx_c_exe_file):
-            logging.error("Abort: C compilation was unsuccessful.")
+            logging.error("[ERROR] Abort: C compilation was unsuccessful.")
             return
 
     # Erstelle die Befehlsliste. Bei mehreren Argumenten werden diese getrennt übertragen.
@@ -3475,13 +3475,13 @@ def run_linux_c_command(command):
     cmd = [lx_c_exe_file] + args
 
     try:
-        logging.info(f"Execute: {' '.join(cmd)}")
+        logging.info(f"[INFO] Execute: {' '.join(cmd)}")
         # Der C-Wrapper startet ein neues Terminalfenster, in dem der Befehl interaktiv ausgeführt wird.
         subprocess.run(cmd, check=True)
     except subprocess.CalledProcessError as e:
-        logging.error(f"Command failed: {e}")
+        logging.error(f"[ERROR] Command failed: {e}")
     except KeyboardInterrupt:
-        logging.warning("Cancellation by user.")
+        logging.warning("[WARNING] Cancellation by user.")
 
 # --- lx-c-c command---
 
@@ -3502,7 +3502,7 @@ def compile_lx_c_c_with_vs(lx_c_c_file, lx_c_c_exe_file):
     """
     Kompiliert run_lx_c_command.c mit cl.exe über die Visual Studio-Umgebung.
     """
-    logging.info("Compiling run_lx_c_command.c with Visual Studio...")
+    logging.info("[INFO] Compiling run_lx_c_command.c with Visual Studio...")
     vcvarsall = find_vcvarsall_c()
 
     # Initialisiere die VS-Umgebung (x64) und rufe cl.exe auf
@@ -3518,12 +3518,12 @@ def compile_lx_c_c_with_vs(lx_c_c_file, lx_c_c_exe_file):
     )
 
     if result.returncode != 0:
-        logging.error("Compilation failed.")
+        logging.error("[ERROR] Compilation failed.")
         logging.error(result.stdout)
         logging.error(result.stderr)
         return False
 
-    logging.info("Compilation successful.")
+    logging.info("[INFO] Compilation successful.")
     return True
 
 
@@ -3538,7 +3538,7 @@ def run_linux_c_c_command(command):
 
     if not os.path.isfile(lx_c_c_exe_file):
         if not compile_lx_c_c_with_vs(lx_c_c_file, lx_c_c_exe_file):
-            logging.error("Abort: C compilation was unsuccessful.")
+            logging.error("[ERROR] Abort: C compilation was unsuccessful.")
             return
 
     # Erstelle die Befehlsliste. Bei mehreren Argumenten werden diese getrennt übertragen.
@@ -3552,13 +3552,13 @@ def run_linux_c_c_command(command):
     cmd = [lx_c_c_exe_file] + args
 
     try:
-        logging.info(f"Execute: {' '.join(cmd)}")
+        logging.info(f"[INFO] Execute: {' '.join(cmd)}")
         # Der C-Wrapper startet ein neues Terminalfenster, in dem der Befehl interaktiv ausgeführt wird.
         subprocess.run(cmd, check=True)
     except subprocess.CalledProcessError as e:
-        logging.error(f"Command failed: {e}")
+        logging.error(f"[ERROR] Command failed: {e}")
     except KeyboardInterrupt:
-        logging.warning("Cancellation by user.")
+        logging.warning("[WARNING] Cancellation by user.")
 
 
 # --- lx-p command---
@@ -3609,7 +3609,7 @@ def compile_ubuntu_cpp_with_vs(ubuntu_cpp_file, ubuntu_exe_file):
     Kompiliert run_command.cpp mit cl.exe über die Visual Studio-Umgebung.
     Die Ausgabe wird im UTF-8 Format eingelesen – ungültige Zeichen werden ersetzt.
     """
-    logging.info("Compile run_ubuntu_command.cpp with Visual Studio C++...")
+    logging.info("[INFO] Compile run_ubuntu_command.cpp with Visual Studio C++...")
     vcvarsall = find_vcvarsall()
     # Initialisiere die VS-Umgebung (x64) und rufe cl.exe auf
     command = f'"{vcvarsall}" x64 && cl.exe /EHsc "{ubuntu_cpp_file}" /Fe:"{ubuntu_exe_file}"'
@@ -3624,12 +3624,12 @@ def compile_ubuntu_cpp_with_vs(ubuntu_cpp_file, ubuntu_exe_file):
     )
 
     if result.returncode != 0:
-        logging.error("Compilation failed.")
+        logging.error("[ERROR] Compilation failed.")
         logging.error(result.stdout)
         logging.error(result.stderr)
         return False
 
-    logging.info("Compilation successful.")
+    logging.info("[INFO] Compilation successful.")
     return True
 
 
@@ -3644,7 +3644,7 @@ def run_ubuntu_command(command):
 
     if not os.path.isfile(ubuntu_exe_file):
         if not compile_ubuntu_cpp_with_vs(ubuntu_cpp_file, ubuntu_exe_file):
-            logging.error("Abort: C++ compilation was unsuccessful.")
+            logging.error("[ERROR] Abort: C++ compilation was unsuccessful.")
             return
 
     # Erstelle die Befehlsliste. Bei mehreren Argumenten werden diese getrennt übertragen.
@@ -3658,13 +3658,13 @@ def run_ubuntu_command(command):
     cmd = [ubuntu_exe_file] + args
 
     try:
-        logging.info(f"Execute: {' '.join(cmd)}")
+        logging.info(f"[INFO] Execute: {' '.join(cmd)}")
         # Der C++-Wrapper startet ein neues Terminalfenster, in dem der Befehl interaktiv ausgeführt wird.
         subprocess.run(cmd, check=True)
     except subprocess.CalledProcessError as e:
-        logging.error(f"Command failed: {e}")
+        logging.error(f"[ERROR] Command failed: {e}")
     except KeyboardInterrupt:
-        logging.warning("Cancellation by user.")
+        logging.warning("[WARNING] Cancellation by user.")
 
 
 # --- ubuntu-c command---
@@ -3686,7 +3686,7 @@ def compile_ubuntu_c_with_vs(ubuntu_c_file, ubuntu_c_exe_file):
     """
     Kompiliert run_ubuntu_command.c mit cl.exe über die Visual Studio-Umgebung.
     """
-    logging.info("Compiling run_ubuntu_command.c with Visual Studio...")
+    logging.info("[INFO] Compiling run_ubuntu_command.c with Visual Studio...")
     vcvarsall = find_vcvarsall_c()
 
     # Initialisiere die VS-Umgebung (x64) und rufe cl.exe auf
@@ -3702,12 +3702,12 @@ def compile_ubuntu_c_with_vs(ubuntu_c_file, ubuntu_c_exe_file):
     )
 
     if result.returncode != 0:
-        logging.error("Compilation failed.")
+        logging.error("[ERROR] Compilation failed.")
         logging.error(result.stdout)
         logging.error(result.stderr)
         return False
 
-    logging.info("Compilation successful.")
+    logging.info("[INFO] Compilation successful.")
     return True
 
 
@@ -3722,7 +3722,7 @@ def run_ubuntu_c_command(command):
 
     if not os.path.isfile(ubuntu_c_exe_file):
         if not compile_ubuntu_c_with_vs(ubuntu_c_file, ubuntu_c_exe_file):
-            logging.error("Abort: C compilation was unsuccessful.")
+            logging.error("[ERROR] Abort: C compilation was unsuccessful.")
             return
 
     # Erstelle die Befehlsliste. Bei mehreren Argumenten werden diese getrennt übertragen.
@@ -3736,13 +3736,13 @@ def run_ubuntu_c_command(command):
     cmd = [ubuntu_c_exe_file] + args
 
     try:
-        logging.info(f"Execute: {' '.join(cmd)}")
+        logging.info(f"[INFO] Execute: {' '.join(cmd)}")
         # Der C-Wrapper startet ein neues Terminalfenster, in dem der Befehl interaktiv ausgeführt wird.
         subprocess.run(cmd, check=True)
     except subprocess.CalledProcessError as e:
-        logging.error(f"Command failed: {e}")
+        logging.error(f"[ERROR] Command failed: {e}")
     except KeyboardInterrupt:
-        logging.warning("Cancellation by user.")
+        logging.warning("[WARNING] Cancellation by user.")
 
 
 # --- ubuntu-p command---
@@ -3779,7 +3779,7 @@ def compile_debian_cpp_with_vs(debian_cpp_file, debian_exe_file):
     Kompiliert run_command.cpp mit cl.exe über die Visual Studio-Umgebung.
     Die Ausgabe wird im UTF-8 Format eingelesen – ungültige Zeichen werden ersetzt.
     """
-    logging.info("Compile run_debian_command.cpp with Visual Studio C++...")
+    logging.info("[INFO] Compile run_debian_command.cpp with Visual Studio C++...")
     vcvarsall = find_vcvarsall()
     # Initialisiere die VS-Umgebung (x64) und rufe cl.exe auf
     command = f'"{vcvarsall}" x64 && cl.exe /EHsc "{debian_cpp_file}" /Fe:"{debian_exe_file}"'
@@ -3794,12 +3794,12 @@ def compile_debian_cpp_with_vs(debian_cpp_file, debian_exe_file):
     )
 
     if result.returncode != 0:
-        logging.error("Compilation failed.")
+        logging.error("[ERROR] Compilation failed.")
         logging.error(result.stdout)
         logging.error(result.stderr)
         return False
 
-    logging.info("Compilation successful.")
+    logging.info("[INFO] Compilation successful.")
     return True
 
 
@@ -3814,7 +3814,7 @@ def run_debian_command(command):
 
     if not os.path.isfile(debian_exe_file):
         if not compile_debian_cpp_with_vs(debian_cpp_file, debian_exe_file):
-            logging.error("Abort: C++ compilation was unsuccessful.")
+            logging.error("[ERROR] Abort: C++ compilation was unsuccessful.")
             return
 
     # Erstelle die Befehlsliste. Bei mehreren Argumenten werden diese getrennt übertragen.
@@ -3828,13 +3828,13 @@ def run_debian_command(command):
     cmd = [debian_exe_file] + args
 
     try:
-        logging.info(f"Execute: {' '.join(cmd)}")
+        logging.info(f"[INFO] Execute: {' '.join(cmd)}")
         # Der C++-Wrapper startet ein neues Terminalfenster, in dem der Befehl interaktiv ausgeführt wird.
         subprocess.run(cmd, check=True)
     except subprocess.CalledProcessError as e:
-        logging.error(f"Command failed: {e}")
+        logging.error(f"[ERROR] Command failed: {e}")
     except KeyboardInterrupt:
-        logging.warning("Cancellation by user.")
+        logging.warning("[WARNING] Cancellation by user.")
 
 
 # --- debian-c command---
@@ -3856,7 +3856,7 @@ def compile_debian_c_with_vs(debian_c_file, debian_c_exe_file):
     """
     Kompiliert run_debian_command.c mit cl.exe über die Visual Studio-Umgebung.
     """
-    logging.info("Compiling run_debian_command.c with Visual Studio...")
+    logging.info("[INFO] Compiling run_debian_command.c with Visual Studio...")
     vcvarsall = find_vcvarsall_c()
 
     # Initialisiere die VS-Umgebung (x64) und rufe cl.exe auf
@@ -3872,12 +3872,12 @@ def compile_debian_c_with_vs(debian_c_file, debian_c_exe_file):
     )
 
     if result.returncode != 0:
-        logging.error("Compilation failed.")
+        logging.error("[ERROR] Compilation failed.")
         logging.error(result.stdout)
         logging.error(result.stderr)
         return False
 
-    logging.info("Compilation successful.")
+    logging.info("[INFO] Compilation successful.")
     return True
 
 
@@ -3892,7 +3892,7 @@ def run_debian_c_command(command):
 
     if not os.path.isfile(debian_c_exe_file):
         if not compile_debian_c_with_vs(debian_c_file, debian_c_exe_file):
-            logging.error("Abort: C compilation was unsuccessful.")
+            logging.error("[ERROR] Abort: C compilation was unsuccessful.")
             return
 
     # Erstelle die Befehlsliste. Bei mehreren Argumenten werden diese getrennt übertragen.
@@ -3906,13 +3906,13 @@ def run_debian_c_command(command):
     cmd = [debian_c_exe_file] + args
 
     try:
-        logging.info(f"Execute: {' '.join(cmd)}")
+        logging.info(f"[INFO] Execute: {' '.join(cmd)}")
         # Der C-Wrapper startet ein neues Terminalfenster, in dem der Befehl interaktiv ausgeführt wird.
         subprocess.run(cmd, check=True)
     except subprocess.CalledProcessError as e:
-        logging.error(f"Command failed: {e}")
+        logging.error(f"[ERROR] Command failed: {e}")
     except KeyboardInterrupt:
-        logging.warning("Cancellation by user.")
+        logging.warning("[WARNING] Cancellation by user.")
 
 
 # --- debian-p command---
@@ -3949,7 +3949,7 @@ def compile_kali_cpp_with_vs(kali_cpp_file, kali_exe_file):
     Kompiliert run_command.cpp mit cl.exe über die Visual Studio-Umgebung.
     Die Ausgabe wird im UTF-8 Format eingelesen – ungültige Zeichen werden ersetzt.
     """
-    logging.info("Compile run_kali_command.cpp with Visual Studio C++...")
+    logging.info("[INFO] Compile run_kali_command.cpp with Visual Studio C++...")
     vcvarsall = find_vcvarsall()
     # Initialisiere die VS-Umgebung (x64) und rufe cl.exe auf
     command = f'"{vcvarsall}" x64 && cl.exe /EHsc "{kali_cpp_file}" /Fe:"{kali_exe_file}"'
@@ -3964,12 +3964,12 @@ def compile_kali_cpp_with_vs(kali_cpp_file, kali_exe_file):
     )
 
     if result.returncode != 0:
-        logging.error("Compilation failed.")
+        logging.error("[ERROR] Compilation failed.")
         logging.error(result.stdout)
         logging.error(result.stderr)
         return False
 
-    logging.info("Compilation successful.")
+    logging.info("[INFO] Compilation successful.")
     return True
 
 
@@ -3984,7 +3984,7 @@ def run_kali_command(command):
 
     if not os.path.isfile(kali_exe_file):
         if not compile_kali_cpp_with_vs(kali_cpp_file, kali_exe_file):
-            logging.error("Abort: C++ compilation was unsuccessful.")
+            logging.error("[ERROR] Abort: C++ compilation was unsuccessful.")
             return
 
     # Erstelle die Befehlsliste. Bei mehreren Argumenten werden diese getrennt übertragen.
@@ -3998,13 +3998,13 @@ def run_kali_command(command):
     cmd = [kali_exe_file] + args
 
     try:
-        logging.info(f"Execute: {' '.join(cmd)}")
+        logging.info(f"[INFO] Execute: {' '.join(cmd)}")
         # Der C++-Wrapper startet ein neues Terminalfenster, in dem der Befehl interaktiv ausgeführt wird.
         subprocess.run(cmd, check=True)
     except subprocess.CalledProcessError as e:
-        logging.error(f"Command failed: {e}")
+        logging.error(f"[ERROR] Command failed: {e}")
     except KeyboardInterrupt:
-        logging.warning("Cancellation by user.")
+        logging.warning("[WARNING] Cancellation by user.")
 
 
 # --- kali-c command---
@@ -4026,7 +4026,7 @@ def compile_kali_c_with_vs(kali_c_file, kali_c_exe_file):
     """
     Kompiliert run_kali_command.c mit cl.exe über die Visual Studio-Umgebung.
     """
-    logging.info("Compiling run_kali_command.c with Visual Studio...")
+    logging.info("[INFO] Compiling run_kali_command.c with Visual Studio...")
     vcvarsall = find_vcvarsall_c()
 
     # Initialisiere die VS-Umgebung (x64) und rufe cl.exe auf
@@ -4042,12 +4042,12 @@ def compile_kali_c_with_vs(kali_c_file, kali_c_exe_file):
     )
 
     if result.returncode != 0:
-        logging.error("Compilation failed.")
+        logging.error("[ERROR] Compilation failed.")
         logging.error(result.stdout)
         logging.error(result.stderr)
         return False
 
-    logging.info("Compilation successful.")
+    logging.info("[INFO] Compilation successful.")
     return True
 
 
@@ -4062,7 +4062,7 @@ def run_kali_c_command(command):
 
     if not os.path.isfile(kali_c_exe_file):
         if not compile_kali_c_with_vs(kali_c_file, kali_c_exe_file):
-            logging.error("Abort: C compilation was unsuccessful.")
+            logging.error("[ERROR] Abort: C compilation was unsuccessful.")
             return
 
     # Erstelle die Befehlsliste. Bei mehreren Argumenten werden diese getrennt übertragen.
@@ -4076,13 +4076,13 @@ def run_kali_c_command(command):
     cmd = [kali_c_exe_file] + args
 
     try:
-        logging.info(f"Execute: {' '.join(cmd)}")
+        logging.info(f"[INFO] Execute: {' '.join(cmd)}")
         # Der C-Wrapper startet ein neues Terminalfenster, in dem der Befehl interaktiv ausgeführt wird.
         subprocess.run(cmd, check=True)
     except subprocess.CalledProcessError as e:
-        logging.error(f"Command failed: {e}")
+        logging.error(f"[ERROR] Command failed: {e}")
     except KeyboardInterrupt:
-        logging.warning("Cancellation by user.")
+        logging.warning("[WARNING] Cancellation by user.")
 
 
 # --- kali-p command---
@@ -4119,7 +4119,7 @@ def compile_arch_cpp_with_vs(arch_cpp_file, arch_exe_file):
     Kompiliert run_command.cpp mit cl.exe über die Visual Studio-Umgebung.
     Die Ausgabe wird im UTF-8 Format eingelesen – ungültige Zeichen werden ersetzt.
     """
-    logging.info("Compile run_arch_command.cpp with Visual Studio C++...")
+    logging.info("[INFO] Compile run_arch_command.cpp with Visual Studio C++...")
     vcvarsall = find_vcvarsall()
     # Initialisiere die VS-Umgebung (x64) und rufe cl.exe auf
     command = f'"{vcvarsall}" x64 && cl.exe /EHsc "{arch_cpp_file}" /Fe:"{arch_exe_file}"'
@@ -4134,12 +4134,12 @@ def compile_arch_cpp_with_vs(arch_cpp_file, arch_exe_file):
     )
 
     if result.returncode != 0:
-        logging.error("Compilation failed.")
+        logging.error("[ERROR] Compilation failed.")
         logging.error(result.stdout)
         logging.error(result.stderr)
         return False
 
-    logging.info("Compilation successful.")
+    logging.info("[INFO] Compilation successful.")
     return True
 
 
@@ -4154,7 +4154,7 @@ def run_arch_command(command):
 
     if not os.path.isfile(arch_exe_file):
         if not compile_arch_cpp_with_vs(arch_cpp_file, arch_exe_file):
-            logging.error("Abort: C++ compilation was unsuccessful.")
+            logging.error("[ERROR] Abort: C++ compilation was unsuccessful.")
             return
 
     # Erstelle die Befehlsliste. Bei mehreren Argumenten werden diese getrennt übertragen.
@@ -4168,13 +4168,13 @@ def run_arch_command(command):
     cmd = [arch_exe_file] + args
 
     try:
-        logging.info(f"Execute: {' '.join(cmd)}")
+        logging.info(f"[INFO] Execute: {' '.join(cmd)}")
         # Der C++-Wrapper startet ein neues Terminalfenster, in dem der Befehl interaktiv ausgeführt wird.
         subprocess.run(cmd, check=True)
     except subprocess.CalledProcessError as e:
-        logging.error(f"Command failed: {e}")
+        logging.error(f"[ERROR] Command failed: {e}")
     except KeyboardInterrupt:
-        logging.warning("Cancellation by user.")
+        logging.warning("[WARNING] Cancellation by user.")
 
 
 # --- arch-c command---
@@ -4196,7 +4196,7 @@ def compile_arch_c_with_vs(arch_c_file, arch_c_exe_file):
     """
     Kompiliert run_arch_command.c mit cl.exe über die Visual Studio-Umgebung.
     """
-    logging.info("Compiling run_arch_command.c with Visual Studio...")
+    logging.info("[INFO] Compiling run_arch_command.c with Visual Studio...")
     vcvarsall = find_vcvarsall_c()
 
     # Initialisiere die VS-Umgebung (x64) und rufe cl.exe auf
@@ -4212,12 +4212,12 @@ def compile_arch_c_with_vs(arch_c_file, arch_c_exe_file):
     )
 
     if result.returncode != 0:
-        logging.error("Compilation failed.")
+        logging.error("[ERROR] Compilation failed.")
         logging.error(result.stdout)
         logging.error(result.stderr)
         return False
 
-    logging.info("Compilation successful.")
+    logging.info("[INFO] Compilation successful.")
     return True
 
 
@@ -4232,7 +4232,7 @@ def run_arch_c_command(command):
 
     if not os.path.isfile(arch_c_exe_file):
         if not compile_arch_c_with_vs(arch_c_file, arch_c_exe_file):
-            logging.error("Abort: C compilation was unsuccessful.")
+            logging.error("[ERROR] Abort: C compilation was unsuccessful.")
             return
 
     # Erstelle die Befehlsliste. Bei mehreren Argumenten werden diese getrennt übertragen.
@@ -4246,13 +4246,13 @@ def run_arch_c_command(command):
     cmd = [arch_c_exe_file] + args
 
     try:
-        logging.info(f"Execute: {' '.join(cmd)}")
+        logging.info(f"[INFO] Execute: {' '.join(cmd)}")
         # Der C-Wrapper startet ein neues Terminalfenster, in dem der Befehl interaktiv ausgeführt wird.
         subprocess.run(cmd, check=True)
     except subprocess.CalledProcessError as e:
-        logging.error(f"Command failed: {e}")
+        logging.error(f"[ERROR] Command failed: {e}")
     except KeyboardInterrupt:
-        logging.warning("Cancellation by user.")
+        logging.warning("[WARNING] Cancellation by user.")
 
 
 # --- arch-p command---
@@ -4289,7 +4289,7 @@ def compile_opensuse_cpp_with_vs(opensuse_cpp_file, opensuse_exe_file):
     Kompiliert run_command.cpp mit cl.exe über die Visual Studio-Umgebung.
     Die Ausgabe wird im UTF-8 Format eingelesen – ungültige Zeichen werden ersetzt.
     """
-    logging.info("Compile run_opensuse_command.cpp with Visual Studio C++...")
+    logging.info("[INFO] Compile run_opensuse_command.cpp with Visual Studio C++...")
     vcvarsall = find_vcvarsall()
     # Initialisiere die VS-Umgebung (x64) und rufe cl.exe auf
     command = f'"{vcvarsall}" x64 && cl.exe /EHsc "{opensuse_cpp_file}" /Fe:"{opensuse_exe_file}"'
@@ -4304,12 +4304,12 @@ def compile_opensuse_cpp_with_vs(opensuse_cpp_file, opensuse_exe_file):
     )
 
     if result.returncode != 0:
-        logging.error("Compilation failed.")
+        logging.error("[ERROR] Compilation failed.")
         logging.error(result.stdout)
         logging.error(result.stderr)
         return False
 
-    logging.info("Compilation successful.")
+    logging.info("[INFO] Compilation successful.")
     return True
 
 
@@ -4324,7 +4324,7 @@ def run_opensuse_command(command):
 
     if not os.path.isfile(opensuse_exe_file):
         if not compile_opensuse_cpp_with_vs(opensuse_cpp_file, opensuse_exe_file):
-            logging.error("Abort: C++ compilation was unsuccessful.")
+            logging.error("[ERROR] Abort: C++ compilation was unsuccessful.")
             return
 
     # Erstelle die Befehlsliste. Bei mehreren Argumenten werden diese getrennt übertragen.
@@ -4338,13 +4338,13 @@ def run_opensuse_command(command):
     cmd = [opensuse_exe_file] + args
 
     try:
-        logging.info(f"Execute: {' '.join(cmd)}")
+        logging.info(f"[INFO] Execute: {' '.join(cmd)}")
         # Der C++-Wrapper startet ein neues Terminalfenster, in dem der Befehl interaktiv ausgeführt wird.
         subprocess.run(cmd, check=True)
     except subprocess.CalledProcessError as e:
-        logging.error(f"Command failed: {e}")
+        logging.error(f"[ERROR] Command failed: {e}")
     except KeyboardInterrupt:
-        logging.warning("Cancellation by user.")
+        logging.warning("[WARNING] Cancellation by user.")
 
 
 # --- opensuse-c command---
@@ -4366,7 +4366,7 @@ def compile_opensuse_c_with_vs(opensuse_c_file, opensuse_c_exe_file):
     """
     Kompiliert run_opensuse_command.c mit cl.exe über die Visual Studio-Umgebung.
     """
-    logging.info("Compiling run_opensuse_command.c with Visual Studio...")
+    logging.info("[INFO] Compiling run_opensuse_command.c with Visual Studio...")
     vcvarsall = find_vcvarsall_c()
 
     # Initialisiere die VS-Umgebung (x64) und rufe cl.exe auf
@@ -4382,12 +4382,12 @@ def compile_opensuse_c_with_vs(opensuse_c_file, opensuse_c_exe_file):
     )
 
     if result.returncode != 0:
-        logging.error("Compilation failed.")
+        logging.error("[ERROR] Compilation failed.")
         logging.error(result.stdout)
         logging.error(result.stderr)
         return False
 
-    logging.info("Compilation successful.")
+    logging.info("[INFO] Compilation successful.")
     return True
 
 
@@ -4402,7 +4402,7 @@ def run_opensuse_c_command(command):
 
     if not os.path.isfile(opensuse_c_exe_file):
         if not compile_opensuse_c_with_vs(opensuse_c_file, opensuse_c_exe_file):
-            logging.error("Abort: C compilation was unsuccessful.")
+            logging.error("[ERROR] Abort: C compilation was unsuccessful.")
             return
 
     # Erstelle die Befehlsliste. Bei mehreren Argumenten werden diese getrennt übertragen.
@@ -4416,13 +4416,13 @@ def run_opensuse_c_command(command):
     cmd = [opensuse_c_exe_file] + args
 
     try:
-        logging.info(f"Execute: {' '.join(cmd)}")
+        logging.info(f"[INFO] Execute: {' '.join(cmd)}")
         # Der C-Wrapper startet ein neues Terminalfenster, in dem der Befehl interaktiv ausgeführt wird.
         subprocess.run(cmd, check=True)
     except subprocess.CalledProcessError as e:
-        logging.error(f"Command failed: {e}")
+        logging.error(f"[ERROR] Command failed: {e}")
     except KeyboardInterrupt:
-        logging.warning("Cancellation by user.")
+        logging.warning("[WARNING] Cancellation by user.")
 
 
 # --- opensuse-p command---
@@ -4459,7 +4459,7 @@ def compile_mint_cpp_with_vs(mint_cpp_file, mint_exe_file):
     Kompiliert run_mint_command.cpp mit cl.exe über die Visual Studio-Umgebung.
     Die Ausgabe wird im UTF-8 Format eingelesen – ungültige Zeichen werden ersetzt.
     """
-    logging.info("Compile run_mint_command.cpp with Visual Studio C++...")
+    logging.info("[INFO] Compile run_mint_command.cpp with Visual Studio C++...")
     vcvarsall = find_vcvarsall()
     # Initialisiere die VS-Umgebung (x64) und rufe cl.exe auf
     command = f'"{vcvarsall}" x64 && cl.exe /EHsc "{mint_cpp_file}" /Fe:"{mint_exe_file}"'
@@ -4474,12 +4474,12 @@ def compile_mint_cpp_with_vs(mint_cpp_file, mint_exe_file):
     )
 
     if result.returncode != 0:
-        logging.error("Compilation failed.")
+        logging.error("[ERROR] Compilation failed.")
         logging.error(result.stdout)
         logging.error(result.stderr)
         return False
 
-    logging.info("Compilation successful.")
+    logging.info("[INFO] Compilation successful.")
     return True
 
 
@@ -4494,7 +4494,7 @@ def run_mint_command(command):
 
     if not os.path.isfile(mint_exe_file):
         if not compile_mint_cpp_with_vs(mint_cpp_file, mint_exe_file):
-            logging.error("Abort: C++ compilation was unsuccessful.")
+            logging.error("[ERROR] Abort: C++ compilation was unsuccessful.")
             return
 
     # Erstelle die Befehlsliste. Bei mehreren Argumenten werden diese getrennt übertragen.
@@ -4508,13 +4508,13 @@ def run_mint_command(command):
     cmd = [mint_exe_file] + args
 
     try:
-        logging.info(f"Execute: {' '.join(cmd)}")
+        logging.info(f"[INFO] Execute: {' '.join(cmd)}")
         # Der C++-Wrapper startet ein neues Terminalfenster, in dem der Befehl interaktiv ausgeführt wird.
         subprocess.run(cmd, check=True)
     except subprocess.CalledProcessError as e:
-        logging.error(f"Command failed: {e}")
+        logging.error(f"[ERROR] Command failed: {e}")
     except KeyboardInterrupt:
-        logging.warning("Cancellation by user.")
+        logging.warning("[WARNING] Cancellation by user.")
 
 
 # --- mint-c command---
@@ -4536,7 +4536,7 @@ def compile_mint_c_with_vs(mint_c_file, mint_c_exe_file):
     """
     Kompiliert run_mint_command.c mit cl.exe über die Visual Studio-Umgebung.
     """
-    logging.info("Compiling run_mint_command.c with Visual Studio...")
+    logging.info("[INFO] Compiling run_mint_command.c with Visual Studio...")
     vcvarsall = find_vcvarsall_c()
 
     # Initialisiere die VS-Umgebung (x64) und rufe cl.exe auf
@@ -4552,12 +4552,12 @@ def compile_mint_c_with_vs(mint_c_file, mint_c_exe_file):
     )
 
     if result.returncode != 0:
-        logging.error("Compilation failed.")
+        logging.error("[ERROR] Compilation failed.")
         logging.error(result.stdout)
         logging.error(result.stderr)
         return False
 
-    logging.info("Compilation successful.")
+    logging.info("[INFO] Compilation successful.")
     return True
 
 
@@ -4572,7 +4572,7 @@ def run_mint_c_command(command):
 
     if not os.path.isfile(mint_c_exe_file):
         if not compile_mint_c_with_vs(mint_c_file, mint_c_exe_file):
-            logging.error("Abort: C compilation was unsuccessful.")
+            logging.error("[ERROR] Abort: C compilation was unsuccessful.")
             return
 
     # Erstelle die Befehlsliste. Bei mehreren Argumenten werden diese getrennt übertragen.
@@ -4586,13 +4586,13 @@ def run_mint_c_command(command):
     cmd = [mint_c_exe_file] + args
 
     try:
-        logging.info(f"Execute: {' '.join(cmd)}")
+        logging.info(f"[INFO] Execute: {' '.join(cmd)}")
         # Der C-Wrapper startet ein neues Terminalfenster, in dem der Befehl interaktiv ausgeführt wird.
         subprocess.run(cmd, check=True)
     except subprocess.CalledProcessError as e:
-        logging.error(f"Command failed: {e}")
+        logging.error(f"[ERROR] Command failed: {e}")
     except KeyboardInterrupt:
-        logging.warning("Cancellation by user.")
+        logging.warning("[WARNING] Cancellation by user.")
 
 
 # --- mint-p command---
@@ -4629,7 +4629,7 @@ def compile_fedora_cpp_with_vs(fedora_cpp_file, fedora_exe_file):
     Kompiliert run_fedora_command.cpp mit cl.exe über die Visual Studio-Umgebung.
     Die Ausgabe wird im UTF-8 Format eingelesen – ungültige Zeichen werden ersetzt.
     """
-    logging.info("Compile run_fedora_command.cpp with Visual Studio C++...")
+    logging.info("[INFO] Compile run_fedora_command.cpp with Visual Studio C++...")
     vcvarsall = find_vcvarsall()
     # Initialisiere die VS-Umgebung (x64) und rufe cl.exe auf
     command = f'"{vcvarsall}" x64 && cl.exe /EHsc "{fedora_cpp_file}" /Fe:"{fedora_exe_file}"'
@@ -4644,12 +4644,12 @@ def compile_fedora_cpp_with_vs(fedora_cpp_file, fedora_exe_file):
     )
 
     if result.returncode != 0:
-        logging.error("Compilation failed.")
+        logging.error("[ERROR] Compilation failed.")
         logging.error(result.stdout)
         logging.error(result.stderr)
         return False
 
-    logging.info("Compilation successful.")
+    logging.info("[INFO] Compilation successful.")
     return True
 
 
@@ -4664,7 +4664,7 @@ def run_fedora_command(command):
 
     if not os.path.isfile(fedora_exe_file):
         if not compile_fedora_cpp_with_vs(fedora_cpp_file, fedora_exe_file):
-            logging.error("Abort: C++ compilation was unsuccessful.")
+            logging.error("[ERROR] Abort: C++ compilation was unsuccessful.")
             return
 
     # Erstelle die Befehlsliste. Bei mehreren Argumenten werden diese getrennt übertragen.
@@ -4678,13 +4678,13 @@ def run_fedora_command(command):
     cmd = [fedora_exe_file] + args
 
     try:
-        logging.info(f"Execute: {' '.join(cmd)}")
+        logging.info(f"[INFO] Execute: {' '.join(cmd)}")
         # Der C++-Wrapper startet ein neues Terminalfenster, in dem der Befehl interaktiv ausgeführt wird.
         subprocess.run(cmd, check=True)
     except subprocess.CalledProcessError as e:
-        logging.error(f"Command failed: {e}")
+        logging.error(f"[ERROR] Command failed: {e}")
     except KeyboardInterrupt:
-        logging.warning("Cancellation by user.")
+        logging.warning("[WARNING] Cancellation by user.")
 
 
 # --- fedora-c command---
@@ -4706,7 +4706,7 @@ def compile_fedora_c_with_vs(fedora_c_file, fedora_c_exe_file):
     """
     Kompiliert run_fedora_command.c mit cl.exe über die Visual Studio-Umgebung.
     """
-    logging.info("Compiling run_fedora_command.c with Visual Studio...")
+    logging.info("[INFO] Compiling run_fedora_command.c with Visual Studio...")
     vcvarsall = find_vcvarsall_c()
 
     # Initialisiere die VS-Umgebung (x64) und rufe cl.exe auf
@@ -4722,12 +4722,12 @@ def compile_fedora_c_with_vs(fedora_c_file, fedora_c_exe_file):
     )
 
     if result.returncode != 0:
-        logging.error("Compilation failed.")
+        logging.error("[ERROR] Compilation failed.")
         logging.error(result.stdout)
         logging.error(result.stderr)
         return False
 
-    logging.info("Compilation successful.")
+    logging.info("[INFO] Compilation successful.")
     return True
 
 
@@ -4742,7 +4742,7 @@ def run_fedora_c_command(command):
 
     if not os.path.isfile(fedora_c_exe_file):
         if not compile_fedora_c_with_vs(fedora_c_file, fedora_c_exe_file):
-            logging.error("Abort: C compilation was unsuccessful.")
+            logging.error("[ERROR] Abort: C compilation was unsuccessful.")
             return
 
     # Erstelle die Befehlsliste. Bei mehreren Argumenten werden diese getrennt übertragen.
@@ -4756,13 +4756,13 @@ def run_fedora_c_command(command):
     cmd = [fedora_c_exe_file] + args
 
     try:
-        logging.info(f"Execute: {' '.join(cmd)}")
+        logging.info(f"[INFO] Execute: {' '.join(cmd)}")
         # Der C-Wrapper startet ein neues Terminalfenster, in dem der Befehl interaktiv ausgeführt wird.
         subprocess.run(cmd, check=True)
     except subprocess.CalledProcessError as e:
-        logging.error(f"Command failed: {e}")
+        logging.error(f"[ERROR] Command failed: {e}")
     except KeyboardInterrupt:
-        logging.warning("Cancellation by user.")
+        logging.warning("[WARNING] Cancellation by user.")
 
 
 # --- fedora-p command---
@@ -4799,7 +4799,7 @@ def compile_redhat_cpp_with_vs(redhat_cpp_file, redhat_exe_file):
     Kompiliert run_redhat_command.cpp mit cl.exe über die Visual Studio-Umgebung.
     Die Ausgabe wird im UTF-8 Format eingelesen – ungültige Zeichen werden ersetzt.
     """
-    logging.info("Compile run_redhat_command.cpp with Visual Studio C++...")
+    logging.info("[INFO] Compile run_redhat_command.cpp with Visual Studio C++...")
     vcvarsall = find_vcvarsall()
     # Initialisiere die VS-Umgebung (x64) und rufe cl.exe auf
     command = f'"{vcvarsall}" x64 && cl.exe /EHsc "{redhat_cpp_file}" /Fe:"{redhat_exe_file}"'
@@ -4814,12 +4814,12 @@ def compile_redhat_cpp_with_vs(redhat_cpp_file, redhat_exe_file):
     )
 
     if result.returncode != 0:
-        logging.error("Compilation failed.")
+        logging.error("[ERROR] Compilation failed.")
         logging.error(result.stdout)
         logging.error(result.stderr)
         return False
 
-    logging.info("Compilation successful.")
+    logging.info("[INFO] Compilation successful.")
     return True
 
 
@@ -4834,7 +4834,7 @@ def run_redhat_command(command):
 
     if not os.path.isfile(redhat_exe_file):
         if not compile_redhat_cpp_with_vs(redhat_cpp_file, redhat_exe_file):
-            logging.error("Abort: C++ compilation was unsuccessful.")
+            logging.error("[ERROR] Abort: C++ compilation was unsuccessful.")
             return
 
     # Erstelle die Befehlsliste. Bei mehreren Argumenten werden diese getrennt übertragen.
@@ -4848,13 +4848,13 @@ def run_redhat_command(command):
     cmd = [redhat_exe_file] + args
 
     try:
-        logging.info(f"Execute: {' '.join(cmd)}")
+        logging.info(f"[INFO] Execute: {' '.join(cmd)}")
         # Der C++-Wrapper startet ein neues Terminalfenster, in dem der Befehl interaktiv ausgeführt wird.
         subprocess.run(cmd, check=True)
     except subprocess.CalledProcessError as e:
-        logging.error(f"Command failed: {e}")
+        logging.error(f"[ERROR] Command failed: {e}")
     except KeyboardInterrupt:
-        logging.warning("Cancellation by user.")
+        logging.warning("[WARNING] Cancellation by user.")
 
 
 # --- redhat-c command---
@@ -4876,7 +4876,7 @@ def compile_redhat_c_with_vs(redhat_c_file, redhat_c_exe_file):
     """
     Kompiliert run_redhat_command.c mit cl.exe über die Visual Studio-Umgebung.
     """
-    logging.info("Compiling run_redhat_command.c with Visual Studio...")
+    logging.info("[INFO] Compiling run_redhat_command.c with Visual Studio...")
     vcvarsall = find_vcvarsall_c()
 
     # Initialisiere die VS-Umgebung (x64) und rufe cl.exe auf
@@ -4892,12 +4892,12 @@ def compile_redhat_c_with_vs(redhat_c_file, redhat_c_exe_file):
     )
 
     if result.returncode != 0:
-        logging.error("Compilation failed.")
+        logging.error("[ERROR] Compilation failed.")
         logging.error(result.stdout)
         logging.error(result.stderr)
         return False
 
-    logging.info("Compilation successful.")
+    logging.info("[INFO] Compilation successful.")
     return True
 
 
@@ -4912,7 +4912,7 @@ def run_redhat_c_command(command):
 
     if not os.path.isfile(redhat_c_exe_file):
         if not compile_redhat_c_with_vs(redhat_c_file, redhat_c_exe_file):
-            logging.error("Abort: C compilation was unsuccessful.")
+            logging.error("[ERROR] Abort: C compilation was unsuccessful.")
             return
 
     # Erstelle die Befehlsliste. Bei mehreren Argumenten werden diese getrennt übertragen.
@@ -4926,13 +4926,13 @@ def run_redhat_c_command(command):
     cmd = [redhat_c_exe_file] + args
 
     try:
-        logging.info(f"Execute: {' '.join(cmd)}")
+        logging.info(f"[INFO] Execute: {' '.join(cmd)}")
         # Der C-Wrapper startet ein neues Terminalfenster, in dem der Befehl interaktiv ausgeführt wird.
         subprocess.run(cmd, check=True)
     except subprocess.CalledProcessError as e:
-        logging.error(f"Command failed: {e}")
+        logging.error(f"[ERROR] Command failed: {e}")
     except KeyboardInterrupt:
-        logging.warning("Cancellation by user.")
+        logging.warning("[WARNING] Cancellation by user.")
 
 
 # --- redhat-p command---
@@ -4969,7 +4969,7 @@ def compile_sles_cpp_with_vs(sles_cpp_file, sles_exe_file):
     Kompiliert run_sles_command.cpp mit cl.exe über die Visual Studio-Umgebung.
     Die Ausgabe wird im UTF-8 Format eingelesen – ungültige Zeichen werden ersetzt.
     """
-    logging.info("Compile run_sles_command.cpp with Visual Studio C++...")
+    logging.info("[INFO] Compile run_sles_command.cpp with Visual Studio C++...")
     vcvarsall = find_vcvarsall()
     # Initialisiere die VS-Umgebung (x64) und rufe cl.exe auf
     command = f'"{vcvarsall}" x64 && cl.exe /EHsc "{sles_cpp_file}" /Fe:"{sles_exe_file}"'
@@ -4984,12 +4984,12 @@ def compile_sles_cpp_with_vs(sles_cpp_file, sles_exe_file):
     )
 
     if result.returncode != 0:
-        logging.error("Compilation failed.")
+        logging.error("[ERROR] Compilation failed.")
         logging.error(result.stdout)
         logging.error(result.stderr)
         return False
 
-    logging.info("Compilation successful.")
+    logging.info("[INFO] Compilation successful.")
     return True
 
 
@@ -5004,7 +5004,7 @@ def run_sles_command(command):
 
     if not os.path.isfile(sles_exe_file):
         if not compile_sles_cpp_with_vs(sles_cpp_file, sles_exe_file):
-            logging.error("Abort: C++ compilation was unsuccessful.")
+            logging.error("[ERROR] Abort: C++ compilation was unsuccessful.")
             return
 
     # Erstelle die Befehlsliste. Bei mehreren Argumenten werden diese getrennt übertragen.
@@ -5018,13 +5018,13 @@ def run_sles_command(command):
     cmd = [sles_exe_file] + args
 
     try:
-        logging.info(f"Execute: {' '.join(cmd)}")
+        logging.info(f"[INFO] Execute: {' '.join(cmd)}")
         # Der C++-Wrapper startet ein neues Terminalfenster, in dem der Befehl interaktiv ausgeführt wird.
         subprocess.run(cmd, check=True)
     except subprocess.CalledProcessError as e:
-        logging.error(f"Command failed: {e}")
+        logging.error(f"[ERROR] Command failed: {e}")
     except KeyboardInterrupt:
-        logging.warning("Cancellation by user.")
+        logging.warning("[WARNING] Cancellation by user.")
 
 
 # --- sles-c command---
@@ -5046,7 +5046,7 @@ def compile_sles_c_with_vs(sles_c_file, sles_c_exe_file):
     """
     Kompiliert run_sles_command.c mit cl.exe über die Visual Studio-Umgebung.
     """
-    logging.info("Compiling run_sles_command.c with Visual Studio...")
+    logging.info("[INFO] Compiling run_sles_command.c with Visual Studio...")
     vcvarsall = find_vcvarsall_c()
 
     # Initialisiere die VS-Umgebung (x64) und rufe cl.exe auf
@@ -5062,12 +5062,12 @@ def compile_sles_c_with_vs(sles_c_file, sles_c_exe_file):
     )
 
     if result.returncode != 0:
-        logging.error("Compilation failed.")
+        logging.error("[ERROR] Compilation failed.")
         logging.error(result.stdout)
         logging.error(result.stderr)
         return False
 
-    logging.info("Compilation successful.")
+    logging.info("[INFO] Compilation successful.")
     return True
 
 
@@ -5082,7 +5082,7 @@ def run_sles_c_command(command):
 
     if not os.path.isfile(sles_c_exe_file):
         if not compile_sles_c_with_vs(sles_c_file, sles_c_exe_file):
-            logging.error("Abort: C compilation was unsuccessful.")
+            logging.error("[ERROR] Abort: C compilation was unsuccessful.")
             return
 
     # Erstelle die Befehlsliste. Bei mehreren Argumenten werden diese getrennt übertragen.
@@ -5096,13 +5096,13 @@ def run_sles_c_command(command):
     cmd = [sles_c_exe_file] + args
 
     try:
-        logging.info(f"Execute: {' '.join(cmd)}")
+        logging.info(f"[INFO] Execute: {' '.join(cmd)}")
         # Der C-Wrapper startet ein neues Terminalfenster, in dem der Befehl interaktiv ausgeführt wird.
         subprocess.run(cmd, check=True)
     except subprocess.CalledProcessError as e:
-        logging.error(f"Command failed: {e}")
+        logging.error(f"[ERROR] Command failed: {e}")
     except KeyboardInterrupt:
-        logging.warning("Cancellation by user.")
+        logging.warning("[WARNING] Cancellation by user.")
 
 
 # --- sles-p command---
@@ -5139,7 +5139,7 @@ def compile_pengwin_cpp_with_vs(pengwin_cpp_file, pengwin_exe_file):
     Kompiliert run_pengwin_command.cpp mit cl.exe über die Visual Studio-Umgebung.
     Die Ausgabe wird im UTF-8 Format eingelesen – ungültige Zeichen werden ersetzt.
     """
-    logging.info("Compile run_pengwin_command.cpp with Visual Studio C++...")
+    logging.info("[INFO] Compile run_pengwin_command.cpp with Visual Studio C++...")
     vcvarsall = find_vcvarsall()
     # Initialisiere die VS-Umgebung (x64) und rufe cl.exe auf
     command = f'"{vcvarsall}" x64 && cl.exe /EHsc "{pengwin_cpp_file}" /Fe:"{pengwin_exe_file}"'
@@ -5154,12 +5154,12 @@ def compile_pengwin_cpp_with_vs(pengwin_cpp_file, pengwin_exe_file):
     )
 
     if result.returncode != 0:
-        logging.error("Compilation failed.")
+        logging.error("[ERROR] Compilation failed.")
         logging.error(result.stdout)
         logging.error(result.stderr)
         return False
 
-    logging.info("Compilation successful.")
+    logging.info("[INFO] Compilation successful.")
     return True
 
 
@@ -5174,7 +5174,7 @@ def run_pengwin_command(command):
 
     if not os.path.isfile(pengwin_exe_file):
         if not compile_pengwin_cpp_with_vs(pengwin_cpp_file, pengwin_exe_file):
-            logging.error("Abort: C++ compilation was unsuccessful.")
+            logging.error("[ERROR] Abort: C++ compilation was unsuccessful.")
             return
 
     # Erstelle die Befehlsliste. Bei mehreren Argumenten werden diese getrennt übertragen.
@@ -5188,13 +5188,13 @@ def run_pengwin_command(command):
     cmd = [pengwin_exe_file] + args
 
     try:
-        logging.info(f"Execute: {' '.join(cmd)}")
+        logging.info(f"[INFO] Execute: {' '.join(cmd)}")
         # Der C++-Wrapper startet ein neues Terminalfenster, in dem der Befehl interaktiv ausgeführt wird.
         subprocess.run(cmd, check=True)
     except subprocess.CalledProcessError as e:
-        logging.error(f"Command failed: {e}")
+        logging.error(f"[ERROR] Command failed: {e}")
     except KeyboardInterrupt:
-        logging.warning("Cancellation by user.")
+        logging.warning("[WARNING] Cancellation by user.")
 
 
 # --- pengwin-c command---
@@ -5216,7 +5216,7 @@ def compile_pengwin_c_with_vs(pengwin_c_file, pengwin_c_exe_file):
     """
     Kompiliert run_pengwin_command.c mit cl.exe über die Visual Studio-Umgebung.
     """
-    logging.info("Compiling run_pengwin_command.c with Visual Studio...")
+    logging.info("[INFO] Compiling run_pengwin_command.c with Visual Studio...")
     vcvarsall = find_vcvarsall_c()
 
     # Initialisiere die VS-Umgebung (x64) und rufe cl.exe auf
@@ -5232,12 +5232,12 @@ def compile_pengwin_c_with_vs(pengwin_c_file, pengwin_c_exe_file):
     )
 
     if result.returncode != 0:
-        logging.error("Compilation failed.")
+        logging.error("[ERROR] Compilation failed.")
         logging.error(result.stdout)
         logging.error(result.stderr)
         return False
 
-    logging.info("Compilation successful.")
+    logging.info("[INFO] Compilation successful.")
     return True
 
 
@@ -5252,7 +5252,7 @@ def run_pengwin_c_command(command):
 
     if not os.path.isfile(pengwin_c_exe_file):
         if not compile_pengwin_c_with_vs(pengwin_c_file, pengwin_c_exe_file):
-            logging.error("Abort: C compilation was unsuccessful.")
+            logging.error("[ERROR] Abort: C compilation was unsuccessful.")
             return
 
     # Erstelle die Befehlsliste. Bei mehreren Argumenten werden diese getrennt übertragen.
@@ -5266,13 +5266,13 @@ def run_pengwin_c_command(command):
     cmd = [pengwin_c_exe_file] + args
 
     try:
-        logging.info(f"Execute: {' '.join(cmd)}")
+        logging.info(f"[INFO] Execute: {' '.join(cmd)}")
         # Der C-Wrapper startet ein neues Terminalfenster, in dem der Befehl interaktiv ausgeführt wird.
         subprocess.run(cmd, check=True)
     except subprocess.CalledProcessError as e:
-        logging.error(f"Command failed: {e}")
+        logging.error(f"[ERROR] Command failed: {e}")
     except KeyboardInterrupt:
-        logging.warning("Cancellation by user.")
+        logging.warning("[WARNING] Cancellation by user.")
 
 
 # --- pengwin-p command---
@@ -5309,7 +5309,7 @@ def compile_oracle_cpp_with_vs(oracle_cpp_file, oracle_exe_file):
     Kompiliert run_oracle_command.cpp mit cl.exe über die Visual Studio-Umgebung.
     Die Ausgabe wird im UTF-8 Format eingelesen – ungültige Zeichen werden ersetzt.
     """
-    logging.info("Compile run_oracle_command.cpp with Visual Studio C++...")
+    logging.info("[INFO] Compile run_oracle_command.cpp with Visual Studio C++...")
     vcvarsall = find_vcvarsall()
     # Initialisiere die VS-Umgebung (x64) und rufe cl.exe auf
     command = f'"{vcvarsall}" x64 && cl.exe /EHsc "{oracle_cpp_file}" /Fe:"{oracle_exe_file}"'
@@ -5324,12 +5324,12 @@ def compile_oracle_cpp_with_vs(oracle_cpp_file, oracle_exe_file):
     )
 
     if result.returncode != 0:
-        logging.error("Compilation failed.")
+        logging.error("[ERROR] Compilation failed.")
         logging.error(result.stdout)
         logging.error(result.stderr)
         return False
 
-    logging.info("Compilation successful.")
+    logging.info("[INFO] Compilation successful.")
     return True
 
 
@@ -5344,7 +5344,7 @@ def run_oracle_command(command):
 
     if not os.path.isfile(oracle_exe_file):
         if not compile_oracle_cpp_with_vs(oracle_cpp_file, oracle_exe_file):
-            logging.error("Abort: C++ compilation was unsuccessful.")
+            logging.error("[ERROR] Abort: C++ compilation was unsuccessful.")
             return
 
     # Erstelle die Befehlsliste. Bei mehreren Argumenten werden diese getrennt übertragen.
@@ -5358,13 +5358,13 @@ def run_oracle_command(command):
     cmd = [oracle_exe_file] + args
 
     try:
-        logging.info(f"Execute: {' '.join(cmd)}")
+        logging.info(f"[INFO] Execute: {' '.join(cmd)}")
         # Der C++-Wrapper startet ein neues Terminalfenster, in dem der Befehl interaktiv ausgeführt wird.
         subprocess.run(cmd, check=True)
     except subprocess.CalledProcessError as e:
-        logging.error(f"Command failed: {e}")
+        logging.error(f"[ERROR] Command failed: {e}")
     except KeyboardInterrupt:
-        logging.warning("Cancellation by user.")
+        logging.warning("[WARNING] Cancellation by user.")
 
 
 # --- oracle-c command---
@@ -5386,7 +5386,7 @@ def compile_oracle_c_with_vs(oracle_c_file, oracle_c_exe_file):
     """
     Kompiliert run_oracle_command.c mit cl.exe über die Visual Studio-Umgebung.
     """
-    logging.info("Compiling run_oracle_command.c with Visual Studio...")
+    logging.info("[INFO] Compiling run_oracle_command.c with Visual Studio...")
     vcvarsall = find_vcvarsall_c()
 
     # Initialisiere die VS-Umgebung (x64) und rufe cl.exe auf
@@ -5402,12 +5402,12 @@ def compile_oracle_c_with_vs(oracle_c_file, oracle_c_exe_file):
     )
 
     if result.returncode != 0:
-        logging.error("Compilation failed.")
+        logging.error("[ERROR] Compilation failed.")
         logging.error(result.stdout)
         logging.error(result.stderr)
         return False
 
-    logging.info("Compilation successful.")
+    logging.info("[INFO] Compilation successful.")
     return True
 
 
@@ -5422,7 +5422,7 @@ def run_oracle_c_command(command):
 
     if not os.path.isfile(oracle_c_exe_file):
         if not compile_oracle_c_with_vs(oracle_c_file, oracle_c_exe_file):
-            logging.error("Abort: C compilation was unsuccessful.")
+            logging.error("[ERROR] Abort: C compilation was unsuccessful.")
             return
 
     # Erstelle die Befehlsliste. Bei mehreren Argumenten werden diese getrennt übertragen.
@@ -5436,13 +5436,13 @@ def run_oracle_c_command(command):
     cmd = [oracle_c_exe_file] + args
 
     try:
-        logging.info(f"Execute: {' '.join(cmd)}")
+        logging.info(f"[INFO] Execute: {' '.join(cmd)}")
         # Der C-Wrapper startet ein neues Terminalfenster, in dem der Befehl interaktiv ausgeführt wird.
         subprocess.run(cmd, check=True)
     except subprocess.CalledProcessError as e:
-        logging.error(f"Command failed: {e}")
+        logging.error(f"[ERROR] Command failed: {e}")
     except KeyboardInterrupt:
-        logging.warning("Cancellation by user.")
+        logging.warning("[WARNING] Cancellation by user.")
 
 
 # --- oracle-p command---
@@ -5479,7 +5479,7 @@ def compile_alpine_cpp_with_vs(alpine_cpp_file, alpine_exe_file):
     Kompiliert run_alpine_command.cpp mit cl.exe über die Visual Studio-Umgebung.
     Die Ausgabe wird im UTF-8 Format eingelesen – ungültige Zeichen werden ersetzt.
     """
-    logging.info("Compile run_alpine_command.cpp with Visual Studio C++...")
+    logging.info("[INFO] Compile run_alpine_command.cpp with Visual Studio C++...")
     vcvarsall = find_vcvarsall()
     # Initialisiere die VS-Umgebung (x64) und rufe cl.exe auf
     command = f'"{vcvarsall}" x64 && cl.exe /EHsc "{alpine_cpp_file}" /Fe:"{alpine_exe_file}"'
@@ -5494,12 +5494,12 @@ def compile_alpine_cpp_with_vs(alpine_cpp_file, alpine_exe_file):
     )
 
     if result.returncode != 0:
-        logging.error("Compilation failed.")
+        logging.error("[ERROR] Compilation failed.")
         logging.error(result.stdout)
         logging.error(result.stderr)
         return False
 
-    logging.info("Compilation successful.")
+    logging.info("[INFO] Compilation successful.")
     return True
 
 
@@ -5514,7 +5514,7 @@ def run_alpine_command(command):
 
     if not os.path.isfile(alpine_exe_file):
         if not compile_alpine_cpp_with_vs(alpine_cpp_file, alpine_exe_file):
-            logging.error("Abort: C++ compilation was unsuccessful.")
+            logging.error("[ERROR] Abort: C++ compilation was unsuccessful.")
             return
 
     # Erstelle die Befehlsliste. Bei mehreren Argumenten werden diese getrennt übertragen.
@@ -5528,13 +5528,13 @@ def run_alpine_command(command):
     cmd = [alpine_exe_file] + args
 
     try:
-        logging.info(f"Execute: {' '.join(cmd)}")
+        logging.info(f"[INFO] Execute: {' '.join(cmd)}")
         # Der C++-Wrapper startet ein neues Terminalfenster, in dem der Befehl interaktiv ausgeführt wird.
         subprocess.run(cmd, check=True)
     except subprocess.CalledProcessError as e:
-        logging.error(f"Command failed: {e}")
+        logging.error(f"[ERROR] Command failed: {e}")
     except KeyboardInterrupt:
-        logging.warning("Cancellation by user.")
+        logging.warning("[WARNING] Cancellation by user.")
 
 
 # --- alpine-c command---
@@ -5556,7 +5556,7 @@ def compile_alpine_c_with_vs(alpine_c_file, alpine_c_exe_file):
     """
     Kompiliert run_alpine_command.c mit cl.exe über die Visual Studio-Umgebung.
     """
-    logging.info("Compiling run_alpine_command.c with Visual Studio...")
+    logging.info("[INFO] Compiling run_alpine_command.c with Visual Studio...")
     vcvarsall = find_vcvarsall_c()
 
     # Initialisiere die VS-Umgebung (x64) und rufe cl.exe auf
@@ -5572,12 +5572,12 @@ def compile_alpine_c_with_vs(alpine_c_file, alpine_c_exe_file):
     )
 
     if result.returncode != 0:
-        logging.error("Compilation failed.")
+        logging.error("[ERROR] Compilation failed.")
         logging.error(result.stdout)
         logging.error(result.stderr)
         return False
 
-    logging.info("Compilation successful.")
+    logging.info("[INFO] Compilation successful.")
     return True
 
 
@@ -5592,7 +5592,7 @@ def run_alpine_c_command(command):
 
     if not os.path.isfile(alpine_c_exe_file):
         if not compile_alpine_c_with_vs(alpine_c_file, alpine_c_exe_file):
-            logging.error("Abort: C compilation was unsuccessful.")
+            logging.error("[ERROR] Abort: C compilation was unsuccessful.")
             return
 
     # Erstelle die Befehlsliste. Bei mehreren Argumenten werden diese getrennt übertragen.
@@ -5606,13 +5606,13 @@ def run_alpine_c_command(command):
     cmd = [alpine_c_exe_file] + args
 
     try:
-        logging.info(f"Execute: {' '.join(cmd)}")
+        logging.info(f"[INFO] Execute: {' '.join(cmd)}")
         # Der C-Wrapper startet ein neues Terminalfenster, in dem der Befehl interaktiv ausgeführt wird.
         subprocess.run(cmd, check=True)
     except subprocess.CalledProcessError as e:
-        logging.error(f"Command failed: {e}")
+        logging.error(f"[ERROR] Command failed: {e}")
     except KeyboardInterrupt:
-        logging.warning("Cancellation by user.")
+        logging.warning("[WARNING] Cancellation by user.")
 
 
 # --- alpine-p command---
@@ -5649,7 +5649,7 @@ def compile_clear_cpp_with_vs(clear_cpp_file, clear_exe_file):
     Kompiliert run_clear_command.cpp mit cl.exe über die Visual Studio-Umgebung.
     Die Ausgabe wird im UTF-8 Format eingelesen – ungültige Zeichen werden ersetzt.
     """
-    logging.info("Compile run_clear_command.cpp with Visual Studio C++...")
+    logging.info("[INFO] Compile run_clear_command.cpp with Visual Studio C++...")
     vcvarsall = find_vcvarsall()
     # Initialisiere die VS-Umgebung (x64) und rufe cl.exe auf
     command = f'"{vcvarsall}" x64 && cl.exe /EHsc "{clear_cpp_file}" /Fe:"{clear_exe_file}"'
@@ -5664,12 +5664,12 @@ def compile_clear_cpp_with_vs(clear_cpp_file, clear_exe_file):
     )
 
     if result.returncode != 0:
-        logging.error("Compilation failed.")
+        logging.error("[ERROR] Compilation failed.")
         logging.error(result.stdout)
         logging.error(result.stderr)
         return False
 
-    logging.info("Compilation successful.")
+    logging.info("[INFO] Compilation successful.")
     return True
 
 
@@ -5684,7 +5684,7 @@ def run_clear_command(command):
 
     if not os.path.isfile(clear_exe_file):
         if not compile_clear_cpp_with_vs(clear_cpp_file, clear_exe_file):
-            logging.error("Abort: C++ compilation was unsuccessful.")
+            logging.error("[ERROR] Abort: C++ compilation was unsuccessful.")
             return
 
     # Erstelle die Befehlsliste. Bei mehreren Argumenten werden diese getrennt übertragen.
@@ -5698,13 +5698,13 @@ def run_clear_command(command):
     cmd = [clear_exe_file] + args
 
     try:
-        logging.info(f"Execute: {' '.join(cmd)}")
+        logging.info(f"[INFO] Execute: {' '.join(cmd)}")
         # Der C++-Wrapper startet ein neues Terminalfenster, in dem der Befehl interaktiv ausgeführt wird.
         subprocess.run(cmd, check=True)
     except subprocess.CalledProcessError as e:
-        logging.error(f"Command failed: {e}")
+        logging.error(f"[ERROR] Command failed: {e}")
     except KeyboardInterrupt:
-        logging.warning("Cancellation by user.")
+        logging.warning("[WARNING] Cancellation by user.")
 
 
 # --- clear-c command---
@@ -5726,7 +5726,7 @@ def compile_clear_c_with_vs(clear_c_file, clear_c_exe_file):
     """
     Kompiliert run_clear_command.c mit cl.exe über die Visual Studio-Umgebung.
     """
-    logging.info("Compiling run_clear_command.c with Visual Studio...")
+    logging.info("[INFO] Compiling run_clear_command.c with Visual Studio...")
     vcvarsall = find_vcvarsall_c()
 
     # Initialisiere die VS-Umgebung (x64) und rufe cl.exe auf
@@ -5742,12 +5742,12 @@ def compile_clear_c_with_vs(clear_c_file, clear_c_exe_file):
     )
 
     if result.returncode != 0:
-        logging.error("Compilation failed.")
+        logging.error("[ERROR] Compilation failed.")
         logging.error(result.stdout)
         logging.error(result.stderr)
         return False
 
-    logging.info("Compilation successful.")
+    logging.info("[INFO] Compilation successful.")
     return True
 
 
@@ -5762,7 +5762,7 @@ def run_clear_c_command(command):
 
     if not os.path.isfile(clear_c_exe_file):
         if not compile_clear_c_with_vs(clear_c_file, clear_c_exe_file):
-            logging.error("Abort: C compilation was unsuccessful.")
+            logging.error("[ERROR] Abort: C compilation was unsuccessful.")
             return
 
     # Erstelle die Befehlsliste. Bei mehreren Argumenten werden diese getrennt übertragen.
@@ -5776,13 +5776,13 @@ def run_clear_c_command(command):
     cmd = [clear_c_exe_file] + args
 
     try:
-        logging.info(f"Execute: {' '.join(cmd)}")
+        logging.info(f"[INFO] Execute: {' '.join(cmd)}")
         # Der C-Wrapper startet ein neues Terminalfenster, in dem der Befehl interaktiv ausgeführt wird.
         subprocess.run(cmd, check=True)
     except subprocess.CalledProcessError as e:
-        logging.error(f"Command failed: {e}")
+        logging.error(f"[ERROR] Command failed: {e}")
     except KeyboardInterrupt:
-        logging.warning("Cancellation by user.")
+        logging.warning("[WARNING] Cancellation by user.")
 
 
 # --- clear-p command---
@@ -5833,7 +5833,7 @@ def run_scoop_command(
     if not logger.handlers:
         # Wenn kein Handler vorhanden ist: Standard-Stream-Handler hinzufügen
         handler = logging.StreamHandler()
-        fmt = logging.Formatter("%(asctime)s [%(levelname)s] %(name)s: %(message)s")
+        fmt = logging.Formatter("[%(asctime)s] [%(levelname)s] %(name)s: %(message)s")
         handler.setFormatter(fmt)
         logger.addHandler(handler)
         logger.setLevel(logging.INFO)
@@ -5925,7 +5925,7 @@ def run_choco_command(
     if not logger.handlers:
         # Standard-Stream-Handler hinzufügen, falls keiner vorhanden ist
         handler = logging.StreamHandler()
-        fmt = logging.Formatter("%(asctime)s [%(levelname)s] %(name)s: %(message)s")
+        fmt = logging.Formatter("[%(asctime)s] [%(levelname)s] %(name)s: %(message)s")
         handler.setFormatter(fmt)
         logger.addHandler(handler)
         logger.setLevel(logging.INFO)
@@ -6017,7 +6017,7 @@ def run_winget_command(
         logger = logging.getLogger("run_winget_command")
     if not logger.handlers:
         handler = logging.StreamHandler()
-        fmt = logging.Formatter("%(asctime)s [%(levelname)s] %(name)s: %(message)s")
+        fmt = logging.Formatter("[%(asctime)s] [%(levelname)s] %(name)s: %(message)s")
         handler.setFormatter(fmt)
         logger.addHandler(handler)
         logger.setLevel(logging.INFO)
