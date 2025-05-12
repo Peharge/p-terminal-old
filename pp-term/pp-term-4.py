@@ -696,7 +696,9 @@ def handle_special_commands(user_input):
         "nvim": "pp-commands\\nvim.py", # new
         "code": "pp-commands\\code.py", # new
         "micro": "pp-commands\\micro.py", # new
-        "gedit": "pp-commands\\gedit.py" # new
+        "gedit": "pp-commands\\gedit.py", # new
+        "update": "pp-commands\\updade.py", # new
+        "update pp-term": "pp-commands\\updade.py"  # new
     }
 
     # Custom command launcher
