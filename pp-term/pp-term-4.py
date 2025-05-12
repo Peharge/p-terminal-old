@@ -1626,6 +1626,270 @@ def handle_special_commands(user_input):
             print(f"[{timestamp()}] [ERROR] Whoops, something went wrong with the speedtest: {e}")
             return False
 
+    if user_input == "setting":
+        subprocess.run("start ms-settings:", shell=True, check=False)
+
+    if user_input == "workplace":
+        subprocess.run("start ms-settings:workplace", shell=True, check=False)
+
+    if user_input == "emailandaccounts":
+        subprocess.run("start ms-settings:emailandaccounts", shell=True, check=False)
+
+    if user_input == "otherusers":
+        subprocess.run("start ms-settings:otherusers", shell=True, check=False)
+
+    if user_input == "assignedaccess":
+        subprocess.run("start ms-settings:assignedaccess", shell=True, check=False)
+
+    if user_input == "signinoptions":
+        subprocess.run("start ms-settings:signinoptions", shell=True, check=False)
+
+    if user_input == "sync":
+        subprocess.run("start ms-settings:sync", shell=True, check=False)
+
+    if user_input == "yourinfo":
+        subprocess.run("start ms-settings:yourinfo", shell=True, check=False)
+
+    if user_input == "hello-face":
+        subprocess.run("start ms-settings:signinoptions-launchfaceenrollment", shell=True, check=False)
+
+    if user_input == "hello-fingerprint":
+        subprocess.run("start ms-settings:signinoptions-launchfingerprintenrollment", shell=True, check=False)
+
+    if user_input == "appsfeatures":
+        subprocess.run("start ms-settings:appsfeatures", shell=True, check=False)
+
+    if user_input == "appsfeatures-app":
+        subprocess.run("start ms-settings:appsfeatures-app", shell=True, check=False)
+
+    if user_input == "appsforwebsites":
+        subprocess.run("start ms-settings:appsforwebsites", shell=True, check=False)
+
+    if user_input == "defaultapps":
+        subprocess.run("start ms-settings:defaultapps", shell=True, check=False)
+
+    if user_input == "optionalfeatures":
+        subprocess.run("start ms-settings:optionalfeatures", shell=True, check=False)
+
+    if user_input == "maps":
+        subprocess.run("start ms-settings:maps", shell=True, check=False)
+
+    if user_input == "startupapps":
+        subprocess.run("start ms-settings:startupapps", shell=True, check=False)
+
+    if user_input == "videoplayback":
+        subprocess.run("start ms-settings:videoplayback", shell=True, check=False)
+
+    if user_input == "autoplay":
+        subprocess.run("start ms-settings:autoplay", shell=True, check=False)
+
+    if user_input == "bluetooth":
+        subprocess.run("start ms-settings:bluetooth", shell=True, check=False)
+
+    if user_input == "camera":
+        subprocess.run("start ms-settings:camera", shell=True, check=False)
+
+    if user_input == "mousetouchpad":
+        subprocess.run("start ms-settings:mousetouchpad", shell=True, check=False)
+
+    if user_input == "pen":
+        subprocess.run("start ms-settings:pen", shell=True, check=False)
+
+    if user_input == "printers":
+        subprocess.run("start ms-settings:printers", shell=True, check=False)
+
+    if user_input == "usb":
+        subprocess.run("start ms-settings:usb", shell=True, check=False)
+
+    if user_input == "display":
+        subprocess.run("start ms-settings:display", shell=True, check=False)
+
+    if user_input == "sound":
+        subprocess.run("start ms-settings:sound", shell=True, check=False)
+
+    if user_input == "notifications":
+        subprocess.run("start ms-settings:notifications", shell=True, check=False)
+
+    if user_input == "power":
+        subprocess.run("start ms-settings:powersleep", shell=True, check=False)
+
+    if user_input == "storage":
+        subprocess.run("start ms-settings:storage", shell=True, check=False)
+
+    if user_input == "multitasking":
+        subprocess.run("start ms-settings:multitasking", shell=True, check=False)
+
+    if user_input == "network-status":
+        subprocess.run("start ms-settings:network-status", shell=True, check=False)
+
+    if user_input == "wifi":
+        subprocess.run("start ms-settings:network-wifi", shell=True, check=False)
+
+    if user_input == "ethernet":
+        subprocess.run("start ms-settings:network-ethernet", shell=True, check=False)
+
+    if user_input == "vpn":
+        subprocess.run("start ms-settings:network-vpn", shell=True, check=False)
+
+    if user_input == "datausage":
+        subprocess.run("start ms-settings:datausage", shell=True, check=False)
+
+    if user_input == "privacy-microphone":
+        subprocess.run("start ms-settings:privacy-microphone", shell=True, check=False)
+
+    if user_input == "privacy-webcam":
+        subprocess.run("start ms-settings:privacy-webcam", shell=True, check=False)
+
+    if user_input == "privacy-location":
+        subprocess.run("start ms-settings:privacy-location", shell=True, check=False)
+
+    if user_input == "privacy-notifications":
+        subprocess.run("start ms-settings:privacy-notifications", shell=True, check=False)
+
+    if user_input == "windowsupdate":
+        subprocess.run("start ms-settings:windowsupdate", shell=True, check=False)
+
+    if user_input == "backup":
+        subprocess.run("start ms-settings:backup", shell=True, check=False)
+
+    if user_input == "recovery":
+        subprocess.run("start ms-settings:recovery", shell=True, check=False)
+
+    if user_input == "activation":
+        subprocess.run("start ms-settings:activation", shell=True, check=False)
+
+    if user_input == "fordevelopers":
+        subprocess.run("start ms-settings:developers", shell=True, check=False)
+
+    if user_input == "airplanemode":
+        subprocess.run("start ms-settings:airplanemode", shell=True, check=False)
+
+    if user_input == "cellular":
+        subprocess.run("start ms-settings:cellular", shell=True, check=False)
+
+    if user_input == "cloudstorage":
+        subprocess.run("start ms-settings:cloudstorage", shell=True, check=False)
+
+    if user_input == "language":
+        subprocess.run("start ms-settings:language", shell=True, check=False)
+
+    if user_input == "location":
+        subprocess.run("start ms-settings:location", shell=True, check=False)
+
+    if user_input == "lock":
+        subprocess.run("start ms-settings:lock", shell=True, check=False)
+
+    if user_input == "nfctransactions":
+        subprocess.run("start ms-settings:nfctransactions", shell=True, check=False)
+
+    if user_input == "proximity":
+        subprocess.run("start ms-settings:privacy-proximity", shell=True, check=False)
+
+    if user_input == "mobilehotspot":
+        subprocess.run("start ms-settings:network-mobilehotspot", shell=True, check=False)
+
+    if user_input == "proxy":
+        subprocess.run("start ms-settings:network-proxy", shell=True, check=False)
+
+    if user_input == "defender":
+        subprocess.run("start ms-settings:windowsdefender", shell=True, check=False)
+
+    if user_input == "privacy-contacts":
+        subprocess.run("start ms-settings:privacy-contacts", shell=True, check=False)
+
+    if user_input == "privacy-calendar":
+        subprocess.run("start ms-settings:privacy-calendar", shell=True, check=False)
+
+    if user_input == "privacy-callhistory":
+        subprocess.run("start ms-settings:privacy-callhistory", shell=True, check=True)
+
+    if user_input == "family":
+        subprocess.run("start ms-settings:family", shell=True, check=False)
+
+    if user_input == "gaming-gamebar":
+        subprocess.run("start ms-settings:gaming-gamebar", shell=True, check=False)
+
+    if user_input == "mixedreality-portal":
+        subprocess.run("start ms-settings:mixedreality-portal", shell=True, check=False)
+
+    if user_input == "easeofaccess":
+        subprocess.run("start ms-settings:easeofaccess", shell=True, check=False)
+
+    if user_input == "easeofaccess-narrator":
+        subprocess.run("start ms-settings:easeofaccess-narrator", shell=True, check=False)
+
+    if user_input == "easeofaccess-magnifier":
+        subprocess.run("start ms-settings:easeofaccess-magnifier", shell=True, check=False)
+
+    if user_input == "easeofaccess-closedcaptioning":
+        subprocess.run("start ms-settings:easeofaccess-closedcaptioning", shell=True, check=False)
+
+    if user_input == "easeofaccess-highcontrast":
+        subprocess.run("start ms-settings:easeofaccess-highcontrast", shell=True, check=False)
+
+    if user_input == "easeofaccess-speechrecognition":
+        subprocess.run("start ms-settings:easeofaccess-speechrecognition", shell=True, check=False)
+
+    if user_input == "easeofaccess-keyboard":
+        subprocess.run("start ms-settings:easeofaccess-keyboard", shell=True, check=False)
+
+    if user_input == "easeofaccess-mousepointer":
+        subprocess.run("start ms-settings:easeofaccess-mousepointer", shell=True, check=False)
+
+    if user_input == "easeofaccess-touch":
+        subprocess.run("start ms-settings:easeofaccess-touch", shell=True, check=False)
+
+    if user_input == "wirelessdisplay":
+        subprocess.run("start ms-settings-connectabledevices:devicediscovery", shell=True, check=False)
+
+    if user_input == "project":
+        subprocess.run("start ms-settings:project", shell=True, check=False)
+
+    if user_input == "tethering":
+        subprocess.run("start ms-settings:network-tethering", shell=True, check=False)
+
+    if user_input == "storagesense":
+        subprocess.run("start ms-settings:storagesense", shell=True, check=False)
+
+    if user_input == "batterysaver":
+        subprocess.run("start ms-settings:batterysaver-settings", shell=True, check=False)
+
+    if user_input == "autorotate":
+        subprocess.run("start ms-settings:screenrotation", shell=True, check=False)
+
+    if user_input == "dateandtime":
+        subprocess.run("start ms-settings:dateandtime", shell=True, check=False)
+
+    if user_input == "region":
+        subprocess.run("start ms-settings:region", shell=True, check=False)
+
+    if user_input == "speech":
+        subprocess.run("start ms-settings:regionlanguage-speech", shell=True, check=False)
+
+    if user_input == "typing":
+        subprocess.run("start ms-settings:typing", shell=True, check=False)
+
+    if user_input == "troubleshoot":
+        subprocess.run("start ms-settings:troubleshoot", shell=True, check=False)
+
+    if user_input == "recommendedtroubleshoot":
+        subprocess.run("start ms-settings:troubleshoot-recommended", shell=True, check=False)
+
+    if user_input == "windowsinsider":
+        subprocess.run("start ms-settings:windowsinsider", shell=True, check=False)
+
+    if user_input == "gaming-broadcasting":
+        subprocess.run("start ms-settings:gaming-broadcasting", shell=True, check=False)
+
+    if user_input == "gaming-gamedvr":
+        subprocess.run("start ms-settings:gaming-gamedvr", shell=True, check=False)
+
+    if user_input == "gaming-xboxnetworking":
+        subprocess.run("start ms-settings:gaming-xboxnetworking", shell=True, check=False)
+
+    if user_input == "mixedreality-settings":
+        subprocess.run("start ms-settings:mixedreality-portal", shell=True, check=False)
+
     # Prozessliste
     if user_input.lower() == "ps":
         for proc in psutil.process_iter(['pid', 'name']):
