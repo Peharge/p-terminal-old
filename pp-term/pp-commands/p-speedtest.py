@@ -1,12 +1,13 @@
 import sys
 import random
 import math
+import os
 from PyQt6.QtWidgets import (
     QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout,
     QLabel, QPushButton
 )
 from PyQt6.QtCore import Qt, QTimer, QRectF, QPointF
-from PyQt6.QtGui import QPainter, QPen, QFont, QColor
+from PyQt6.QtGui import QPainter, QPen, QFont, QColor, QIcon
 import pyqtgraph as pg
 
 
@@ -103,7 +104,7 @@ class SpeedometerWidget(QWidget):
 class SpeedTestWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Cool Graphical Speed Test")
+        self.setWindowTitle("P-Term Speed Test")
         self.setGeometry(100, 100, 1000, 700)
         self.duration = 20  # Duration of the test in seconds
         self.elapsed = 0
@@ -112,6 +113,11 @@ class SpeedTestWindow(QMainWindow):
 
         self.initUI()
         self.setStyleSheet(self.loadStylesheet())
+
+        user = os.getenv("USERNAME") or os.getenv("USER")
+        self.repo_path = f"C:/Users/{user}/p-terminal/pp-term"
+        icon_path = f"C:/Users/{user}/p-terminal/pp-term/icons/p-term-logo-5.ico"
+        self.setWindowIcon(QIcon(icon_path))
 
     def initUI(self):
         central_widget = QWidget()
@@ -141,7 +147,6 @@ class SpeedTestWindow(QMainWindow):
 
         # Start test button
         self.start_button = QPushButton("Start Speed Test")
-        self.start_button.setFixedWidth(60)
         self.start_button.clicked.connect(self.startTest)
 
         # Add widgets to main layout
@@ -280,10 +285,6 @@ class SpeedTestWindow(QMainWindow):
         # Start timer: update every 1000 ms (1 second)
         self.timer.start(1000)
         # Annahme: Das Repository befindet sich im p-terminal-Ordner des aktuellen Benutzers
-        user = os.getenv("USERNAME") or os.getenv("USER")
-        self.repo_path = f"C:/Users/{user}/p-terminal/pp-term"
-        icon_path = f"C:/Users/{user}/p-terminal/pp-term/icons/p-term-logo-5.ico"
-        self.setWindowIcon(QIcon(icon_path))
 
     def updateTest(self):
         if self.elapsed >= self.duration:
