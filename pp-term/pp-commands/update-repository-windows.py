@@ -143,8 +143,11 @@ def perform_update():
 
 
 def main():
-    print("\nP-Terminal Repository Update (experimental):")
-    print("---------------------------------------")
+    title = f"P-Terminal Repository Update (experimental):"
+    line = "-" * len(title)
+
+    print(f"\n{title}")
+    print(f"{line}\n")
     print("Please note that this update function is not yet 100% reliable and errors may occur. \nTherefore, we recommend using the git pull https://github.com/Peharge/p-terminal.git command instead. \nHowever, if this is not possible...\n")
 
     last_update = read_last_update()

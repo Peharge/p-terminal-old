@@ -393,7 +393,7 @@ def install_or_update_package(package: str):
                     pipdeptree_result = subprocess.run([sys.executable, "-m", 'pipdeptree', '-r', '-p', package], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
 
                     if pipdeptree_result.returncode == 0:
-                        print("[{timestamp()}] [INFO] Packages installed after installation:")
+                        print(f"[{timestamp()}] [INFO] Packages installed after installation:")
                         print(pipdeptree_result.stdout)
 
                         incompatible_packages = pipdeptree_result.stdout.splitlines()
@@ -525,7 +525,7 @@ def check_all_installed_packages_compatibility(packages: List[str]) -> None:
 def process_packages(packages: List[str]):
     """Überprüft und installiert oder aktualisiert eine Liste von Paketen."""
     for idx, package in enumerate(packages, start=1):
-        print(f"\n[{idx}/{len(packages)}] Checking package: {blue}{package}")
+        print(f"\n[{timestamp()}] [INFO] [{idx}/{len(packages)}] Checking package: {package}")
         install_or_update_package(package)
 
 print(f"\n[{timestamp()}] [INFO] All frameworks for {blue}PP-Term 4{reset} are currently being installed and updated.")
