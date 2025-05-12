@@ -2082,8 +2082,37 @@ def handle_special_commands(user_input):
 
     # CPU Temperatur
     if user_input.lower() == "cputemp":
-        print(f"{yellow}Feature not fully supported on Windows without third party libs!{reset}")
-        return True
+        """
+        Returns the current CPU temperature in °C, or None if it cannot be determined.
+        """
+        try:
+            # PowerShell command to query CPU temperature
+            command = [
+                "powershell.exe",
+                "-Command",
+                "(Get-WmiObject MSAcpi_ThermalZoneTemperature -Namespace 'root/wmi').CurrentTemperature / 10 - 273.15"
+            ]
+
+            # Execute the PowerShell command and capture the output
+            process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+            stdout, stderr = process.communicate()
+
+            # Error handling
+            if process.returncode != 0:
+                print(f"[{timestamp()}] [ERROR] Error retrieving CPU temperature: {stderr}")
+                return None
+
+            # Process the output and return the temperature in °C
+            try:
+                temperature = float(stdout.strip())
+                return temperature
+            except ValueError:
+                print(f"[{timestamp()}] [ERROR] Invalid output when retrieving CPU temperature.")
+                return None
+
+        except Exception as e:
+            print(f"[{timestamp()}] [ERROR] Error: {e}")
+            return None
 
     # Chuck Norris Joke
     if user_input.lower() == "chucknorris":
