@@ -377,6 +377,9 @@ def handle_special_commands(user_input):
         "change models": "mavis-install\\install-ollama-mavis-4.py",  # new
         "grafana": "mavis-run-grafana\\run-grafana.py",
         "run grafana": "mavis-run-grafana\\run-grafana.py",
+        "run solution": "mavis-solution\\run-solution-4.py",
+        "run solution-3": "mavis-solution\\run-solution-3.py",
+        "run solution-4": "mavis-solution\\run-solution-4.py",
         "install grafana": "mavis-run-grafana\\run-grafana.py",
         "account": "mavis-account\\account.py",
         "run deepseek-r1:1.5b": "pp-commands\\deepseek-r1-1-5b.py",
@@ -664,6 +667,7 @@ def handle_special_commands(user_input):
         "p claude": "pp-commands\\claude.py",  # new
         "p chatgpt": "pp-commands\\chatgpt.py",  # new
         "run mavis main": "pp-commands\\run-mavis-main.py", # new
+        "run mavis main fast": "pp-commands\\run-mavis-main-fast.py",  # new
         "htop": "pp-commands\\htop.py",  # new
         "bashtop": "pp-commands\\bashtop.py", # new
         "taskmanager": "pp-commands\\bashtop.py",  # new
