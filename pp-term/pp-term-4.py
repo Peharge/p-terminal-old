@@ -1375,6 +1375,28 @@ def handle_special_commands(user_input):
         code.interact(local=dict(globals(), **locals()))
         return True
 
+    if user_input.startswith("pb "):
+        # Remove "pb " and strip any surrounding whitespace
+        user_input = user_input[3:].strip()
+
+        # Check if the input is not empty
+        if not user_input:
+            print(f"[{timestamp()}] [INFO] Please provide a valid URL after 'pb '.")
+            return
+
+        # Create the full URL
+        url = f"https://{user_input}"
+
+        # Try to open the URL in the browser
+        try:
+            webbrowser.open(url)
+            print(f"[{timestamp()}] [INFO] The page is now opening: {url}")
+            return True
+
+        except Exception as e:
+            print(f"[{timestamp()}] [ERROR] Error opening the URL: {e}")
+            return True
+
     # Mini KI Antwort - soon
     if user_input.startswith("pa "):
         user_input = user_input[3:].strip()
