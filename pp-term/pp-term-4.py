@@ -1950,6 +1950,72 @@ def handle_special_commands(user_input):
     if user_input == "provisioning":
         subprocess.run("start ms-settings:provisioning", shell=True, check=False)
 
+    if user_input == "about":
+        subprocess.run("start ms-settings:about", shell=True, check=False)
+
+    if user_input == "uninstallupdates":
+        subprocess.run("start ms-settings:uninstallupdates", shell=True, check=False)
+
+    if user_input == "manage-restartapps":
+        subprocess.run("start ms-settings:appsforwebsites", shell=True, check=False)
+
+    if user_input == "startsettings":
+        subprocess.run("start ms-settings:personalization-start", shell=True, check=False)
+
+    if user_input == "taskbar":
+        subprocess.run("start ms-settings:personalization-taskbar", shell=True, check=False)
+
+    if user_input == "themes":
+        subprocess.run("start ms-settings:themes", shell=True, check=False)
+
+    if user_input == "colors":
+        subprocess.run("start ms-settings:colors", shell=True, check=False)
+
+    if user_input == "lockscreen":
+        subprocess.run("start ms-settings:personalization-lockscreen", shell=True, check=False)
+
+    if user_input == "background":
+        subprocess.run("start ms-settings:personalization-background", shell=True, check=False)
+
+    if user_input == "volume":
+        subprocess.run("start ms-settings:apps-volume", shell=True, check=False)
+
+    if user_input == "defaultbrowsersettings":
+        subprocess.run("start ms-settings:defaultbrowsersettings", shell=True, check=False)
+
+    if user_input == "firewall":
+        subprocess.run("start ms-settings:windowsdefender-firewall", shell=True, check=False)
+
+    if user_input == "securitycenter":
+        subprocess.run("start ms-settings:windowsdefender-securitycenter", shell=True, check=False)
+
+    if user_input == "surfacehub":
+        subprocess.run("start ms-settings:surfacehub", shell=True, check=False)
+
+    if user_input == "windowsanywhere":
+        subprocess.run("start ms-settings:windowsanywhere", shell=True, check=False)
+
+    if user_input == "privacy-accountinfo":
+        subprocess.run("start ms-settings:privacy-accountinfo", shell=True, check=False)
+
+    if user_input == "privacy-calendars":
+        subprocess.run("start ms-settings:privacy-calendar", shell=True, check=False)
+
+    if user_input == "privacy-radios":
+        subprocess.run("start ms-settings:privacy-radios", shell=True, check=False)
+
+    if user_input == "privacy-multimedia":
+        subprocess.run("start ms-settings:privacy-media", shell=True, check=False)
+
+    if user_input == "privacy-feedback":
+        subprocess.run("start ms-settings:privacy-feedback", shell=True, check=False)
+
+    if user_input == "regionlanguage":
+        subprocess.run("start ms-settings:regionlanguage", shell=True, check=False)
+
+    if user_input == "speechtyping":
+        subprocess.run("start ms-settings:privacy-speechtyping", shell=True, check=False)
+
     # Prozessliste
     if user_input.lower() == "ps":
         for proc in psutil.process_iter(['pid', 'name']):
