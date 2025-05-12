@@ -158,7 +158,6 @@ def main():
     logging.info("[INFO] Starting package checks and installations...")
     ensure_packages(REQUIRED_PACKAGES)
     logging.info("[PASS] ✅ Environment setup complete.")
-    logging.info("[PASS] ✅ All tasks were completed successfully!")
 
 
 if __name__ == '__main__':
