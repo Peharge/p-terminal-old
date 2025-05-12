@@ -961,6 +961,134 @@ def handle_special_commands(user_input):
             print(f"[{timestamp()}] [ERROR] Error executing WSL command: {e}")
         return True
 
+    if user_input.lower() == "disk usage":
+
+        command = f"wsl du -sh ."
+
+        process = subprocess.Popen(command, stdin=sys.stdin, stdout=sys.stdout, stderr=sys.stderr, shell=True,text=True)
+
+        try:
+            process.wait()
+        except KeyboardInterrupt:
+            print(f"[{timestamp()}] [INFO] Cancellation by user.")
+        except subprocess.CalledProcessError as e:
+            print(f"[{timestamp()}] [ERROR] Error executing WSL command: {e}")
+        return True
+
+    if user_input.lower() == "tree2":
+
+        command = f"wsl tree -L 2"
+
+        process = subprocess.Popen(command, stdin=sys.stdin, stdout=sys.stdout, stderr=sys.stderr, shell=True,text=True)
+
+        try:
+            process.wait()
+        except KeyboardInterrupt:
+            print(f"[{timestamp()}] [INFO] Cancellation by user.")
+        except subprocess.CalledProcessError as e:
+            print(f"[{timestamp()}] [ERROR] Error executing WSL command: {e}")
+        return True
+
+    if user_input.lower() == "find py":
+
+        command = f"wsl find . -name '*.py'"
+
+        process = subprocess.Popen(command, stdin=sys.stdin, stdout=sys.stdout, stderr=sys.stderr, shell=True,text=True)
+
+        try:
+            process.wait()
+        except KeyboardInterrupt:
+            print(f"[{timestamp()}] [INFO] Cancellation by user.")
+        except subprocess.CalledProcessError as e:
+            print(f"[{timestamp()}] [ERROR] Error executing WSL command: {e}")
+        return True
+
+    if user_input.lower() == "grep ":
+
+        user_input = user_input[5:]
+        command = f"wsl grep -rnw . -e '{user_input}'"
+
+        process = subprocess.Popen(command, stdin=sys.stdin, stdout=sys.stdout, stderr=sys.stderr, shell=True,text=True)
+
+        try:
+            process.wait()
+        except KeyboardInterrupt:
+            print(f"[{timestamp()}] [INFO] Cancellation by user.")
+        except subprocess.CalledProcessError as e:
+            print(f"[{timestamp()}] [ERROR] Error executing WSL command: {e}")
+        return True
+
+    if user_input.lower() == "lint":
+
+        command = f"wsl pylint ."
+
+        process = subprocess.Popen(command, stdin=sys.stdin, stdout=sys.stdout, stderr=sys.stderr, shell=True,
+                                   text=True)
+
+        try:
+            process.wait()
+        except KeyboardInterrupt:
+            print(f"[{timestamp()}] [INFO] Cancellation by user.")
+        except subprocess.CalledProcessError as e:
+            print(f"[{timestamp()}] [ERROR] Error executing WSL command: {e}")
+        return True
+
+    if user_input.lower() == "make":
+
+        command = f"wsl make"
+
+        process = subprocess.Popen(command, stdin=sys.stdin, stdout=sys.stdout, stderr=sys.stderr, shell=True,text=True)
+
+        try:
+            process.wait()
+        except KeyboardInterrupt:
+            print(f"[{timestamp()}] [INFO] Cancellation by user.")
+        except subprocess.CalledProcessError as e:
+            print(f"[{timestamp()}] [ERROR] Error executing WSL command: {e}")
+        return True
+
+    if user_input.lower() == "format":
+
+        command = f"wsl black ."
+
+        process = subprocess.Popen(command, stdin=sys.stdin, stdout=sys.stdout, stderr=sys.stderr, shell=True,text=True)
+
+        try:
+            process.wait()
+        except KeyboardInterrupt:
+            print(f"[{timestamp()}] [INFO] Cancellation by user.")
+        except subprocess.CalledProcessError as e:
+            print(f"[{timestamp()}] [ERROR] Error executing WSL command: {e}")
+        return True
+
+    if user_input.lower() == "top":
+
+        command = f"wsl top"
+
+        process = subprocess.Popen(command, stdin=sys.stdin, stdout=sys.stdout, stderr=sys.stderr, shell=True,text=True)
+
+        try:
+            process.wait()
+        except KeyboardInterrupt:
+            print(f"[{timestamp()}] [INFO] Cancellation by user.")
+        except subprocess.CalledProcessError as e:
+            print(f"[{timestamp()}] [ERROR] Error executing WSL command: {e}")
+        return True
+
+    if user_input.lower() == "disk":
+
+        command = f"wsl df -h"
+
+        process = subprocess.Popen(command, stdin=sys.stdin, stdout=sys.stdout, stderr=sys.stderr, shell=True,text=True)
+
+        try:
+            process.wait()
+        except KeyboardInterrupt:
+            print(f"[{timestamp()}] [INFO] Cancellation by user.")
+        except subprocess.CalledProcessError as e:
+            print(f"[{timestamp()}] [ERROR] Error executing WSL command: {e}")
+        return True
+
     if user_input.startswith("nano "):
 
         command = f"wsl {user_input}"
