@@ -7760,6 +7760,10 @@ def main():
             elif user_input.startswith("powershell "):
                 run_command(user_input, shell=True)
 
+            elif user_input.startswith("pps "):
+                user_input = user_input[4:].strip()
+                run_command("powershell " + user_input, shell=True)
+
             elif user_input.startswith("cmd "):
                 user_input = user_input[4:].strip()
                 run_command(user_input, shell=True)
