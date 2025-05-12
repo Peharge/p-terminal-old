@@ -71,6 +71,8 @@ print ("""
 ██║╚██╔╝██║██╔══██║╚██╗ ██╔╝██║╚════██║
 ██║ ╚═╝ ██║██║  ██║ ╚████╔╝ ██║███████║
 ╚═╝     ╚═╝╚═╝  ╚═╝  ╚═══╝  ╚═╝╚══════╝
+
+Please note that this is an outdated version of MAVIS. To run the latest version, execute 'run mavis main' to ensure the most up-to-date version of MAVIS is launched.
 """)
 
 print(f"""🎉 A warm welcome from Peharge 🎉\n""")

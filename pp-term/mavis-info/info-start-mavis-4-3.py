@@ -103,6 +103,8 @@ print(f"""
 {blue}MAVIS Launcher Version{reset}: 4
 {blue}MAVIS Terminal Version{reset}: 5
 {blue}MAVIS License{reset}: MIT
+
+Please note that this is an outdated version of MAVIS. To run the latest version, execute 'run mavis main' to ensure the most up-to-date version of MAVIS is launched.
 """)
 
 # Funktion zur Anzeige der 16 Farbpaletten ohne Abstände und Zahlen
