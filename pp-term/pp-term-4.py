@@ -1395,12 +1395,25 @@ def handle_special_commands(user_input):
         return True
 
     if user_input.startswith("open "):
-        site = user_input[5:].strip()
-        if not site.startswith("http"):
-            site = "https://" + site
-        webbrowser.open(site)
-        print(f"{blue}Opening {site}...{reset}")
-        return True
+        path = user_input[5:].strip()
+
+        # Check if file exists
+        if not os.path.exists(path):
+            print(f"[{timestamp()}] [ERROR] File not found: {path}")
+            return False
+
+        try:
+            if sys.platform.startswith("win"):
+                os.startfile(path)  # Windows
+            elif sys.platform.startswith("darwin"):
+                subprocess.Popen(["open", path])  # macOS
+            else:
+                subprocess.Popen(["xdg-open", path])  # Linux
+            print(f"[{timestamp()}] [PASS] Opened: {path}")
+            return True
+        except Exception as e:
+            print(f"[{timestamp()}] [ERROR] Error while opening: {e}")
+            return False
 
     if user_input.lower() == "fortune":
         fortunes = [
@@ -1422,7 +1435,7 @@ def handle_special_commands(user_input):
             # Teilen Sie die Eingabe in Befehl, Dateiname und Schlüsselwort auf
             parts = user_input.split(maxsplit=2)
             if len(parts) < 3:
-                print("Usage: search <filename> <keyword>")
+                print(f"[{timestamp()}] [INFO] Usage: search <filename> <keyword>")
                 return True
 
             _, filename, keyword = parts
