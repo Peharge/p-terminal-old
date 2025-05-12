@@ -136,6 +136,7 @@ logging.basicConfig(level=logging.INFO,
 # p-terminal Static Versions
 P_Terminal_VERSION = "1"
 PP_Terminal_VERSION = "4"
+PP_Terminal_launcher_VERSION = "4"
 Peharge_C_COMP_VERSION = "4"
 Peharge_CPP_COMP_VERSION = "4"
 P_Terminal_License = "MIT"
@@ -328,6 +329,7 @@ def get_system_info() -> dict:
         # P-Terminal-specific static versions
         info['P-Terminal Version'] = P_Terminal_VERSION
         info['PP-Terminal Version'] = PP_Terminal_VERSION
+        info['PP-Terminal Launcher Version'] = PP_Terminal_launcher_VERSION
         info['Peharge C Compiler Version'] = Peharge_C_COMP_VERSION
         info['Peharge C++ Compiler Version'] = Peharge_CPP_COMP_VERSION
         info['P-Terminal License'] = P_Terminal_License
