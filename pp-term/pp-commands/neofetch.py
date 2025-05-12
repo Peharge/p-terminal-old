@@ -357,50 +357,50 @@ def print_system_info(system_info: dict):
     title = f"PP-Terminal - {os.getlogin()}"
     line = "-" * len(title)
 
-    print(f"""
-                   ██████      
-                ████████████                                             {blue}{title}{reset}
-             ██████████████████                                          {line}
-          ████████████████████████                                       {blue}P-Terminal Version{reset}: 1
-       ██████████████████████████████                                    {blue}PP-Terminal Version{reset}: 4
-       █████████████████████████████████                                 {blue}PP-Terminal Launcher Version{reset}: 4
-       ████████████████████████████████████                              {blue}Peharge C Compiler Version{reset}: 4
-       ███████████████████████████████████████                           {blue}Peharge C++ Compiler Version{reset}: 4
-       ██████████████████████████████████████████                        {blue}P-Terminal License{reset}: MIT
-       █████████████████████████████████████████████                     {blue}MAVIS Version{reset}: 4.3
-       ████████████       █████████████████████████████                  {blue}MAVIS Launcher Version{reset}: 4
-       █████████             █████████████████████████████               {blue}MAVIS Terminal Version{reset}: 5
-       ██████                   █████████████████████████████            {blue}MAVIS License{reset}: MIT
-        ███           █████         ████████████████████████████╗        {blue}OS{reset}: {system_info['os_name']} {system_info['os_release']}    
-                   ██████████         ██████████████████████████║        {blue}Version{reset}: {system_info['os_version']}      
-                ████████████████         ███████████████████████║        {blue}Architecture{reset}: {system_info['os_arch']}       
-             ██████████████████████         ████████████████████║        {blue}Hostname{reset}: {system_info['hostname']}          
-          ████████████████████████████╗        █████████████████║        {blue}IP Address{reset}: {system_info['ip_address']}        
-        █████████████████████████████╔╝        █████████████████║        {blue}CPU{reset}: {system_info['cpu_model']}        
-       ███████████████████████████╔══╝      ████████████████████║        {blue}Architecture{reset}: {system_info['cpu_arch']} 
-       ████████████████████████╔══╝      ███████████████████████║        {blue}Max Frequency{reset}: {system_info['cpu_freq']} MHz     
-        ████████████████████╔══╝     ███████████████████████████║        {blue}RAM Usage{reset}: {system_info['ram_usage']}%     
-        █████████████████╔══╝     █████████████████████████████╔╝        {blue}RAM Total{reset}: {system_info['ram_total']} GB       
-        ███████████████╔═╝     █████████████████████████████╔══╝         {blue}PIP Version{reset}: {pip.__version__}      
-        ███████████████║    █████████████████████████████╔══╝            {blue}PowerShell Version{reset}: {get_powershell_version()}
-        ███████████████║    ██████████████████████████╔══╝               {blue}WSL Version{reset}: {get_wsl_version()}
-        ███████████████║    ███████████████████████╔══╝                  {blue}Kernelversion{reset}: {get_kernel_version()}
-        ███████████████║    ████████████████████╔══╝                     {blue}WSLg Version{reset}: {get_wslg_version()}
-        ███████████████║    █████████████████╔══╝                        {blue}MSRDC Version{reset}: {get_msrpc_version()}
-        ███████████████║    ██████████████╔══╝                           {blue}Direct3D Version{reset}: {get_direct3d_version()}
-        ███████████████║    ███████████╔══╝                              {blue}DXCore Version{reset}: {get_dxcore_version()}
-        ███████████████║    ████████╔══╝                                 {blue}Python Version{reset}: {system_info['python_version']}
-        ███████████████║    █████╔══╝                                    {blue}PowerShell Version{reset}: {subprocess.check_output(['git', '--version'], text=True).strip()}
-        ███████████████║    ██╔══╝                                       {blue}Ollama Version{reset}: {get_ollama_version()}
-        ███████████████╚═╗  ╚═╝                                          {blue}Visual Studio Version{reset}: {get_visual_studio_version()}
-        █████████████████╚╗                                              {blue}Rust Version{reset}: {subprocess.check_output(['rustc', '--version'], text=True).strip()}
-        ██████████████████║                                              
-        █████████████╔════╝                                              {show_color_palette_1()}
-        ██████████╔══╝                                                   {show_color_palette_3()}
-        ██████╔═══╝                             
-        ███╔══╝
-        ╚══╝
-""")
+    print("")
+    print(f"                   ██████")
+    print(f"                ████████████                                             {blue}{title}{reset}")
+    print(f"             ██████████████████                                          {line}")
+    print(f"          ████████████████████████                                       {blue}P-Terminal Version{reset}: 1")
+    print(f"       ██████████████████████████████                                    {blue}PP-Terminal Version{reset}: 4")
+    print(f"       █████████████████████████████████                                 {blue}PP-Terminal Launcher Version{reset}: 4")
+    print(f"       ████████████████████████████████████                              {blue}Peharge C Compiler Version{reset}: 4")
+    print(f"       ███████████████████████████████████████                           {blue}Peharge C++ Compiler Version{reset}: 4")
+    print(f"       ██████████████████████████████████████████                        {blue}P-Terminal License{reset}: MIT")
+    print(f"       █████████████████████████████████████████████                     {blue}MAVIS Version{reset}: 4.3")
+    print(f"       ████████████       █████████████████████████████                  {blue}MAVIS Launcher Version{reset}: 4")
+    print(f"       █████████             █████████████████████████████               {blue}MAVIS Terminal Version{reset}: 5")
+    print(f"       ██████                   █████████████████████████████            {blue}MAVIS License{reset}: MIT")
+    print(f"        ███           █████         ████████████████████████████╗        {blue}OS{reset}: {system_info['os_name']} {system_info['os_release']}")
+    print(f"                   ██████████         ██████████████████████████║        {blue}Version{reset}: {system_info['os_version']}")
+    print(f"                ████████████████         ███████████████████████║        {blue}Architecture{reset}: {system_info['os_arch']}")
+    print(f"             ██████████████████████         ████████████████████║        {blue}Hostname{reset}: {system_info['hostname']}")
+    print(f"          ████████████████████████████╗        █████████████████║        {blue}IP Address{reset}: {system_info['ip_address']}")
+    print(f"        █████████████████████████████╔╝        █████████████████║        {blue}CPU{reset}: {system_info['cpu_model']}")
+    print(f"       ███████████████████████████╔══╝      ████████████████████║        {blue}Architecture{reset}: {system_info['cpu_arch']}")
+    print(f"       ████████████████████████╔══╝      ███████████████████████║        {blue}Max Frequency{reset}: {system_info['cpu_freq']} MHz")
+    print(f"        ████████████████████╔══╝     ███████████████████████████║        {blue}RAM Usage{reset}: {system_info['ram_usage']}%")
+    print(f"        █████████████████╔══╝     █████████████████████████████╔╝        {blue}RAM Total{reset}: {system_info['ram_total']} GB")
+    print(f"        ███████████████╔═╝     █████████████████████████████╔══╝         {blue}PIP Version{reset}: {pip.__version__}")
+    print(f"        ███████████████║    █████████████████████████████╔══╝            {blue}PowerShell Version{reset}: {get_powershell_version()}")
+    print(f"        ███████████████║    ██████████████████████████╔══╝               {blue}WSL Version{reset}: {get_wsl_version()}")
+    print(f"        ███████████████║    ███████████████████████╔══╝                  {blue}Kernelversion{reset}: {get_kernel_version()}")
+    print(f"        ███████████████║    ████████████████████╔══╝                     {blue}WSLg Version{reset}: {get_wslg_version()}")
+    print(f"        ███████████████║    █████████████████╔══╝                        {blue}MSRDC Version{reset}: {get_msrpc_version()}")
+    print(f"        ███████████████║    ██████████████╔══╝                           {blue}Direct3D Version{reset}: {get_direct3d_version()}")
+    print(f"        ███████████████║    ███████████╔══╝                              {blue}DXCore Version{reset}: {get_dxcore_version()}")
+    print(f"        ███████████████║    ████████╔══╝                                 {blue}Python Version{reset}: {system_info['python_version']}")
+    print(f"        ███████████████║    █████╔══╝                                    {blue}PowerShell Version{reset}: {subprocess.check_output(['git', '--version'], text=True).strip()}")
+    print(f"        ███████████████║    ██╔══╝                                       {blue}Ollama Version{reset}: {get_ollama_version()}")
+    print(f"        ███████████████╚═╗  ╚═╝                                          {blue}Visual Studio Version{reset}: {get_visual_studio_version()}")
+    print(f"        █████████████████╚╗                                              {blue}Rust Version{reset}: {subprocess.check_output(['rustc', '--version'], text=True).strip()}")
+    print(f"        ██████████████████║")
+    print(f"        █████████████╔════╝                                              {show_color_palette_1()}")
+    print(f"        ██████████╔══╝                                                   {show_color_palette_3()}")
+    print(f"        ██████╔═══╝")
+    print(f"        ███╔══╝")
+    print(f"        ╚══╝")
+    print("")
 
 def show_color_palette_1():
     """Funktion zur Anzeige der 16 Farbpaletten ohne Abstände und Zahlen"""
