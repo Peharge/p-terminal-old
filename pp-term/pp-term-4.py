@@ -1890,6 +1890,66 @@ def handle_special_commands(user_input):
     if user_input == "mixedreality-settings":
         subprocess.run("start ms-settings:mixedreality-portal", shell=True, check=False)
 
+    if user_input == "display-advanced":
+        subprocess.run("start ms-settings:display-advanced", shell=True, check=False)
+
+    if user_input == "defaultbrowsersettings":
+        subprocess.run("start ms-settings:defaultbrowsersettings", shell=True, check=False)
+
+    if user_input == "maps-downloadmaps":
+        subprocess.run("start ms-settings:maps-downloadmaps", shell=True, check=False)
+
+    if user_input == "sound-devices":
+        subprocess.run("start ms-settings:sound-devices", shell=True, check=False)
+
+    if user_input == "devices-touch":
+        subprocess.run("start ms-settings:devices-touch", shell=True, check=False)
+
+    if user_input == "devices-touchpad":
+        subprocess.run("start ms-settings:devices-touchpad", shell=True, check=False)
+
+    if user_input == "devicestyping-hwkbtextsuggestions":
+        subprocess.run("start ms-settings:devicestyping-hwkbtextsuggestions", shell=True, check=False)
+
+    if user_input == "privacy-feedback":
+        subprocess.run("start ms-settings:privacy-feedback", shell=True, check=False)
+
+    if user_input == "privacy-diagnostics":
+        subprocess.run("start ms-settings:privacy-diagnostics", shell=True, check=False)
+
+    if user_input == "cortana":
+        subprocess.run("start ms-settings:cortana", shell=True, check=False)
+
+    if user_input == "cortana-permissions":
+        subprocess.run("start ms-settings:cortana-permissions", shell=True, check=False)
+
+    if user_input == "cortana-windowssearch":
+        subprocess.run("start ms-settings:cortana-windowssearch", shell=True, check=False)
+
+    if user_input == "cortana-moredetails":
+        subprocess.run("start ms-settings:cortana-moredetails", shell=True, check=False)
+
+    if user_input == "controlcenter":
+        subprocess.run("start ms-settings:controlcenter", shell=True, check=False)
+
+    if user_input == "mobile-devices":
+        subprocess.run("start ms-settings:mobile-devices", shell=True, check=False)
+
+    if user_input == "fonts":
+        subprocess.run("start ms-settings:fonts", shell=True, check=False)
+
+    if user_input == "wheel":
+        subprocess.run("start ms-settings:wheel", shell=True, check=False)
+
+    if user_input == "appsfeatures-app?PFN=<YourAppPFN>":
+        subprocess.run("start ms-settings:appsfeatures-app?PFN=YourAppPFN", shell=True, check=False)
+
+    if user_input == "backup-deprecated":
+        subprocess.run("start ms-settings:backup", shell=True, check=False)
+
+    if user_input == "provisioning":
+        subprocess.run("start ms-settings:provisioning", shell=True, check=False)
+
     # Prozessliste
     if user_input.lower() == "ps":
         for proc in psutil.process_iter(['pid', 'name']):
