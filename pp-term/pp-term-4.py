@@ -2857,6 +2857,54 @@ def search_websites(command):
         print(f"\n[{timestamp()}] [INFO] {len(links)} results found.\n")
 
 
+def search_websites_all(command, num_results=50, results_per_page=10):
+    """Sucht mit DuckDuckGo nach Websites, die mit dem Keyword in Zusammenhang stehen, und gibt Links zurück"""
+    base_url = "https://html.duckduckgo.com/html/"
+    headers = {'User-Agent': 'Mozilla/5.0'}
+    collected = []
+
+    print(f"\n[{timestamp()}] [INFO] Searching for: '{command}' ...\n")
+
+    for offset in range(0, num_results, results_per_page):
+        params = {'q': command, 's': str(offset)}
+        try:
+            response = requests.post(base_url, data=params, headers=headers, timeout=10)
+            response.raise_for_status()
+        except Exception as e:
+            print(f"[{timestamp()}] [ERROR] Request failed at offset {offset}: {e}")
+            break
+
+        soup = BeautifulSoup(response.text, 'html.parser')
+        results = soup.find_all('div', class_='result')
+        if not results:
+            print(f"[{timestamp()}] [WARN] Keine weiteren Ergebnisse bei Offset {offset}.")
+            break
+
+        for result in results:
+            link_tag = result.find('a', class_='result__a', href=True)
+            desc_tag = result.find('a', class_='result__snippet') or result.find('div', class_='result__snippet')
+            url = link_tag['href'] if link_tag else None
+            snippet = desc_tag.get_text(strip=True) if desc_tag else 'Keine Beschreibung verfügbar.'
+
+            if url and (url, snippet) not in collected:
+                collected.append((url, snippet))
+                idx = len(collected)
+                print(f"{blue}[{idx}]{reset} {url}\n{snippet}\n")
+
+            if len(collected) >= num_results:
+                break
+        if len(collected) >= num_results:
+            break
+
+    total = len(collected)
+    if total == 0:
+        print(f"[{timestamp()}] [ERROR] Keine Ergebnisse gefunden.")
+    else:
+        print(f"\n[{timestamp()}] [INFO] {total} Ergebnisse gesammelt.\n")
+
+    return collected
+
+
 def search_github(command):
     """Durchsucht GitHub mit DuckDuckGo nach Repositories oder Seiten, die mit dem Schlüsselwort in Zusammenhang stehen, und gibt Links zurück"""
     url = "https://html.duckduckgo.com/html/"
@@ -7583,6 +7631,10 @@ def main():
             elif user_input.startswith("ps "):
                 user_input = user_input[3:].strip()
                 search_websites(user_input)
+
+            elif user_input.startswith("ps-all "):
+                user_input = user_input[7:].strip()
+                search_websites_all(user_input)
 
             elif user_input.startswith("ps-github "):
                 user_input = user_input[10:].strip()
