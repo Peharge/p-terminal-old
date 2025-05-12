@@ -782,7 +782,7 @@ def handle_special_commands(user_input):
             print(f"[{timestamp()}] [ERROR] executing Git command: {e}")
         return True
     
-    if user_input.lower() == "git ls full":
+    if user_input.lower() == "git ls all":
 
         command = f"git log --graph --all --color --decorate --pretty=format:'%C(yellow)%h%Creset - %Cgreen%ad%Creset - %s %C(red)[%an]%Creset' --date=short"
 
@@ -6865,15 +6865,18 @@ def get_cool_23_pin():
 
 COMMANDS = [
     "p", "p git", "p git mavis", "p git mavis-web", "p git simon", "p htop", "p ls", "p ls mavis",
-    "ps ls mavis-web", "p ls simon", "p simon", "p wsl", "p pip", "p models", "p ubuntu",
-    "pp", "pp-cpp", "pp-c", "pp-p", "ps", "ps-github", "ps-huggingface", "ps-ollama", "ps-stackoverflow",
+    "ps ls mavis-web", "p ls simon", "p simon", "p wsl", "p pip", "p models", "p ubuntu", "gitk", "git ls all", "git ls hole",
+    "pp", "pp-cpp", "pp-c", "pp-p", "ps", "ps-github", "ps-huggingface", "ps-ollama", "ps-stackoverflow", "nano",
+    "htop", "btop", "atop", "glances", "ncdu", "fzf", "bat", "gitui", "lazygit", "starship",
+    "emacs", "vim", "nvim", "nano", "kate", "gedit", "geany", "code",
+    "vscodium", "eclipse", "idea", "pycharm", "atom", "sublime_text", "kakoune", "lite-xl",
     "ps-arxiv", "pa", "run mavis main", "lx", "lx-c", "lx-p", "lx-cpp-c", "lx-c-c", "lx-p-c", "ubuntu", "ubuntu-c",
     "ubuntu-p", "debian", "debian-c", "debian-p", "kali", "kali-c", "kali-p", "hack", "arch", "arch-c",
     "arch-p", "opensuse", "opensuse-c", "opensuse-p", "mint", "mint-c", "mint-p", "fedora", "fedora-c",
     "fedora-p", "redhat", "redhat-c", "redhat-p", "sles", "sles-c", "sles-p", "pengwin", "pengwin-c",
     "pengwin-p", "oracle", "oracle-c", "oracle-p", "cd", "cls", "clear", "dir", "ls", "mkdir", "rmdir",
     "del", "rm", "echo", "type", "cat", "exit", "alpine", "scoop", "choco", "winget", "speedtest", "kill",
-    "download", "cputemp", "chucknorris", "theme", "cleantemp", "selfupdate", "tree", "py", "ask",
+    "download", "cputemp", "chucknorris", "theme", "cleantemp", "selfupdate", "tree", "py", "ask", "pa", "pa google.com"
     "weather", "whoami", "hostname", "ip", "os", "time", "date", "open", "fortune", "history", "search",
     "zip", "unzip", "sysinfo", "clip set", "clip get", "ping", "emptytrash", "launch", "doctor", "hole doctor",
     "mavis env install", "install mavis env", "install mavis3", "install mavis3.3", "install mavis4",
