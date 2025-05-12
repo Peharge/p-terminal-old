@@ -2657,7 +2657,7 @@ exit /b
     call :Log "INFO" "Checking drivers..."
 
     rem PowerShell Befehl, um die Treiberinformationen im CSV-Format zu exportieren
-    powershell -Command "Get-WmiObject Win32_PnPSignedDriver | Select-Object DeviceName, DriverVersion, Manufacturer | Export-Csv -Path temp_driver_check.csv -NoTypeInformation -Encoding UTF8"
+    powershell -Command "Get-CimInstance Win32_PnPSignedDriver -Property DeviceName,DriverVersion,Manufacturer | ForEach-Object { '$($_.DeviceName);$($_.DriverVersion);$($_.Manufacturer)' } > temp_driver_check.txt"
 
     rem Überprüfen, ob die Datei existiert und gelesen werden kann
     if exist temp_driver_check.csv (
