@@ -8,6 +8,8 @@
 
 Download the [pp-term.bat](https://github.com/Peharge/p-terminal/blob/main/pp-term/run-pp-term.bat) file and double-click it. You're ready to go! Have fun with pp-terminal and you can always start it with pp-term.exe after installation. If you want, you can further enhance your terminal with PP Terminal Themes/Pins: [PP Terminal Themes/Pins](./pp-term/THEMES.md)
 
+Old (PP-Terminal Launcher 3), but with PP-Terminal Launcher 4, no additional steps are required; it simply checks more packages:
+
 ```bash
 Aktive Codepage: 65001.
 
