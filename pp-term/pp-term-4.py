@@ -7756,6 +7756,9 @@ def main():
             elif user_input.startswith("powershell "):
                 run_command(user_input, shell=True)
 
+            elif user_input.startswith("cmd "):
+                run_command(user_input, shell=True)
+
             elif user_input.startswith("ps "):
                 user_input = user_input[3:].strip()
                 search_websites(user_input)
