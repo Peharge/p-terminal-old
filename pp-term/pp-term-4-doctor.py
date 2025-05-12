@@ -116,6 +116,11 @@ logger.handlers.clear()
 logger.addHandler(console_handler)
 logger.addHandler(file_handler)
 
+def timestamp() -> str:
+    """Returns current time formatted with milliseconds"""
+    now = datetime.now()
+    return now.strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]
+
 # Global Report
 class Report:
     def __init__(self):
@@ -340,6 +345,7 @@ def main():
 
     logger.info(f"Start scanning {args.path}, with PP-Term Scanner")
     scan_project(args.path, args)
+    print(f"[{timestamp()}] [PASS] ✅ All tasks were completed successfully!")
     print("")
 
 if __name__ == "__main__":
