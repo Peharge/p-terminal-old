@@ -308,6 +308,18 @@
         "run vs": "pp-commands\\run-vs.py",  # new
         "p map": "pp-commands\\p-map.py", # new
         "p weather": "pp-commands\\p-weather.py", # new
+        "p you": "pp-commands\\you.py",  # new
+        "p qwen": "pp-commands\\qwen.py",  # new
+        "p poe": "pp-commands\\poe.py",  # new
+        "p perplexity": "pp-commands\\perplexity.py",  # new
+        "p mistral": "pp-commands\\mistral.py",  # new
+        "p jasper": "pp-commands\\jasper.py",  # new
+        "p grok": "pp-commands\\grok.py",  # new
+        "p gemini": "pp-commands\\gemini.py",  # new
+        "p deepseek": "pp-commands\\deepseek.py",  # new
+        "p copy": "pp-commands\\copy.py",  # new
+        "p claude": "pp-commands\\claude.py",  # new
+        "p chatgpt": "pp-commands\\chatgpt.py",  # new
         "run mavis main": "pp-commands\\run-mavis-main.py", # new
         "htop": "pp-commands\\htop.py",  # new
         "bashtop": "pp-commands\\bashtop.py", # new
