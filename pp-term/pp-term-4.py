@@ -7761,6 +7761,7 @@ def main():
                 run_command(user_input, shell=True)
 
             elif user_input.startswith("cmd "):
+                user_input = user_input[4:].strip()
                 run_command(user_input, shell=True)
 
             elif user_input.startswith("ps "):
