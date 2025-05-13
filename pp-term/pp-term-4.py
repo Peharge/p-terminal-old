@@ -736,7 +736,8 @@ def handle_special_commands(user_input):
         "mousepad": "pp-commands\\mousepad.py",  # new
         "xed": "pp-commands\\xed.py",  # new
         "atom": "pp-commands\\atom.py",  # new
-        "lite-xl": "pp-commands\\lite-xl.py"  # new
+        "lite-xl": "pp-commands\\lite-xl.py",  # new
+        "weather": "pp-commands\\weather.py"  # new
     }
 
     # Custom command launcher
@@ -1399,7 +1400,7 @@ def handle_special_commands(user_input):
         print(today.strftime("%Y-%m-%d"))
         return True
 
-    if user_input.lower() == "weather":
+    if user_input.lower() == "weather easy":
         get_weather()
         return True
 
