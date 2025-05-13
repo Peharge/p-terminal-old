@@ -534,6 +534,7 @@ def handle_special_commands(user_input):
         "models ls": "pp-commands\\models-ls.py",  # new
         "p models": "pp-commands\\p-models-ls.py",  # new
         "p models ls": "pp-commands\\p-models-ls.py",  # new
+        "p github p-terminal": "pp-commands\\p-github-p-terminal.py",  # new
         "p github mavis": "pp-commands\\p-github-mavis.py",  # new
         "p github commits": "pp-commands\\p-github-commits.py",  # new
         "p github issues": "pp-commands\\p-github-issues.py",  # new
@@ -566,7 +567,7 @@ def handle_special_commands(user_input):
         "p google.com": "pp-commands\\p-google.py",  # new
         "p ollama.com": "pp-commands\\p-ollama.py",  # new
         "p huggingface.com": "pp-commands\\p-huggingface.py",  # new
-        "p mavis": "pp-commands\\p-mavis-git.py",  # new
+        "p mavis": "pp-commands\\p-github-mavis.py",  # new
         "p mavis.com": "pp-commands\\p-mavis.py",  # new
         "p simon": "pp-commands\\p-simon.py",  # new
         "p simon.com": "pp-commands\\p-simon-git.py", # new
