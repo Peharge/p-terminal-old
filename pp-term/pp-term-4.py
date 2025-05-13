@@ -7129,18 +7129,19 @@ def find_active_env():
 
 def get_main_pin(current_dir, env_indicator):
     return (
-        f"\n{green}┌──({reset}{blue}{getpass.getuser()}"
+        f"\n{white}┌──({reset}{blue}{getpass.getuser()}"
         + colored("㋐", attrs=["bold"])
-        + f"{blue}Peharge{reset}{green})-[{reset}{current_dir}{green}]-{reset}{env_indicator}"
-        f"\n{green}└─{reset}{blue}${reset} "
+        + f"{blue}Peharge{reset}{white})-[{reset}{current_dir}{white}]-{reset}{env_indicator}"
+        f"\n{white}└─{reset}{blue}${reset} "
     )
 
 
-def get_main_3_pin(current_dir, env_indicator_3):
-    print("")
-
+def get_main_3_pin(current_dir, env_indicator_5):
     return (
-        f"{env_indicator_3} {blue}PP{reset} {current_dir}:~{blue}${reset} "
+        f"\n{green}┌──({reset}{blue}{getpass.getuser()}"
+        + colored("㋐", attrs=["bold"])
+        + f"{blue}Peharge{reset}{green})-[{reset}{current_dir}{green}]-{reset}{env_indicator_5}"
+        f"\n{green}└─{reset}{blue}${reset} "
     )
 
 
@@ -7148,16 +7149,33 @@ def get_main_4_pin(current_dir, env_indicator_3):
     print("")
 
     return (
-        f"{env_indicator_3} {red}PP{reset} {current_dir}:~{red}#{reset} "
+        f"{env_indicator_3} {blue}PP{reset} {current_dir}:~{blue}${reset} "
     )
 
 
-def get_evil_pin(current_dir, env_indicator_4):
+def get_evil_pin(current_dir, env_indicator):
+    return (
+        f"\n{white}┌──({reset}{red}root"
+        + colored("㋐", attrs=["bold"])
+        + f"{red}Peharge{reset}{white})-[{reset}{current_dir}{white}]-{reset}{env_indicator}"
+        f"\n{white}└─{reset}{red}#{reset} "
+    )
+
+
+def get_evil_3_pin(current_dir, env_indicator_4):
     return (
         f"\n{blue}┌──({reset}{red}root"
         + colored("㋐", attrs=["bold"])
         + f"{red}Peharge{reset}{blue})-[{reset}{current_dir}{blue}]-{reset}{env_indicator_4}"
         f"\n{blue}└─{reset}{red}#{reset} "
+    )
+
+
+def get_evil_4_pin(current_dir, env_indicator_3):
+    print("")
+
+    return (
+        f"{env_indicator_3} {red}PP{reset} {current_dir}:~{red}#{reset} "
     )
 
 
@@ -8213,9 +8231,9 @@ def main():
                 display_env_path = active_env_path
 
             env_indicator = (
-                f"{green}[{reset}{display_env_path}{green}]{reset}"
+                f"{white}[{reset}{display_env_path}{white}]{reset}"
                 if env_active else
-                f"{green}[{reset}{red}no venv recorded{reset}{green}]{reset}"
+                f"{white}[{reset}{red}no venv recorded{reset}{white}]{reset}"
             )
 
             env_indicator_3 = (
@@ -8230,6 +8248,12 @@ def main():
                 f"{blue}[{reset}{red}no venv recorded{reset}{blue}]{reset}"
             )
 
+            env_indicator_5 = (
+                f"{green}[{reset}{display_env_path}{green}]{reset}"
+                if env_active else
+                f"{green}[{reset}{red}no venv recorded{reset}{green}]{reset}"
+            )
+
             # PIN-Design je nach state
             if state == "main":
                 setup_autocomplete()
@@ -8240,7 +8264,7 @@ def main():
                 history.append(user_input)
             elif state == "main-3":
                 setup_autocomplete()
-                pin = get_main_3_pin(current_dir, env_indicator_3)
+                pin = get_main_3_pin(current_dir, env_indicator_5)
                 print(pin, end='')
                 user_input = input().strip()
                 history.append(user_input)
@@ -8252,65 +8276,77 @@ def main():
                 history.append(user_input)
             elif state == "evil":
                 setup_autocomplete()
-                pin = get_evil_pin(current_dir, env_indicator_4)
+                pin = get_evil_pin(current_dir, env_indicator)
+                print(pin, end='')
+                user_input = input().strip()
+                history.append(user_input)
+            elif state == "evil-3":
+                setup_autocomplete()
+                pin = get_evil_3_pin(current_dir, env_indicator_4)
+                print(pin, end='')
+                user_input = input().strip()
+                history.append(user_input)
+            elif state == "evil-4":
+                setup_autocomplete()
+                pin = get_evil_4_pin(current_dir, env_indicator_3)
                 print(pin, end='')
                 user_input = input().strip()
                 history.append(user_input)
             elif state == "cool":
                 pin = get_cool_pin()
                 user_input = input_line(pin)
-            elif state == "cool_3":
+            elif state == "cool-3":
                 pin = get_cool_3_pin()
                 user_input = input_line(pin)
-            elif state == "cool_4":
+            elif state == "cool-4":
                 pin = get_cool_4_pin()
                 user_input = input_line(pin)
-            elif state == "cool_5":
+            elif state == "cool-5":
                 pin = get_cool_5_pin()
                 user_input = input_line(pin)
-            elif state == "cool_6":
+            elif state == "cool-6":
                 pin = get_cool_6_pin()
                 user_input = input_line(pin)
-            elif state == "cool_8":
+            elif state == "cool-8":
                 pin = get_cool_8_pin()
                 user_input = input_line(pin)
-            elif state == "cool_9":
+            elif state == "cool-9":
                 pin = get_cool_9_pin()
                 user_input = input_line(pin)
-            elif state == "cool_10":
+            elif state == "cool-10":
                 pin = get_cool_10_pin()
                 user_input = input_line(pin)
-            elif state == "cool_11":
+            elif state == "cool-11":
                 pin = get_cool_11_pin()
                 user_input = input_line(pin)
-            elif state == "cool_12":
+            elif state == "cool-12":
                 pin = get_cool_12_pin()
                 user_input = input_line(pin)
-            elif state == "cool_13":
+            elif state == "cool-13":
                 pin = get_cool_13_pin()
                 user_input = input_line(pin)
-            elif state == "cool_14":
+            elif state == "cool-14":
                 pin = get_cool_14_pin()
                 user_input = input_line(pin)
-            elif state == "cool_15":
+            elif state == "cool-15":
                 pin = get_cool_15_pin()
                 user_input = input_line(pin)
-            elif state == "cool_16":
+            elif state == "cool-16":
                 pin = get_cool_16_pin()
                 user_input = input_line(pin)
-            elif state == "cool_18":
+            elif state == "cool-18":
                 pin = get_cool_18_pin()
                 user_input = input_line(pin)
-            elif state == "cool_19":
+            elif state == "cool-19":
                 pin = get_cool_19_pin()
                 user_input = input_line(pin)
-            elif state == "cool_20":
+            elif state == "cool-20":
                 pin = get_cool_20_pin()
                 user_input = input_line(pin)
-            elif state == "cool_21":
+            elif state == "cool-21":
                 pin = get_cool_21_pin()
                 user_input = input_line(pin)
-            elif state == "cool_23":
+            elif state == "cool-23":
                 pin = get_cool_23_pin()
                 user_input = input_line(pin)
             else:
@@ -8336,36 +8372,44 @@ def main():
                 state = "evil"
                 continue
 
+            elif user_input.lower() == "pin evil-3":
+                state = "evil-3"
+                continue
+
+            elif user_input.lower() == "pin evil-4":
+                state = "evil-4"
+                continue
+
             elif user_input.lower() == "pin cool":
                 state = "cool"
                 continue
 
             elif user_input.lower() == "pin cool-3":
-                state = "cool_3"
+                state = "cool-3"
                 continue
 
             elif user_input.lower() == "pin cool-4":
-                state = "cool_4"
+                state = "cool-4"
                 continue
 
             elif user_input.lower() == "pin cool-5":
-                state = "cool_5"
+                state = "cool-5"
                 continue
 
             elif user_input.lower() == "pin cool-6":
-                state = "cool_6"
+                state = "cool-6"
                 continue
 
             elif user_input.lower() == "pin cool-8":
-                state = "cool_8"
+                state = "cool-8"
                 continue
 
             elif user_input.lower() == "pin cool-9":
-                state = "cool_9"
+                state = "cool-9"
                 continue
 
             elif user_input.lower() == "pin cool-10":
-                state = "cool_10"
+                state = "cool-10"
                 continue
 
             elif user_input.lower() == "pin cool-11":
@@ -8373,43 +8417,43 @@ def main():
                 continue
 
             elif user_input.lower() == "pin cool-12":
-                state = "cool_12"
+                state = "cool-12"
                 continue
 
             elif user_input.lower() == "pin cool-13":
-                state = "cool_13"
+                state = "cool-13"
                 continue
 
             elif user_input.lower() == "pin cool-14":
-                state = "cool_14"
+                state = "cool-14"
                 continue
 
             elif user_input.lower() == "pin cool-15":
-                state = "cool_15"
+                state = "cool-15"
                 continue
 
             elif user_input.lower() == "pin cool-16":
-                state = "cool_16"
+                state = "cool-16"
                 continue
 
             elif user_input.lower() == "pin cool-18":
-                state = "cool_18"
+                state = "cool-18"
                 continue
 
             elif user_input.lower() == "pin cool-19":
-                state = "cool_19"
+                state = "cool-19"
                 continue
 
             elif user_input.lower() == "pin cool-20":
-                state = "cool_20"
+                state = "cool-20"
                 continue
 
             elif user_input.lower() == "pin cool-21":
-                state = "cool_21"
+                state = "cool-21"
                 continue
 
             elif user_input.lower() == "pin cool-23":
-                state = "cool_23"
+                state = "cool-23"
                 continue
 
             elif user_input.startswith("pp "):
