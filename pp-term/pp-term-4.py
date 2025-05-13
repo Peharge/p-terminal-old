@@ -636,6 +636,8 @@ def handle_special_commands(user_input):
         "fun calculator": "pp-commands\\fun-calc.py",  # new
         "fun calc": "pp-commands\\fun-calc.py",  # new
         "fun install calculator": "pp-commands\\fun-install-calc.py",  # new
+        "fun matrix": "pp-commands\\fun-matrix.py",  # new
+        "fun matrix green": "pp-commands\\fun-matrix-green.py",  # new
         "install cool pin": "pp-commands\\theme-pcc.py", # new
         "install cool pin-3": "pp-commands\\theme-pcc-3.py",  # new
         "install cool pin-4": "pp-commands\\theme-pcc-4.py",  # new
