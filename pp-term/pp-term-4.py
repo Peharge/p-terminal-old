@@ -8061,6 +8061,7 @@ def main():
                 setup_autocomplete()
                 pin = get_main_pin(current_dir, env_indicator)
                 print(pin, end='')
+                # print(pin, end='', flush=True)
                 user_input = input().strip()
                 history.append(user_input)
             elif state == "main-3":
