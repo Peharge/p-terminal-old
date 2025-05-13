@@ -182,6 +182,9 @@
         "p git pytorch": "pp-commands\\p-git-pytorch.py",  # new
         "p git tensorflow": "pp-commands\\p-git-tensorflow.py",  # new
         "p git jax": "pp-commands\\p-git-jax.py",  # new
+        "p git ollama": "pp-commands\\p-git-ollama.py",  # new
+        "p git transformer": "pp-commands\\p-git-transformer.py",  # new
+        "p git slicer": "pp-commands\\p-git-slicer.py",  # new
         "p ls": "pp-commands\\p-ls.py", # new
         "p p-terminal ls": "pp-commands\\p-ls.py",  # new
         "p ls mavis": "pp-commands\\p-ls-mavis.py",  # new
