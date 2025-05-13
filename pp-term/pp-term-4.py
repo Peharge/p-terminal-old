@@ -529,7 +529,8 @@ def handle_special_commands(user_input):
         "p git transformer": "pp-commands\\p-git-transformer.py",  # new
         "p git slicer": "pp-commands\\p-git-slicer.py",  # new
         "p ls": "pp-commands\\p-ls.py", # new
-        "p p-terminal ls": "pp-commands\\p-ls.py",  # new
+        "p ls pp-term": "pp-commands\\p-ls.py",  # new
+        "p ls p-terminal": "pp-commands\\p-ls-p-terminal.py",  # new
         "p ls mavis": "pp-commands\\p-ls-mavis.py",  # new
         "p ls mavis-web": "pp-commands\\p-ls-mavis-web.py",  # new
         "p ls simon": "pp-commands\\p-ls-simon.py",  # new
