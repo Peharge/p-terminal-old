@@ -640,6 +640,7 @@ def handle_special_commands(user_input):
         "fun matrix green": "pp-commands\\fun-matrix-green.py",  # new
         "fun aquarium": "pp-commands\\fun-asciiquarium.py",  # new
         "fun aqua": "pp-commands\\fun-asciiquarium.py",  # new
+        "fun bb": "pp-commands\\fun-bb.py",  # new
         "install cool pin": "pp-commands\\theme-pcc.py", # new
         "install cool pin-3": "pp-commands\\theme-pcc-3.py",  # new
         "install cool pin-4": "pp-commands\\theme-pcc-4.py",  # new
