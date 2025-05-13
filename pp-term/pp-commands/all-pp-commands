@@ -376,7 +376,7 @@
         "code": "pp-commands\\code.py", # new
         "micro": "pp-commands\\micro.py", # new
         "gedit": "pp-commands\\gedit.py", # new
-        "update": "pp-commands\\updade.py", # new
+        "update": "pp-commands\\update.py", # new
         "update pp-term": "pp-commands\\updade.py",  # new
         "kakoune": "pp-commands\\kakoune.py",  # new
         "helix": "pp-commands\\helix.py",  # new
