@@ -143,7 +143,7 @@ class BrowserWindow(QMainWindow):
 
         # Erstellt eine WebEngine-Ansicht und lädt die URL
         self.browser = QWebEngineView()
-        self.browser.setUrl(QUrl("https://peharge.github.io/MAVIS-web/"))
+        self.browser.setUrl(QUrl("https://github.com/Peharge/MAVIS"))
 
         # Stellt sicher, dass die URL vollständig geladen wird
         self.browser.loadFinished.connect(self.on_load_finished)

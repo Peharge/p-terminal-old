@@ -132,7 +132,7 @@ class BrowserWindow(QMainWindow):
         super().__init__()
 
         # Setzt den Titel und die Größe des Fensters
-        self.setWindowTitle("P-Term GitHub")
+        self.setWindowTitle("P-Term MAVIS")
         self.setGeometry(100, 100, 1024, 768)
 
         user = os.getenv("USERNAME") or os.getenv("USER")
@@ -143,7 +143,7 @@ class BrowserWindow(QMainWindow):
 
         # Erstellt eine WebEngine-Ansicht und lädt die URL
         self.browser = QWebEngineView()
-        self.browser.setUrl(QUrl("https://github.com/Peharge/p-terminal"))
+        self.browser.setUrl(QUrl("https://github.com/Peharge/MAVIS"))
 
         # Stellt sicher, dass die URL vollständig geladen wird
         self.browser.loadFinished.connect(self.on_load_finished)
