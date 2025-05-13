@@ -97,13 +97,13 @@ def open_github_desktop():
     github_desktop_path = find_github_desktop()
 
     if github_desktop_path is None:
-        print("[{timestamp()}] [ERROR] GitHub Desktop was not found. Please check the installation path.")
+        print(f"[{timestamp()}] [ERROR] GitHub Desktop was not found. Please check the installation path.")
         sys.exit(1)
 
     # Try opening GitHub Desktop
     try:
         subprocess.run([github_desktop_path], check=True)
-        print("[{timestamp()}] [INFO] GitHub Desktop opened successfully.")
+        print(f"[{timestamp()}] [INFO] GitHub Desktop opened successfully.")
     except subprocess.CalledProcessError as e:
         print(f"[{timestamp()}] [ERROR] Error opening GitHub Desktop: {e}")
         sys.exit(1)
