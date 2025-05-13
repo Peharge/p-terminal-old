@@ -2569,6 +2569,8 @@ SETTINGS_PATH = os.path.expandvars(
 BACKUP_SUFFIX = ".bak"
 THEMES_PATH = f'C:\\Users\\{os.getlogin()}\\p-terminal\\pp-term\\themes.json'
 
+# C:\Users\julia\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\RoamingState für Bilder
+
 # Vordefinierte Farbschemata
 COLOR_SCHEMES = {
     "dark": {
