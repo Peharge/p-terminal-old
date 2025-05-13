@@ -7888,9 +7888,48 @@ COMMANDS = [
 history = []
 history_index = -1
 
+
+import readline
+
+def setup_autocomplete(commands=None):
+    if commands is None:
+        commands = COMMANDS  # Fallback auf Standardliste
+
+    def completer(text, state):
+        buffer = readline.get_line_buffer()
+        tokens = buffer.strip().split()
+
+        # Das aktuelle (letzte) Wort für die Autovervollständigung nehmen
+        if tokens:
+            current_text = tokens[-1]
+        else:
+            current_text = ""
+
+        # Case-insensitive Matching
+        current_text_lower = current_text.lower()
+
+        # Nur Befehle vorschlagen, die mit dem eingegebenen Text anfangen
+        if state == 0:
+            completer.matches = [
+                cmd for cmd in commands if cmd.lower().startswith(current_text_lower)
+            ]
+
+        # Rückgabe der Treffer nacheinander
+        try:
+            return completer.matches[state]
+        except IndexError:
+            return None
+
+    readline.set_completer(completer)
+    readline.parse_and_bind("tab: complete")
+    readline.parse_and_bind("set show-all-if-ambiguous on")
+    readline.parse_and_bind("set completion-ignore-case on")
+
+
 def get_completions(prefix):
     """Gibt alle COMMANDS zurück, die mit prefix anfangen (für tab-Vervollständigung)."""
     return [cmd for cmd in COMMANDS if cmd.startswith(prefix)]
+
 
 def input_line(prompt):
     """Lesen einer Zeile mit History (Up/Down) und Tab-Completion."""
@@ -8029,55 +8068,89 @@ def main():
 
             # PIN-Design je nach state
             if state == "main":
+                setup_autocomplete()
                 pin = get_main_pin(current_dir, env_indicator)
+                print(pin, end='')
+                user_input = input().strip()
+                history.append(user_input)
             elif state == "main-3":
+                setup_autocomplete()
                 pin = get_main_3_pin(current_dir, env_indicator_3)
+                print(pin, end='')
+                user_input = input().strip()
+                history.append(user_input)
             elif state == "main-4":
+                setup_autocomplete()
                 pin = get_main_4_pin(current_dir, env_indicator_3)
+                print(pin, end='')
+                user_input = input().strip()
+                history.append(user_input)
             elif state == "evil":
+                setup_autocomplete()
                 pin = get_evil_pin(current_dir, env_indicator_4)
+                print(pin, end='')
+                user_input = input().strip()
+                history.append(user_input)
             elif state == "cool":
                 pin = get_cool_pin()
+                user_input = input_line(pin)
             elif state == "cool_3":
                 pin = get_cool_3_pin()
+                user_input = input_line(pin)
             elif state == "cool_4":
                 pin = get_cool_4_pin()
+                user_input = input_line(pin)
             elif state == "cool_5":
                 pin = get_cool_5_pin()
+                user_input = input_line(pin)
             elif state == "cool_6":
                 pin = get_cool_6_pin()
+                user_input = input_line(pin)
             elif state == "cool_8":
                 pin = get_cool_8_pin()
+                user_input = input_line(pin)
             elif state == "cool_9":
                 pin = get_cool_9_pin()
+                user_input = input_line(pin)
             elif state == "cool_10":
                 pin = get_cool_10_pin()
+                user_input = input_line(pin)
             elif state == "cool_11":
                 pin = get_cool_11_pin()
+                user_input = input_line(pin)
             elif state == "cool_12":
                 pin = get_cool_12_pin()
+                user_input = input_line(pin)
             elif state == "cool_13":
                 pin = get_cool_13_pin()
+                user_input = input_line(pin)
             elif state == "cool_14":
                 pin = get_cool_14_pin()
+                user_input = input_line(pin)
             elif state == "cool_15":
                 pin = get_cool_15_pin()
+                user_input = input_line(pin)
             elif state == "cool_16":
                 pin = get_cool_16_pin()
+                user_input = input_line(pin)
             elif state == "cool_18":
                 pin = get_cool_18_pin()
+                user_input = input_line(pin)
             elif state == "cool_19":
                 pin = get_cool_19_pin()
+                user_input = input_line(pin)
             elif state == "cool_20":
                 pin = get_cool_20_pin()
+                user_input = input_line(pin)
             elif state == "cool_21":
                 pin = get_cool_21_pin()
+                user_input = input_line(pin)
             elif state == "cool_23":
                 pin = get_cool_23_pin()
+                user_input = input_line(pin)
             else:
                 pin = get_main_pin(current_dir, env_indicator)
-
-            user_input = input_line(pin)
+                user_input = input_line(pin)
 
             if handle_special_commands(user_input):
                 continue
