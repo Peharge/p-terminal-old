@@ -100,6 +100,144 @@ import msvcrt
 from pathlib import Path
 import code
 from datetime import datetime
+from deep_translator import GoogleTranslator
+
+# Unterstützte Sprachen (deep-translator nutzt ISO-Codes)
+languages = {
+    "afrikaans": "af",
+    "albanian": "sq",
+    "amharic": "am",
+    "arabic": "ar",
+    "armenian": "hy",
+    "assamese": "as",
+    "aymara": "ay",
+    "azerbaijani": "az",
+    "bambara": "bm",
+    "basque": "eu",
+    "belarusian": "be",
+    "bengali": "bn",
+    "bhojpuri": "bho",
+    "bosnian": "bs",
+    "bulgarian": "bg",
+    "catalan": "ca",
+    "cebuano": "ceb",
+    "chichewa": "ny",
+    "chinese (simplified)": "zh-CN",
+    "chinese (traditional)": "zh-TW",
+    "corsican": "co",
+    "croatian": "hr",
+    "czech": "cs",
+    "danish": "da",
+    "dhivehi": "dv",
+    "dogri": "doi",
+    "dutch": "nl",
+    "english": "en",
+    "esperanto": "eo",
+    "estonian": "et",
+    "ewe": "ee",
+    "filipino": "tl",
+    "finnish": "fi",
+    "french": "fr",
+    "frisian": "fy",
+    "galician": "gl",
+    "georgian": "ka",
+    "german": "de",
+    "greek": "el",
+    "guarani": "gn",
+    "gujarati": "gu",
+    "haitian creole": "ht",
+    "hausa": "ha",
+    "hawaiian": "haw",
+    "hebrew": "iw",
+    "hindi": "hi",
+    "hmong": "hmn",
+    "hungarian": "hu",
+    "icelandic": "is",
+    "igbo": "ig",
+    "ilocano": "ilo",
+    "indonesian": "id",
+    "irish": "ga",
+    "italian": "it",
+    "japanese": "ja",
+    "javanese": "jw",
+    "kannada": "kn",
+    "kazakh": "kk",
+    "khmer": "km",
+    "kinyarwanda": "rw",
+    "konkani": "gom",
+    "korean": "ko",
+    "krio": "kri",
+    "kurdish (kurmanji)": "ku",
+    "kurdish (sorani)": "ckb",
+    "kyrgyz": "ky",
+    "lao": "lo",
+    "latin": "la",
+    "latvian": "lv",
+    "lingala": "ln",
+    "lithuanian": "lt",
+    "luganda": "lg",
+    "luxembourgish": "lb",
+    "macedonian": "mk",
+    "maithili": "mai",
+    "malagasy": "mg",
+    "malay": "ms",
+    "malayalam": "ml",
+    "maltese": "mt",
+    "maori": "mi",
+    "marathi": "mr",
+    "meiteilon (manipuri)": "mni-Mtei",
+    "mizo": "lus",
+    "mongolian": "mn",
+    "myanmar": "my",
+    "nepali": "ne",
+    "norwegian": "no",
+    "odia (oriya)": "or",
+    "oromo": "om",
+    "pashto": "ps",
+    "persian": "fa",
+    "polish": "pl",
+    "portuguese": "pt",
+    "punjabi": "pa",
+    "quechua": "qu",
+    "romanian": "ro",
+    "russian": "ru",
+    "samoan": "sm",
+    "sanskrit": "sa",
+    "scots gaelic": "gd",
+    "sepedi": "nso",
+    "serbian": "sr",
+    "sesotho": "st",
+    "shona": "sn",
+    "sindhi": "sd",
+    "sinhala": "si",
+    "slovak": "sk",
+    "slovenian": "sl",
+    "somali": "so",
+    "spanish": "es",
+    "sundanese": "su",
+    "swahili": "sw",
+    "swedish": "sv",
+    "tajik": "tg",
+    "tamil": "ta",
+    "tatar": "tt",
+    "telugu": "te",
+    "thai": "th",
+    "tigrinya": "ti",
+    "tsonga": "ts",
+    "turkish": "tr",
+    "turkmen": "tk",
+    "twi": "ak",
+    "ukrainian": "uk",
+    "urdu": "ur",
+    "uyghur": "ug",
+    "uzbek": "uz",
+    "vietnamese": "vi",
+    "welsh": "cy",
+    "xhosa": "xh",
+    "yiddish": "yi",
+    "yoruba": "yo",
+    "zulu": "zu"
+}
 
 colorama.init()
 
@@ -2187,7 +2325,37 @@ def handle_special_commands(user_input):
             print(f"[{timestamp()}] [ERROR] Error opening the URL: {e}")
             return True
 
-    # Mini KI Antwort - soon
+    if user_input.startswith("pt "):
+        payload = user_input[3:].strip()  # Entfernt das Präfix 'pb ' -> "german->english hallo"
+
+        if ' ' in payload and '->' in payload:
+            lang_part, text = payload.split(' ', 1)  # Split "german->english" und den Text
+            if '->' in lang_part:
+                source_str, target_str = lang_part.split('->')  # Split "german" und "english"
+                source = source_str.lower()
+                target = target_str.lower()
+
+                # Überprüfen, ob die angegebenen Sprachen in der Liste enthalten sind
+                if source in languages and target in languages:
+                    try:
+                        # Übersetzung durchführen
+                        result = GoogleTranslator(
+                            source=languages[source],
+                            target=languages[target]
+                        ).translate(text)
+
+                        print(f"Translation ({source} -> {target}): {result}")
+                    except Exception as e:
+                        print(f"[{timestamp()}] [ERROR] Error during translation: {e}")
+                else:
+                    print(f"[{timestamp()}] [ERROR] Language not supported.")
+            else:
+                print(f"[{timestamp()}] [ERROR] Invalid language format (e.g., german->english).")
+        else:
+            print(f"[{timestamp()}] [ERROR] Invalid command. Correct format: pb <source>-><target> <text>")
+
+        return True
+
     if user_input.startswith("pa "):
         user_input = user_input[3:].strip()
         ollama_installed = check_command_installed("ollama")
