@@ -7888,42 +7888,32 @@ COMMANDS = [
 history = []
 history_index = -1
 
-
-import readline
-
 def setup_autocomplete(commands=None):
+    """
+    Aktiviert Tab-Autocomplete für eine gegebene Befehlsliste.
+    Nur Befehle, die mit dem bereits getippten Text beginnen, werden vorgeschlagen.
+    """
     if commands is None:
-        commands = COMMANDS  # Fallback auf Standardliste
+        commands = COMMANDS.copy()
+
+    # Definiere, welche Zeichen als Worttrenner gelten (hier nur Leerzeichen)
+    readline.set_completer_delims(' \t\n')
 
     def completer(text, state):
-        buffer = readline.get_line_buffer()
-        tokens = buffer.strip().split()
-
-        # Das aktuelle (letzte) Wort für die Autovervollständigung nehmen
-        if tokens:
-            current_text = tokens[-1]
-        else:
-            current_text = ""
-
-        # Case-insensitive Matching
-        current_text_lower = current_text.lower()
-
-        # Nur Befehle vorschlagen, die mit dem eingegebenen Text anfangen
-        if state == 0:
-            completer.matches = [
-                cmd for cmd in commands if cmd.lower().startswith(current_text_lower)
-            ]
-
-        # Rückgabe der Treffer nacheinander
+        # Bei jedem Aufruf filtern wir die Befehle anhand des Präfixes 'text'
+        matches = [cmd for cmd in commands if cmd.startswith(text)]
         try:
-            return completer.matches[state]
+            return matches[state]
         except IndexError:
             return None
 
+    # Setze den Completer und die Key-Bindings
     readline.set_completer(completer)
-    readline.parse_and_bind("tab: complete")
-    readline.parse_and_bind("set show-all-if-ambiguous on")
-    readline.parse_and_bind("set completion-ignore-case on")
+    readline.parse_and_bind('tab: complete')
+    # show-all-if-ambiguous = bei mehreren Treffern sofort alle anzeigen
+    readline.parse_and_bind('set show-all-if-ambiguous on')
+    # completion-ignore-case = Groß-/Kleinschreibung ignorieren
+    readline.parse_and_bind('set completion-ignore-case on')
 
 
 def get_completions(prefix):
