@@ -7354,13 +7354,13 @@ def get_evil_5_pin(current_dir, env_indicator_3):
     print("")
 
     return (
-        f"{env_indicator_3} {red}{getpass.getuser()}" + colored("㋐", attrs=["bold"]) + f"{red}Peharge{reset} {current_dir}:~{red}#{reset} "
+        f"{env_indicator_3} {red}root" + colored("㋐", attrs=["bold"]) + f"{red}Peharge{reset} {current_dir}:~{red}#{reset} "
     )
 
 
 def get_stable_pin(current_dir, env_indicator_6):
     return (
-        f"\n┌──({getpass.getuser()}"
+        f"\n┌──(root"
         + colored("㋐", attrs=["bold"])
         + f"Peharge)-[{current_dir}]-{env_indicator_6}"
         f"\n└─$ "
