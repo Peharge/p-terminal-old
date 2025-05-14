@@ -7299,6 +7299,14 @@ def get_main_4_pin(current_dir, env_indicator_3):
     )
 
 
+def get_main_5_pin(current_dir, env_indicator_3):
+    print("")
+
+    return (
+        f"{env_indicator_3} {blue}{getpass.getuser()}" + colored("㋐", attrs=["bold"]) + f"{blue}Peharge{reset} {current_dir}:~{blue}${reset} "
+    )
+
+
 def get_evil_pin(current_dir, env_indicator):
     return (
         f"\n{white}┌──({reset}{red}root"
@@ -7322,6 +7330,14 @@ def get_evil_4_pin(current_dir, env_indicator_3):
 
     return (
         f"{env_indicator_3} {red}PP{reset} {current_dir}:~{red}#{reset} "
+    )
+
+
+def get_evil_5_pin(current_dir, env_indicator_3):
+    print("")
+
+    return (
+        f"{env_indicator_3} {red}{getpass.getuser()}" + colored("㋐", attrs=["bold"]) + f" {red}Peharge{reset} {current_dir}:~{red}${reset} "
     )
 
 
@@ -8449,6 +8465,12 @@ def main():
                 print(pin, end='')
                 user_input = input().strip()
                 history.append(user_input)
+            elif state == "main-5":
+                setup_autocomplete()
+                pin = get_main_5_pin(current_dir, env_indicator_3)
+                print(pin, end='')
+                user_input = input().strip()
+                history.append(user_input)
             elif state == "evil":
                 setup_autocomplete()
                 pin = get_evil_pin(current_dir, env_indicator)
@@ -8464,6 +8486,12 @@ def main():
             elif state == "evil-4":
                 setup_autocomplete()
                 pin = get_evil_4_pin(current_dir, env_indicator_3)
+                print(pin, end='')
+                user_input = input().strip()
+                history.append(user_input)
+            elif state == "evil-5":
+                setup_autocomplete()
+                pin = get_evil_5_pin(current_dir, env_indicator_3)
                 print(pin, end='')
                 user_input = input().strip()
                 history.append(user_input)
@@ -8553,6 +8581,10 @@ def main():
                 state = "main-4"
                 continue
 
+            elif user_input.lower() == "pin main-5":
+                state = "main-5"
+                continue
+
             elif user_input.lower() == "pin evil":
                 state = "evil"
                 continue
@@ -8563,6 +8595,10 @@ def main():
 
             elif user_input.lower() == "pin evil-4":
                 state = "evil-4"
+                continue
+
+            elif user_input.lower() == "pin evil-5":
+                state = "evil-5"
                 continue
 
             elif user_input.lower() == "pin stable":
