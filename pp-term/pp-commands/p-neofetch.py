@@ -124,6 +124,7 @@ import time
 import socket
 import subprocess
 import logging
+import json
 
 from PyQt6 import QtWidgets, QtGui, QtCore
 from PyQt6.QtGui import QIcon
@@ -133,13 +134,17 @@ logging.basicConfig(level=logging.INFO,
                     format='[%(asctime)s] %(levelname)s: %(message)s',
                     datefmt='%Y-%m-%d %H:%M:%S')
 
-# p-terminal Static Versions
-P_Terminal_VERSION = "1"
-PP_Terminal_VERSION = "4"
-PP_Terminal_launcher_VERSION = "4"
-Peharge_C_COMP_VERSION = "4"
-Peharge_CPP_COMP_VERSION = "4"
-P_Terminal_License = "MIT"
+def load_versions_json() -> dict:
+    """Lädt die Versionsinformationen aus der JSON-Datei"""
+    json_path = f'C:\\Users\\{os.getlogin()}\\p-terminal\\pp-term\\pp-term-versions.json'
+    try:
+        with open(json_path, 'r') as f:
+            return json.load(f)
+    except FileNotFoundError:
+        print(f"[{timestamp()}] [INFO] Versionsdatei nicht gefunden unter {json_path}")
+    except json.JSONDecodeError:
+        print(f"[{timestamp()}] [INFO] JSON-Formatfehler in {json_path}")
+    return {}
 
 # Inline QSS Stylesheet
 INLINE_QSS = r"""
@@ -326,13 +331,16 @@ def get_dxcore_version() -> str:
 def get_system_info() -> dict:
     info = {}
     try:
-        # P-Terminal-specific static versions
-        info['P-Terminal Version'] = P_Terminal_VERSION
-        info['PP-Terminal Version'] = PP_Terminal_VERSION
-        info['PP-Terminal Launcher Version'] = PP_Terminal_launcher_VERSION
-        info['Peharge C Compiler Version'] = Peharge_C_COMP_VERSION
-        info['Peharge C++ Compiler Version'] = Peharge_CPP_COMP_VERSION
-        info['P-Terminal License'] = P_Terminal_License
+        # Lade die Versionsinformationen aus der JSON-Datei
+        system_info = load_versions_json()
+
+        # Dynamisch die Versionsinformationen aus der JSON laden
+        info['P-Terminal Version'] = system_info.get("P-Terminal Version", "Unbekannt")
+        info['PP-Terminal Version'] = system_info.get("PP-Terminal Version", "Unbekannt")
+        info['PP-Terminal Launcher Version'] = system_info.get("PP-Terminal Launcher Version", "Unbekannt")
+        info['Peharge C Compiler Version'] = system_info.get("Peharge C compiler Version", "Unbekannt")
+        info['Peharge C++ Compiler Version'] = system_info.get("Peharge C++ compiler Version", "Unbekannt")
+        info['P-Terminal License'] = system_info.get("P-Terminal License", "Unbekannt")
 
         info['Operating System'] = f"{platform.system()} {platform.release()} ({platform.version()})"
         info['Architecture'] = platform.architecture()[0]
@@ -437,11 +445,11 @@ class NeofetchWindow(QtWidgets.QMainWindow):
 
         user = os.getenv('USERNAME') or os.getenv('USER')
         base = os.path.dirname(__file__)
-        icon_path = os.path.join(base, 'icons', 'p-term-logo-5.ico')
+        """icon_path = os.path.join(f'C:/Users/{user}/p-terminal/pp-term/icons/p-term-logo-5.ico')
         if os.path.exists(icon_path):
             self.setWindowIcon(QIcon(icon_path))
         else:
-            logging.warning(f"Icon not found: {icon_path}")
+            logging.warning(f"Icon not found: {icon_path}")"""
 
         self.image_label = QtWidgets.QLabel(alignment=QtCore.Qt.AlignmentFlag.AlignCenter)
         img_path = f"C:/Users/{user}/p-terminal/pp-term/icons/p-term-logo-5.png"
