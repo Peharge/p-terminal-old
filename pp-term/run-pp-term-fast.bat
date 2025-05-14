@@ -1,5 +1,4 @@
 @echo off
-
 REM Englisch Peharge: This source code is released under the MIT License.
 REM
 REM Usage Rights:
@@ -64,81 +63,60 @@ REM
 REM Veuillez lire l'intégralité des termes et conditions de la licence MIT pour vous familiariser avec vos droits et responsabilités.
 
 setlocal EnableExtensions EnableDelayedExpansion
-chcp 65001
+chcp 65001 >nul
 
-:: Global Settings
-set "SCRIPT_DIR=%~dp0"
-set "LOGFILE=C:\Users\julia\p-terminal\pp-term\WSL_Diagnostics.log"
-set "MAX_DRIFT=300"          & rem Maximum allowed time drift in seconds
-set "PING_ADDR=8.8.8.8"      & rem Default ping target
-set "TEST_DOMAIN=example.com"
+:: Config
+set "USERNAME=%USERNAME%"
+set "LOGFILE=C:\Users\%USERNAME%\p-terminal\pp-term\WSL_Diagnostics.log"
+set "PYTHON_EXE=C:\Users\%USERNAME%\p-terminal\pp-term\.env\Scripts\python.exe"
+set "SCRIPT_PATH=C:\Users\%USERNAME%\p-terminal\pp-term\pp-term-4.py"
+set "WORKDIR=C:\Users\%USERNAME%"
 
+:: Change to target working directory
+cd /d "%WORKDIR%"
 
-set USERNAME=%USERNAME%
-set PYTHON_PATH=C:\Users\%USERNAME%\p-terminal\pp-term\.env\Scripts\python.exe
-set SCRIPT_PATH_1=C:\Users\%USERNAME%\p-terminal\pp-term\pp-term-4.py
+:: CPU affinity mask
+for /f "tokens=2 delims==" %%A in ('wmic cpu get NumberOfLogicalProcessors /value ^| find "NumberOfLogicalProcessors"') do set /A "LOGPROC=%%A"
+if %LOGPROC% GTR 64 set "LOGPROC=64"
+setlocal EnableDelayedExpansion
+set "AFF_MASK=0"
+for /L %%I in (0,1,%LOGPROC%-1) do (
+    set /A "AFF_MASK|=(1<<%%I)"
+)
+endlocal & set "AFFINITY=%AFF_MASK%"
 
-if not exist "%PYTHON_PATH%" (
-    call :Log ERROR "❌ Python interpreter not found: %PYTHON_PATH%"
+:: Launch Python script with full CPU and high priority
+powershell -NoProfile -ExecutionPolicy Bypass -Command ^
+  "$p = Start-Process -FilePath '%PYTHON_EXE%' -ArgumentList '%SCRIPT_PATH%' -WorkingDirectory '%WORKDIR%' -NoNewWindow -Wait -PassThru; ^
+   $p.PriorityClass = 'High'; ^
+   $p.ProcessorAffinity = 0x%AFFINITY%" 2>>"%LOGFILE%"
+
+if errorlevel 1 (
+    call :Log ERROR "❌ Failed to start Python script"
     exit /B 1
 )
 
-rem Setze das Arbeitsverzeichnis auf C:\Users\%USERNAME%
-cd /d C:\Users\%USERNAME%
+exit /B 0
 
-if not exist "%SCRIPT_PATH_1%" (
-    call :Log ERROR "❌ Script not found: %SCRIPT_PATH_1%"
-    exit /B 1
-)
-
-"%PYTHON_PATH%" "%SCRIPT_PATH_1%"
-
-echo.
-call :Log INFO "The scripts have been executed!"
-echo Press any key to exit.
-pause
-
-:: Functions
-:InitLog
-    (echo [%DATE% %TIME%] [LOG INIT] Log created >"%LOGFILE%"
-    ) 2>nul
-    goto :eof
-
+:: Logging Functions
 :Timestamp
-    rem Set TS variable to timestamp YYYY-MM-DD HH:MM:SS.mmm
-    for /F "tokens=* delims=" %%D in ('powershell -NoProfile -Command "Get-Date -Format 'yyyy-MM-dd HH:mm:ss.fff'"') do set "TS=%%D"
-    goto :eof
+for /F "usebackq tokens=* delims=" %%D in (`powershell -NoProfile -Command "Get-Date -Format \"yyyy-MM-dd HH:mm:ss.fff\""`) do set "TS=%%D"
+goto :eof
 
 :Log
-    rem call :Log LEVEL Message
-    setlocal EnableDelayedExpansion
-    call :Timestamp
-    set "LEVEL=%~1"
-    shift
-    set "MSG="
-    :buildMsg
-    if "%~1"=="" goto continueLog
-    set "MSG=!MSG! %~1"
-    shift
-    goto buildMsg
-
-:continueLog
-    set "MSG=!MSG:~1!"  & rem entfernt führendes Leerzeichen
-    echo [!TS!] [!LEVEL!] !MSG!
-    >>"%LOGFILE%" echo [!TS!] [!LEVEL!] !MSG!
-    endlocal
-    goto :eof
-
-:Run
-    rem call :Run command arguments
-    setlocal
-    set "CMD=%*"
-    rem echo [COMMAND] %CMD%
-    >>"%LOGFILE%" echo [COMMAND] %CMD%
-    cmd /C %CMD%
-    endlocal
-    goto :eof
-
-:BlankLine
-    echo.
-    goto :eof
+setlocal EnableDelayedExpansion
+call :Timestamp
+set "LEVEL=%~1"
+shift
+set "MSG="
+:buildMsg
+if "%~1"=="" goto logIt
+set "MSG=!MSG! %~1"
+shift
+goto buildMsg
+:logIt
+set "MSG=!MSG:~1!"
+echo [!TS!] [!LEVEL!] !MSG! >>"%LOGFILE%"
+echo [!TS!] [!LEVEL!] !MSG!
+endlocal
+goto :eof
