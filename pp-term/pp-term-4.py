@@ -804,11 +804,14 @@ def handle_special_commands(user_input):
             print(f"[{timestamp()}] [ERROR] {str(e)}", file=sys.stderr)
         return True
 
-    if user_input.startswith(("del ", "rm ")):
-        try:
-            os.remove(user_input.split(maxsplit=1)[1].strip())
-        except Exception as e:
-            print(f"[{timestamp()}] [ERROR] {str(e)}", file=sys.stderr)
+    if user_input.startswith("del "):
+        target = user_input[4:].strip()
+        delete_target(target)
+        return True
+
+    if user_input.startswith("rm "):
+        target = user_input[3:].strip()
+        delete_target(target)
         return True
 
     if user_input.startswith("echo "):
@@ -3388,6 +3391,47 @@ def type_out_text(text, delay=0.05):
         sys.stdout.flush()
         time.sleep(delay)
     print()
+
+
+def ensure_admin():
+    """
+    Startet das Skript mit Administrator- bzw. Root-Rechten neu, falls nötig.
+    - Unter Linux/macOS: sudo
+    - Unter Windows: über ctypes (ShellExecute)
+    """
+    if os.name == 'posix':
+        if os.geteuid() != 0:
+            print(f"[{timestamp()}] [INFO] Restarting with root privileges...", file=sys.stderr)
+            args = ['sudo', sys.executable] + sys.argv
+            os.execvp('sudo', args)
+    elif os.name == 'nt':
+        try:
+            import ctypes
+            if not ctypes.windll.shell32.IsUserAnAdmin():
+                print(f"[{timestamp()}] [INFO] Restarting with administrator privileges...", file=sys.stderr)
+                params = ' '.join(shlex.quote(arg) for arg in sys.argv)
+                ctypes.windll.shell32.ShellExecuteW(None, "runas", sys.executable, params, None, 1)
+                sys.exit(0)
+        except Exception as e:
+            logging.error(f"[{timestamp()}] [ERROR] Admin check failed: {e}")
+    else:
+        logging.warning(f"[{timestamp()}] [WARN] Unsupported OS for admin elevation: {os.name}")
+
+
+def delete_target(path: str):
+    """
+    Entfernt eine Datei oder ein Verzeichnis (rekursiv).
+    Bei Fehlern wird die Ausnahme protokolliert.
+    """
+    try:
+        if os.path.isdir(path):
+            shutil.rmtree(path)
+            print(f"[{timestamp()}] [INFO] Directory deleted: {path}")
+        else:
+            os.remove(path)
+            print(f"[{timestamp()}] [INFO] File deleted: {path}")
+    except Exception as e:
+        print(f"[{timestamp()}] [ERROR] {e}", file=sys.stderr)
 
 
 def get_response_from_ollama(user_message, ollama):
