@@ -7185,6 +7185,23 @@ def get_evil_4_pin(current_dir, env_indicator_3):
     )
 
 
+def get_stable_pin(current_dir, env_indicator_6):
+    return (
+        f"\n┌──({getpass.getuser()}"
+        + colored("㋐", attrs=["bold"])
+        + f"Peharge)-[{current_dir}]-{env_indicator_6}"
+        f"\n└─$ "
+    )
+
+
+def get_stable_3_pin(current_dir, env_indicator_8):
+    print("")
+
+    return (
+        f"{env_indicator_8} PP {current_dir}:~$ "
+    )
+
+
 def get_cool_pin():
     """
     Ruft eine gerenderte Oh-My-Posh-Prompt basierend auf einer bestimmten Theme-Konfiguration ab.
@@ -8260,6 +8277,18 @@ def main():
                 f"{green}[{reset}{red}no venv recorded{reset}{green}]{reset}"
             )
 
+            env_indicator_6 = (
+                f"[{display_env_path}]"
+                if env_active else
+                f"[no venv recorded]"
+            )
+
+            env_indicator_8 = (
+                f"({display_env_path})"
+                if env_active else
+                f"(no venv)"
+            )
+
             # PIN-Design je nach state
             if state == "main":
                 setup_autocomplete()
@@ -8297,6 +8326,16 @@ def main():
                 pin = get_evil_4_pin(current_dir, env_indicator_3)
                 print(pin, end='')
                 user_input = input().strip()
+                history.append(user_input)
+            elif state == "stable":
+                setup_autocomplete()
+                pin = get_stable_pin(current_dir, env_indicator_6)
+                user_input = input(pin).strip()
+                history.append(user_input)
+            elif state == "stable-3":
+                setup_autocomplete()
+                pin = get_stable_3_pin(current_dir, env_indicator_8)
+                user_input = input(pin).strip()
                 history.append(user_input)
             elif state == "cool":
                 pin = get_cool_pin()
@@ -8384,6 +8423,14 @@ def main():
 
             elif user_input.lower() == "pin evil-4":
                 state = "evil-4"
+                continue
+
+            elif user_input.lower() == "pin stable":
+                state = "stable"
+                continue
+
+            elif user_input.lower() == "pin stable-3":
+                state = "stable-3"
                 continue
 
             elif user_input.lower() == "pin cool":
