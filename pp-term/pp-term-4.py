@@ -790,6 +790,11 @@ def handle_special_commands(user_input):
         change_directory(path)
         return True
 
+    if user_input.lower() == "cd":
+        path = os.path.expanduser("~")
+        change_directory(path)
+        return True
+
     if user_input.lower() in ["dir", "ls"]:
         run_command("dir" if os.name == "nt" else "ls -la", shell=True)
         return True
