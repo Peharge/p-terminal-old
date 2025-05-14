@@ -124,6 +124,7 @@ from typing import Tuple
 import pip
 import subprocess
 import winreg
+import json
 
 # Farbcodes definieren
 red = "\033[91m"
@@ -354,6 +355,14 @@ def get_ollama_version():
 def print_system_info(system_info: dict):
     """Funktion, um die Systeminformationen im Terminal auszugeben"""
 
+    # Werte mit Fallbacks (falls ein Schlüssel fehlt)
+    p_terminal_ver = system_info.get("P-Terminal Version", "Unbekannt")
+    pp_terminal_ver = system_info.get("PP-Terminal Version", "Unbekannt")
+    launcher_ver = system_info.get("PP-Terminal Launcher Version", "Unbekannt")
+    c_compiler_ver = system_info.get("Peharge C compiler Version", "Unbekannt")
+    cpp_compiler_ver = system_info.get("Peharge C++ compiler Version", "Unbekannt")
+    license_info = system_info.get("P-Terminal License", "Unbekannt")
+
     title = f"PP-Terminal - {os.getlogin()}"
     line = "-" * len(title)
 
@@ -361,12 +370,12 @@ def print_system_info(system_info: dict):
     print(f"                   ██████")
     print(f"                ████████████                                             {blue}{title}{reset}")
     print(f"             ██████████████████                                          {line}")
-    print(f"          ████████████████████████                                       {blue}P-Terminal Version{reset}: 1")
-    print(f"       ██████████████████████████████                                    {blue}PP-Terminal Version{reset}: 4")
-    print(f"       █████████████████████████████████                                 {blue}PP-Terminal Launcher Version{reset}: 4")
-    print(f"       ████████████████████████████████████                              {blue}Peharge C Compiler Version{reset}: 4")
-    print(f"       ███████████████████████████████████████                           {blue}Peharge C++ Compiler Version{reset}: 4")
-    print(f"       ██████████████████████████████████████████                        {blue}P-Terminal License{reset}: MIT")
+    print(f"          ████████████████████████                                       {blue}P-Terminal Version{reset}: {p_terminal_ver}")
+    print(f"       ██████████████████████████████                                    {blue}PP-Terminal Version{reset}: {pp_terminal_ver}")
+    print(f"       █████████████████████████████████                                 {blue}PP-Terminal Launcher Version{reset}: {launcher_ver}")
+    print(f"       ████████████████████████████████████                              {blue}Peharge C Compiler Version{reset}: {c_compiler_ver}")
+    print(f"       ███████████████████████████████████████                           {blue}Peharge C++ Compiler Version{reset}: {cpp_compiler_ver}")
+    print(f"       ██████████████████████████████████████████                        {blue}P-Terminal License{reset}: {license_info}")
     print(f"       █████████████████████████████████████████████                     {blue}MAVIS Version{reset}: 4.3")
     print(f"       ████████████       █████████████████████████████                  {blue}MAVIS Launcher Version{reset}: 4")
     print(f"       █████████             █████████████████████████████               {blue}MAVIS Terminal Version{reset}: 5")
@@ -402,6 +411,18 @@ def print_system_info(system_info: dict):
     print(f"        ╚══╝")
     print("")
 
+def load_versions_json():
+    """Lädt die Versionsinformationen aus der JSON-Datei"""
+    json_path = f'C:\\Users\\{os.getlogin()}\\p-terminal\\pp-term\\pp-term-versions.json'
+    try:
+        with open(json_path, 'r') as f:
+            return json.load(f)
+    except FileNotFoundError:
+        print(f"[{timestamp()}] [INFO] Versionsdatei nicht gefunden unter {json_path}")
+    except json.JSONDecodeError:
+        print(f"[{timestamp()}] [INFO] JSON-Formatfehler in {json_path}")
+    return {}
+
 def show_color_palette_1():
     """Funktion zur Anzeige der 16 Farbpaletten ohne Abstände und Zahlen"""
     palette = ""
@@ -422,5 +443,6 @@ def show_color_palette_3():
     return palette
 
 if __name__ == "__main__":
-    system_info = get_system_info()
+    system_info = load_versions_json()
+    system_info.update(get_system_info())
     print_system_info(system_info)
