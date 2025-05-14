@@ -104,6 +104,7 @@ from deep_translator import GoogleTranslator
 from io import BytesIO
 from PIL import Image
 from duckduckgo_search import DDGS
+import multiprocessing
 
 colorama.init()
 
@@ -758,10 +759,24 @@ def handle_special_commands(user_input):
     # Custom command launcher
     if user_input in commands:
         script_path = f"C:\\Users\\{os.getlogin()}\\p-terminal\\pp-term\\{commands[user_input]}"
-        if not user_input.endswith(".bat"):
-            run([python_path, script_path], shell=True)
+
+        # Maximale CPU-Priorität setzen (Windows-spezifisch)
+        if platform.system() == "Windows":
+            script_priority = psutil.BELOW_NORMAL_PRIORITY_CLASS  # Höhere Priorität einstellen
         else:
-            run([script_path], shell=True)
+            script_priority = psutil.NORMAL_PRIORITY_CLASS
+
+        # Wenn der Benutzer keine Batch-Datei hat, den Python-Skript ausführen
+        if not user_input.endswith(".bat"):
+            process = multiprocessing.Process(target=run_script, args=(python_path, script_path))
+            process.start()
+            process.join()
+        else:
+            # Batch-Datei ausführen
+            process = multiprocessing.Process(target=run_script, args=(script_path,))
+            process.start()
+            process.join()
+
         return True
 
     # Built-in Commands Erweiterung
@@ -3230,6 +3245,13 @@ try:
 except (FileNotFoundError, json.JSONDecodeError) as e:
     print(f"[{timestamp()}] [ERROR] Error loading themes.json: {e}")
     THEME_DEFAULTS = {}
+
+
+def run_script(*args):
+    try:
+        run(args, shell=True)
+    except Exception as e:
+        print(f"[{timestamp()}] [ERROR] Error executing the script: {e}")
 
 
 def create_backup(file_path: str) -> str:
