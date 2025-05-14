@@ -7281,6 +7281,14 @@ def get_main_pin(current_dir, env_indicator):
         f"\n{white}└─{reset}{blue}${reset} "
     )
 
+def get_main_2_pin(current_dir, env_indicator_9):
+    return (
+        f"\n{blue}┌──({reset}{getpass.getuser()}"
+        + colored("㋐", attrs=["bold"])
+        + f"Peharge{blue})-[{reset}{current_dir}{blue}]-{reset}{env_indicator_9}"
+        f"\n{blue}└─{reset}{blue}${reset} "
+    )
+
 
 def get_main_3_pin(current_dir, env_indicator_5):
     return (
@@ -7316,11 +7324,20 @@ def get_evil_pin(current_dir, env_indicator):
     )
 
 
-def get_evil_3_pin(current_dir, env_indicator_4):
+def get_evil_2_pin(current_dir, env_indicator_4):
+    return (
+        f"\n{red}┌──({reset}{getpass.getuser()}"
+        + colored("㋐", attrs=["bold"])
+        + f"Peharge{red})-[{reset}{current_dir}{red}]-{reset}{env_indicator_4}"
+        f"\n{red}└─{reset}{red}#{reset} "
+    )
+
+
+def get_evil_3_pin(current_dir, env_indicator_9):
     return (
         f"\n{blue}┌──({reset}{red}root"
         + colored("㋐", attrs=["bold"])
-        + f"{red}Peharge{reset}{blue})-[{reset}{current_dir}{blue}]-{reset}{env_indicator_4}"
+        + f"{red}Peharge{reset}{blue})-[{reset}{current_dir}{blue}]-{reset}{env_indicator_9}"
         f"\n{blue}└─{reset}{red}#{reset} "
     )
 
@@ -7350,11 +7367,19 @@ def get_stable_pin(current_dir, env_indicator_6):
     )
 
 
-def get_stable_3_pin(current_dir, env_indicator_8):
+def get_stable_2_pin(current_dir, env_indicator_8):
     print("")
 
     return (
         f"{env_indicator_8} PP {current_dir}:~$ "
+    )
+
+
+def get_stable_3_pin(current_dir, env_indicator_3):
+    print("")
+
+    return (
+        f"{env_indicator_3} {getpass.getuser()}" + colored("㋐", attrs=["bold"]) + f"Peharge{reset} {current_dir}:~$ "
     )
 
 
@@ -8422,9 +8447,9 @@ def main():
             )
 
             env_indicator_4 = (
-                f"{blue}[{reset}{display_env_path}{blue}]{reset}"
+                f"{red}[{reset}{display_env_path}{red}]{reset}"
                 if env_active else
-                f"{blue}[{reset}{red}no venv recorded{reset}{blue}]{reset}"
+                f"{red}[no venv recorded]{reset}"
             )
 
             env_indicator_5 = (
@@ -8445,12 +8470,24 @@ def main():
                 f"(no venv)"
             )
 
+            env_indicator_9 = (
+                f"{blue}[{reset}{display_env_path}{blue}]{reset}"
+                if env_active else
+                f"{blue}[{reset}{red}no venv recorded{reset}{blue}]{reset}"
+            )
+
             # PIN-Design je nach state
             if state == "main":
                 setup_autocomplete()
                 pin = get_main_pin(current_dir, env_indicator)
                 print(pin, end='')
                 # print(pin, end='', flush=True)
+                user_input = input().strip()
+                history.append(user_input)
+            elif state == "main-2":
+                setup_autocomplete()
+                pin = get_main_2_pin(current_dir, env_indicator_9)
+                print(pin, end='')
                 user_input = input().strip()
                 history.append(user_input)
             elif state == "main-3":
@@ -8477,9 +8514,15 @@ def main():
                 print(pin, end='')
                 user_input = input().strip()
                 history.append(user_input)
+            elif state == "evil-2":
+                setup_autocomplete()
+                pin = get_evil_2_pin(current_dir, env_indicator_4)
+                print(pin, end='')
+                user_input = input().strip()
+                history.append(user_input)
             elif state == "evil-3":
                 setup_autocomplete()
-                pin = get_evil_3_pin(current_dir, env_indicator_4)
+                pin = get_evil_3_pin(current_dir, env_indicator_9)
                 print(pin, end='')
                 user_input = input().strip()
                 history.append(user_input)
@@ -8498,6 +8541,11 @@ def main():
             elif state == "stable":
                 setup_autocomplete()
                 pin = get_stable_pin(current_dir, env_indicator_6)
+                user_input = input(pin).strip()
+                history.append(user_input)
+            elif state == "stable-2":
+                setup_autocomplete()
+                pin = get_stable_2_pin(current_dir, env_indicator_6)
                 user_input = input(pin).strip()
                 history.append(user_input)
             elif state == "stable-3":
@@ -8573,6 +8621,10 @@ def main():
                 state = "main"
                 continue
 
+            elif user_input.lower() == "pin main-2":
+                state = "main-2"
+                continue
+
             elif user_input.lower() == "pin main-3":
                 state = "main-3"
                 continue
@@ -8589,6 +8641,10 @@ def main():
                 state = "evil"
                 continue
 
+            elif user_input.lower() == "pin evil-2":
+                state = "evil-2"
+                continue
+
             elif user_input.lower() == "pin evil-3":
                 state = "evil-3"
                 continue
@@ -8603,6 +8659,10 @@ def main():
 
             elif user_input.lower() == "pin stable":
                 state = "stable"
+                continue
+
+            elif user_input.lower() == "pin stable-2":
+                state = "stable-2"
                 continue
 
             elif user_input.lower() == "pin stable-3":
