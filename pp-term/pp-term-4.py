@@ -166,14 +166,23 @@ def print_banner():
 Developed by Peharge and JK (Peharge Projects 2025)
 Thank you so much for using PP-Terminal. We truly appreciate your support ❤️""")
 
-    print(f"""
-{blue}P-Terminal Version{reset}: 1
-{blue}PP-Terminal Version{reset}: 4
-{blue}PP-Terminal Launcher Version{reset}: 4
-{blue}Peharge C compiler Version{reset}: 4
-{blue}Peharge C++ compiler Version{reset}: 4
-{blue}P-Terminal License{reset}: MIT
-    """)
+    print()
+
+    # JSON-Datei laden
+    json_path = f'C:\\Users\\{os.getlogin()}\\p-terminal\\pp-term\\pp-term-versions.json'
+    try:
+        with open(json_path, 'r') as f:
+            versions = json.load(f)
+
+        # Versionsinformationen ausgeben
+        for key, value in versions.items():
+            print(f"{blue}{key}{reset}: {value}")
+    except FileNotFoundError:
+        print(f"[{timestamp()}] [INFO] Versionsdatei nicht gefunden unter {json_path}")
+    except json.JSONDecodeError:
+        print(f"[{timestamp()}] [INFO] JSON-Formatfehler in {json_path}")
+
+    print()
 
     # Funktion zur Anzeige der 16 Farbpaletten ohne Abstände und Zahlen
     def show_color_palette():
