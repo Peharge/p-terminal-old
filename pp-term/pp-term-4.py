@@ -101,6 +101,9 @@ from pathlib import Path
 import code
 from datetime import datetime
 from deep_translator import GoogleTranslator
+from io import BytesIO
+from PIL import Image
+from duckduckgo_search import DDGS
 
 colorama.init()
 
@@ -3657,6 +3660,29 @@ def search_websites_all(command, num_results=50, results_per_page=10):
         print(f"\n[{timestamp()}] [INFO] {total} Ergebnisse gesammelt.\n")
 
     return collected
+
+
+def search_and_show_first_image(query):
+    with DDGS() as ddgs:
+        results = ddgs.images(query, max_results=1)
+        for result in results:
+            image_url = result.get("image")
+            if not image_url:
+                print(f"[{timestamp()}] [ERROR] Kein Bild gefunden.")
+                return
+
+            try:
+                print(f"[{timestamp()}] [INFO] Lade Bild von: {image_url}")
+                response = requests.get(image_url, timeout=10)
+                image = Image.open(BytesIO(response.content))
+                temp_path = "temp_duck_image.jpg"
+                image.convert("RGB").save(temp_path)
+                print(f"[{timestamp()}] [INFO] Zeige Bild ...")
+                os.startfile(temp_path)  # Nur für Windows
+                return
+            except Exception as e:
+                print(f"[{timestamp()}] [ERROR] Fehler beim Laden oder Anzeigen des Bildes: {e}")
+                return
 
 
 def search_github(command):
@@ -8552,6 +8578,10 @@ def main():
             elif user_input.startswith("ps-all "):
                 user_input = user_input[7:].strip()
                 search_websites_all(user_input)
+
+            elif user_input.startswith("ps-img "):
+                user_input = user_input[7:].strip()
+                search_and_show_first_image(user_input)
 
             elif user_input.startswith("ps-github "):
                 user_input = user_input[10:].strip()
