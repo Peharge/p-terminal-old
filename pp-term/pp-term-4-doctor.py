@@ -88,7 +88,7 @@ EXCLUDE_DIRS = {
     "Lib", "Scripts", "Include",
     "site-packages", "dist-packages",
     ".env", "main-test", "icons", "static",
-    "pp-term.exe"
+    "pp-term.exe", "pp-term-fast.exe"
 }
 EXCLUDE_PATTERNS = {".*"}  # regex für versteckte Dateien/Ordner
 FILE_SIZE_LIMIT = 10 * 1024 * 1024
