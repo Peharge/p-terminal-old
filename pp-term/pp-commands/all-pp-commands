@@ -363,6 +363,8 @@ commands = {
         "iotop": "pp-commands\\iotop.py",  # new
         "fzf": "pp-commands\\fzf.py",  # new
         "fd": "pp-commands\\fd.py",  # new
+        "ripgrep": "pp-commands\\ripgrep.py",  # new
+        "tmux": "pp-commands\\tmux.py",  # new
         "bat": "pp-commands\\bat.py",  # new
         "exa": "pp-commands\\exa.py",  # new
         "tldr": "pp-commands\\tldr.py",  # new
@@ -399,6 +401,17 @@ commands = {
         "kate": "pp-commands\\kate.py",  # new
         "mousepad": "pp-commands\\mousepad.py",  # new
         "xed": "pp-commands\\xed.py",  # new
+        "entr": "pp-commands\\entr.py",  # new
+        "asdf": "pp-commands\\asdf.py",  # new
+        "direnv": "pp-commands\\direnv.py",  # new
+        "nmap": "pp-commands\\nmap.py",  # new
+        "iperf3": "pp-commands\\iperf3.py",  # new
+        "glow": "pp-commands\\glow.py",  # new
+        "ranger": "pp-commands\\ranger.py",  # new
+        "espanso": "pp-commands\\espanso.py",  # new
+        "plasma-workspace": "pp-commands\\plasma-workspace.py",  # new
+        "syncthing": "pp-commands\\syncthing.py",  # new
+        "flatpak": "pp-commands\\flatpak.py",  # new
         "atom": "pp-commands\\atom.py",  # new
         "lite-xl": "pp-commands\\lite-xl.py",  # new
         "weather": "pp-commands\\weather.py"  # new
