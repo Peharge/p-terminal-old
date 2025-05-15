@@ -105,7 +105,7 @@
     },
     "ubuntu": {
         "defaults": {
-            "cursorColor": "#000000"
+            "cursorColor": "#ffffff"
         }
     },
     "ubuntuglass": {
@@ -119,17 +119,17 @@
     },
     "mint": {
         "defaults": {
-            "cursorColor": "#000000"
+            "cursorColor": "#ffffff"
         }
     },
     "dracula": {
         "defaults": {
-            "cursorColor": "#000000"
+            "cursorColor": "#ffffff"
         }
     },
     "solarized_dark": {
         "defaults": {
-            "cursorColor": "#000000"
+            "cursorColor": "#ffffff"
         }
     },
     "gruvbox_dark": {
