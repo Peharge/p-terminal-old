@@ -7425,6 +7425,44 @@ def get_cool_pin():
         return result.stdout
     else:
         return f"[{timestamp()}] [ERROR] Error running oh-my-posh:\n{result.stderr}"
+    
+    
+def get_cool_2_pin():
+    """
+    Ruft eine gerenderte Oh-My-Posh-Prompt basierend auf einer bestimmten Theme-Konfiguration ab.
+    """
+    print("")
+
+    config_path = os.path.expanduser(
+        r"~\AppData\Local\Programs\oh-my-posh\themes\atomicBit.omp.json"
+    )
+    working_dir = os.getcwd()  # oder spezifisch: r"C:\Users\julia"
+
+    try:
+        result = subprocess.run(
+            [
+                "oh-my-posh",
+                "print",
+                "primary",
+                "--config", config_path,
+                "--pwd", working_dir,
+                "--shell", "pwsh"
+            ],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+            encoding='utf-8',  # wichtig für korrekte Grafikzeichen
+            shell=True         # in Windows häufig nötig für PATH-Auflösung
+        )
+    except FileNotFoundError:
+        return f"[{timestamp()}] [ERROR] oh-my-posh was not found. Is it in the PATH?"
+    except Exception as e:
+        return f"[{timestamp()}] [ERROR] Unexpected error: {e}"
+
+    if result.returncode == 0:
+        return result.stdout
+    else:
+        return f"[{timestamp()}] [ERROR] Error running oh-my-posh:\n{result.stderr}"
 
 
 def get_cool_3_pin():
@@ -7473,7 +7511,7 @@ def get_cool_4_pin():
     print("")
 
     config_path = os.path.expanduser(
-        r"~\p10k_classic.omp.jso"
+        r"~\AppData\Local\Programs\oh-my-posh\themes\p10k_classic.omp.jso"
     )
     working_dir = os.getcwd()  # oder spezifisch: r"C:\Users\julia"
 
@@ -7502,6 +7540,7 @@ def get_cool_4_pin():
         return result.stdout
     else:
         return f"[{timestamp()}] [ERROR] Error running oh-my-posh:\n{result.stderr}"
+
 
 def get_cool_5_pin():
     """
@@ -7540,6 +7579,7 @@ def get_cool_5_pin():
     else:
         return f"[{timestamp()}] [ERROR] Error running oh-my-posh:\n{result.stderr}"
 
+
 def get_cool_6_pin():
     """
     Ruft eine gerenderte Oh-My-Posh-Prompt basierend auf einer bestimmten Theme-Konfiguration ab.
@@ -7548,6 +7588,44 @@ def get_cool_6_pin():
 
     config_path = os.path.expanduser(
         r"~\AppData\Local\Programs\oh-my-posh\themes\M365Princess.omp.json"
+    )
+    working_dir = os.getcwd()  # oder spezifisch: r"C:\Users\julia"
+
+    try:
+        result = subprocess.run(
+            [
+                "oh-my-posh",
+                "print",
+                "primary",
+                "--config", config_path,
+                "--pwd", working_dir,
+                "--shell", "pwsh"
+            ],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+            encoding='utf-8',  # wichtig für korrekte Grafikzeichen
+            shell=True         # in Windows häufig nötig für PATH-Auflösung
+        )
+    except FileNotFoundError:
+        return f"[{timestamp()}] [ERROR] oh-my-posh was not found. Is it in the PATH?"
+    except Exception as e:
+        return f"[{timestamp()}] [ERROR] Unexpected error: {e}"
+
+    if result.returncode == 0:
+        return result.stdout
+    else:
+        return f"[{timestamp()}] [ERROR] Error running oh-my-posh:\n{result.stderr}"
+
+
+def get_cool_6_pin():
+    """
+    Ruft eine gerenderte Oh-My-Posh-Prompt basierend auf einer bestimmten Theme-Konfiguration ab.
+    """
+    print("")
+
+    config_path = os.path.expanduser(
+        r"~\AppData\Local\Programs\oh-my-posh\themes\blue-owl.omp.json"
     )
     working_dir = os.getcwd()  # oder spezifisch: r"C:\Users\julia"
 
@@ -7653,6 +7731,7 @@ def get_cool_9_pin():
     else:
         return f"[{timestamp()}] [ERROR] Error running oh-my-posh:\n{result.stderr}"
 
+
 def get_cool_10_pin():
     """
     Ruft eine gerenderte Oh-My-Posh-Prompt basierend auf einer bestimmten Theme-Konfiguration ab.
@@ -7689,6 +7768,7 @@ def get_cool_10_pin():
         return result.stdout
     else:
         return f"[{timestamp()}] [ERROR] Error running oh-my-posh:\n{result.stderr}"
+
 
 def get_cool_11_pin():
     """
@@ -7727,6 +7807,7 @@ def get_cool_11_pin():
     else:
         return f"[{timestamp()}] [ERROR] Error running oh-my-posh:\n{result.stderr}"
 
+
 def get_cool_12_pin():
     """
     Ruft eine gerenderte Oh-My-Posh-Prompt basierend auf einer bestimmten Theme-Konfiguration ab.
@@ -7763,6 +7844,7 @@ def get_cool_12_pin():
         return result.stdout
     else:
         return f"[{timestamp()}] [ERROR] Error running oh-my-posh:\n{result.stderr}"
+
 
 def get_cool_13_pin():
     """
@@ -7801,6 +7883,7 @@ def get_cool_13_pin():
     else:
         return f"[{timestamp()}] [ERROR] Error running oh-my-posh:\n{result.stderr}"
 
+
 def get_cool_14_pin():
     """
     Ruft eine gerenderte Oh-My-Posh-Prompt basierend auf einer bestimmten Theme-Konfiguration ab.
@@ -7837,6 +7920,7 @@ def get_cool_14_pin():
         return result.stdout
     else:
         return f"[{timestamp()}] [ERROR] Error running oh-my-posh:\n{result.stderr}"
+
 
 def get_cool_15_pin():
     """
@@ -7875,6 +7959,7 @@ def get_cool_15_pin():
     else:
         return f"[{timestamp()}] [ERROR] Error running oh-my-posh:\n{result.stderr}"
 
+
 def get_cool_16_pin():
     """
     Ruft eine gerenderte Oh-My-Posh-Prompt basierend auf einer bestimmten Theme-Konfiguration ab.
@@ -7911,6 +7996,45 @@ def get_cool_16_pin():
         return result.stdout
     else:
         return f"[{timestamp()}] [ERROR] Error running oh-my-posh:\n{result.stderr}"
+
+
+def get_cool_17_pin():
+    """
+    Ruft eine gerenderte Oh-My-Posh-Prompt basierend auf einer bestimmten Theme-Konfiguration ab.
+    """
+    print("")
+
+    config_path = os.path.expanduser(
+        r"~\AppData\Local\Programs\oh-my-posh\themes\bubbles.omp.json"
+    )
+    working_dir = os.getcwd()  # oder spezifisch: r"C:\Users\julia"
+
+    try:
+        result = subprocess.run(
+            [
+                "oh-my-posh",
+                "print",
+                "primary",
+                "--config", config_path,
+                "--pwd", working_dir,
+                "--shell", "pwsh"
+            ],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+            encoding='utf-8',  # wichtig für korrekte Grafikzeichen
+            shell=True  # in Windows häufig nötig für PATH-Auflösung
+        )
+    except FileNotFoundError:
+        return f"[{timestamp()}] [ERROR] oh-my-posh was not found. Is it in the PATH?"
+    except Exception as e:
+        return f"[{timestamp()}] [ERROR] Unexpected error: {e}"
+
+    if result.returncode == 0:
+        return result.stdout
+    else:
+        return f"[{timestamp()}] [ERROR] Error running oh-my-posh:\n{result.stderr}"
+
 
 def get_cool_18_pin():
     """
@@ -7949,6 +8073,7 @@ def get_cool_18_pin():
     else:
         return f"[{timestamp()}] [ERROR] Error running oh-my-posh:\n{result.stderr}"
 
+
 def get_cool_19_pin():
     """
     Ruft eine gerenderte Oh-My-Posh-Prompt basierend auf einer bestimmten Theme-Konfiguration ab.
@@ -7985,6 +8110,7 @@ def get_cool_19_pin():
         return result.stdout
     else:
         return f"[{timestamp()}] [ERROR] Error running oh-my-posh:\n{result.stderr}"
+
 
 def get_cool_20_pin():
     """
@@ -8023,6 +8149,7 @@ def get_cool_20_pin():
     else:
         return f"[{timestamp()}] [ERROR] Error running oh-my-posh:\n{result.stderr}"
 
+
 def get_cool_21_pin():
     """
     Ruft eine gerenderte Oh-My-Posh-Prompt basierend auf einer bestimmten Theme-Konfiguration ab.
@@ -8060,6 +8187,45 @@ def get_cool_21_pin():
     else:
         return f"[{timestamp()}] [ERROR] Error running oh-my-posh:\n{result.stderr}"
 
+
+def get_cool_22_pin():
+    """
+    Ruft eine gerenderte Oh-My-Posh-Prompt basierend auf einer bestimmten Theme-Konfiguration ab.
+    """
+    print("")
+
+    config_path = os.path.expanduser(
+        r"~\AppData\Local\Programs\oh-my-posh\themes\emodipt.omp.json"
+    )
+    working_dir = os.getcwd()  # oder spezifisch: r"C:\Users\julia"
+
+    try:
+        result = subprocess.run(
+            [
+                "oh-my-posh",
+                "print",
+                "primary",
+                "--config", config_path,
+                "--pwd", working_dir,
+                "--shell", "pwsh"
+            ],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+            encoding='utf-8',  # wichtig für korrekte Grafikzeichen
+            shell=True  # in Windows häufig nötig für PATH-Auflösung
+        )
+    except FileNotFoundError:
+        return f"[{timestamp()}] [ERROR] oh-my-posh was not found. Is it in the PATH?"
+    except Exception as e:
+        return f"[{timestamp()}] [ERROR] Unexpected error: {e}"
+
+    if result.returncode == 0:
+        return result.stdout
+    else:
+        return f"[{timestamp()}] [ERROR] Error running oh-my-posh:\n{result.stderr}"
+
+
 def get_cool_23_pin():
     """
     Ruft eine gerenderte Oh-My-Posh-Prompt basierend auf einer bestimmten Theme-Konfiguration ab.
@@ -8096,6 +8262,7 @@ def get_cool_23_pin():
         return result.stdout
     else:
         return f"[{timestamp()}] [ERROR] Error running oh-my-posh:\n{result.stderr}"
+
 
 COMMANDS = [
     "p", "p git", "p git mavis", "p git mavis-web", "p git simon", "p htop", "p ls", "p ls mavis",
@@ -8489,132 +8656,180 @@ def main():
                 # print(pin, end='', flush=True)
                 user_input = input().strip()
                 history.append(user_input)
+
             elif state == "main-2":
                 setup_autocomplete()
                 pin = get_main_2_pin(current_dir, env_indicator_9)
                 print(pin, end='')
                 user_input = input().strip()
                 history.append(user_input)
+
             elif state == "main-3":
                 setup_autocomplete()
                 pin = get_main_3_pin(current_dir, env_indicator_5)
                 print(pin, end='')
                 user_input = input().strip()
                 history.append(user_input)
+
             elif state == "main-4":
                 setup_autocomplete()
                 pin = get_main_4_pin(current_dir, env_indicator_3)
                 print(pin, end='')
                 user_input = input().strip()
                 history.append(user_input)
+
             elif state == "main-5":
                 setup_autocomplete()
                 pin = get_main_5_pin(current_dir, env_indicator_3)
                 print(pin, end='')
                 user_input = input().strip()
                 history.append(user_input)
+
             elif state == "evil":
                 setup_autocomplete()
                 pin = get_evil_pin(current_dir, env_indicator)
                 print(pin, end='')
                 user_input = input().strip()
                 history.append(user_input)
+
             elif state == "evil-2":
                 setup_autocomplete()
                 pin = get_evil_2_pin(current_dir, env_indicator_4)
                 print(pin, end='')
                 user_input = input().strip()
                 history.append(user_input)
+
             elif state == "evil-3":
                 setup_autocomplete()
                 pin = get_evil_3_pin(current_dir, env_indicator_9)
                 print(pin, end='')
                 user_input = input().strip()
                 history.append(user_input)
+
             elif state == "evil-4":
                 setup_autocomplete()
                 pin = get_evil_4_pin(current_dir, env_indicator_3)
                 print(pin, end='')
                 user_input = input().strip()
                 history.append(user_input)
+
             elif state == "evil-5":
                 setup_autocomplete()
                 pin = get_evil_5_pin(current_dir, env_indicator_3)
                 print(pin, end='')
                 user_input = input().strip()
                 history.append(user_input)
+
             elif state == "stable":
                 setup_autocomplete()
                 pin = get_stable_pin(current_dir, env_indicator_6)
                 user_input = input(pin).strip()
                 history.append(user_input)
+
             elif state == "stable-2":
                 setup_autocomplete()
                 pin = get_stable_2_pin(current_dir, env_indicator_6)
                 user_input = input(pin).strip()
                 history.append(user_input)
+
             elif state == "stable-3":
                 setup_autocomplete()
                 pin = get_stable_3_pin(current_dir, env_indicator_8)
                 user_input = input(pin).strip()
                 history.append(user_input)
+
             elif state == "cool":
                 pin = get_cool_pin()
                 user_input = input_line(pin)
+
+            elif state == "cool-2":
+                pin = get_cool_2_pin()
+                user_input = input_line(pin)
+
             elif state == "cool-3":
                 pin = get_cool_3_pin()
                 user_input = input_line(pin)
+
             elif state == "cool-4":
                 pin = get_cool_4_pin()
                 user_input = input_line(pin)
+
             elif state == "cool-5":
                 pin = get_cool_5_pin()
                 user_input = input_line(pin)
+
             elif state == "cool-6":
                 pin = get_cool_6_pin()
                 user_input = input_line(pin)
+
+            elif state == "cool-7":
+                pin = get_cool_7_pin()
+                user_input = input_line(pin)
+
             elif state == "cool-8":
                 pin = get_cool_8_pin()
                 user_input = input_line(pin)
+
             elif state == "cool-9":
                 pin = get_cool_9_pin()
                 user_input = input_line(pin)
+
             elif state == "cool-10":
                 pin = get_cool_10_pin()
                 user_input = input_line(pin)
+
             elif state == "cool-11":
                 pin = get_cool_11_pin()
                 user_input = input_line(pin)
+
             elif state == "cool-12":
                 pin = get_cool_12_pin()
                 user_input = input_line(pin)
+
             elif state == "cool-13":
                 pin = get_cool_13_pin()
                 user_input = input_line(pin)
+
             elif state == "cool-14":
                 pin = get_cool_14_pin()
                 user_input = input_line(pin)
+
             elif state == "cool-15":
                 pin = get_cool_15_pin()
                 user_input = input_line(pin)
+
             elif state == "cool-16":
                 pin = get_cool_16_pin()
                 user_input = input_line(pin)
+
+            elif state == "cool-17":
+                pin = get_cool_17_pin()
+                user_input = input_line(pin)
+
             elif state == "cool-18":
                 pin = get_cool_18_pin()
                 user_input = input_line(pin)
+
             elif state == "cool-19":
                 pin = get_cool_19_pin()
                 user_input = input_line(pin)
+
             elif state == "cool-20":
                 pin = get_cool_20_pin()
                 user_input = input_line(pin)
+
             elif state == "cool-21":
                 pin = get_cool_21_pin()
                 user_input = input_line(pin)
+
+            elif state == "cool-22":
+                pin = get_cool_22_pin()
+                user_input = input_line(pin)
+
             elif state == "cool-23":
                 pin = get_cool_23_pin()
                 user_input = input_line(pin)
+
             else:
                 pin = get_main_pin(current_dir, env_indicator)
                 user_input = input_line(pin)
@@ -8678,6 +8893,10 @@ def main():
                 state = "cool"
                 continue
 
+            elif user_input.lower() == "pin cool-2":
+                state = "cool-2"
+                continue
+
             elif user_input.lower() == "pin cool-3":
                 state = "cool-3"
                 continue
@@ -8692,6 +8911,10 @@ def main():
 
             elif user_input.lower() == "pin cool-6":
                 state = "cool-6"
+                continue
+
+            elif user_input.lower() == "pin cool-7":
+                state = "cool-7"
                 continue
 
             elif user_input.lower() == "pin cool-8":
@@ -8730,6 +8953,10 @@ def main():
                 state = "cool-16"
                 continue
 
+            elif user_input.lower() == "pin cool-17":
+                state = "cool-17"
+                continue
+
             elif user_input.lower() == "pin cool-18":
                 state = "cool-18"
                 continue
@@ -8744,6 +8971,10 @@ def main():
 
             elif user_input.lower() == "pin cool-21":
                 state = "cool-21"
+                continue
+
+            elif user_input.lower() == "pin cool-22":
+                state = "cool-22"
                 continue
 
             elif user_input.lower() == "pin cool-23":
