@@ -23,9 +23,9 @@
             "cursorColor": "#ffffff"
         }
     },
-    "glass-main": {
+    "glassmain": {
         "defaults": {
-            "colorScheme": "glass-main",
+            "colorScheme": "glassmain",
             "useAcrylic": true,
             "acrylicOpacity": 0.4,
             "backgroundImage": "ms-appdata:///roaming/p-term-logo-8.png",
@@ -104,6 +104,20 @@
         }
     },
     "ubuntu": {
+        "defaults": {
+            "cursorColor": "#000000"
+        }
+    },
+    "glassmain": {
+        "defaults": {
+            "colorScheme": "glassmain",
+            "useAcrylic": true,
+            "acrylicOpacity": 0.4,
+            "backgroundImageOpacity": 0.8,
+            "cursorColor": "#ffffff"
+        }
+    },
+    "mint": {
         "defaults": {
             "cursorColor": "#000000"
         }
