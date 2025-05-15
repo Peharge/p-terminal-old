@@ -656,10 +656,12 @@ def handle_special_commands(user_input):
         "fun aqua": "pp-commands\\fun-asciiquarium.py",  # new
         "fun bb": "pp-commands\\fun-bb.py",  # new
         "install cool pin": "pp-commands\\theme-pcc.py", # new
+        "install cool pin-2": "pp-commands\\theme-pcc-2.py",  # new
         "install cool pin-3": "pp-commands\\theme-pcc-3.py",  # new
         "install cool pin-4": "pp-commands\\theme-pcc-4.py",  # new
         "install cool pin-5": "pp-commands\\theme-pcc-5.py",  # new
         "install cool pin-6": "pp-commands\\theme-pcc-6.py",  # new
+        "install cool pin-7": "pp-commands\\theme-pcc-7.py",  # new
         "install cool pin-8": "pp-commands\\theme-pcc-8.py",  # new
         "install cool pin-9": "pp-commands\\theme-pcc-9.py",  # new
         "install cool pin-10": "pp-commands\\theme-pcc-10.py",  # new
@@ -668,10 +670,12 @@ def handle_special_commands(user_input):
         "install cool pin-14": "pp-commands\\theme-pcc-14.py",  # new
         "install cool pin-15": "pp-commands\\theme-pcc-15.py",  # new
         "install cool pin-16": "pp-commands\\theme-pcc-16.py",  # new
+        "install cool pin-17": "pp-commands\\theme-pcc-17.py",  # new
         "install cool pin-18": "pp-commands\\theme-pcc-18.py",  # new
         "install cool pin-19": "pp-commands\\theme-pcc-19.py",  # new
         "install cool pin-20": "pp-commands\\theme-pcc-20.py",  # new
         "install cool pin-21": "pp-commands\\theme-pcc-21.py",  # new
+        "install cool pin-22": "pp-commands\\theme-pcc-22.py",  # new
         "install cool pin-23": "pp-commands\\theme-pcc-23.py",  # new
         "run githubdesktop": "pp-commands\\run-githubdesktop.py", # new
         "run dockerdesktop": "pp-commands\\run-dockerdesktop.py", # new
@@ -2741,6 +2745,29 @@ COLOR_SCHEMES = {
     },
     "glass": {
         "name": "glass",
+        "background": "#333333",
+        "foreground": "#ffffff",
+        "black": "#1B1B2F",
+        "red": "#E10600",
+        "green": "#00FF9F",
+        "yellow": "#FFD000",
+        "blue": "#1E90FF",
+        "purple": "#A200FF",
+        "cyan": "#00CFFF",
+        "white": "#FFFFFF",
+        "brightBlack": "#2C2C3A",
+        "brightRed": "#FF2C1F",
+        "brightGreen": "#4CFFB0",
+        "brightYellow": "#FFE94D",
+        "brightBlue": "#1fb1ff",
+        "brightPurple": "#E87CFF",
+        "brightCyan": "#4DE9FF",
+        "brightWhite": "#FAFAFA",
+        "cursorColor": "#E10600",
+        "selectionBackground": "#0047AB",
+    },
+    "glass-main": {
+        "name": "glass-main",
         "background": "#333333",
         "foreground": "#ffffff",
         "black": "#1B1B2F",
@@ -7618,7 +7645,7 @@ def get_cool_6_pin():
         return f"[{timestamp()}] [ERROR] Error running oh-my-posh:\n{result.stderr}"
 
 
-def get_cool_6_pin():
+def get_cool_7_pin():
     """
     Ruft eine gerenderte Oh-My-Posh-Prompt basierend auf einer bestimmten Theme-Konfiguration ab.
     """
