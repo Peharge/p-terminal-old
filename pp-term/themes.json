@@ -108,9 +108,9 @@
             "cursorColor": "#000000"
         }
     },
-    "glassmain": {
+    "ubuntuglass": {
         "defaults": {
-            "colorScheme": "glassmain",
+            "colorScheme": "ubuntuglass",
             "useAcrylic": true,
             "acrylicOpacity": 0.4,
             "backgroundImageOpacity": 0.8,
