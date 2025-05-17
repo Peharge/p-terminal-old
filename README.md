@@ -4,4 +4,5 @@
 
 # **_P-Terminal_**
 
-Dont use old!!! Use: `p-terminal`!!!
+> [!WARNING]  
+> Dont use p-terminal-old!!! Use: [p-terminal](https://github.com/Peharge/p-terminal)!!!
